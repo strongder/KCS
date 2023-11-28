@@ -1,0 +1,12 @@
+.managerment{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin: 30px 20px;
+
+    .card-item{
+        height: 200px;
+        width: 240px;
+    
+    }
+}

@@ -1,0 +1,40 @@
+.nav-list{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px 5px;
+    .nav-search{
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        input{
+            border: 2px solid #ccc;
+            border-radius: 3px;
+        }
+        i{
+            font-size: 20px;
+        }
+    }
+}
+              
+.content{
+    margin-top: 10px;
+    background: #ccc;
+    .list-item{
+        height: 100px;
+        background: #000;
+        .avatar{
+
+        }
+        .name{
+
+        }
+        .message{
+
+        }
+        .time{
+
+        }
+    }
+}
