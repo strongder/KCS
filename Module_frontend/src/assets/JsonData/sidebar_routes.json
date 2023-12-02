@@ -19,10 +19,5 @@
     "display_name": "Report",
     "route": "/reports",
     "icon": "bx bxs-report"
-  },
-  {
-    "display_name": "Customers",
-    "route": "/customers",
-    "icon": "bx bx-user-pin"
   }
 ]
