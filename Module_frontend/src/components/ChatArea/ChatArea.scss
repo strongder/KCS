@@ -1,20 +1,21 @@
 .chat-area {
   display: flex;
   flex-direction: column;
+  position: relative;
   .chat-area-nav {
-      background: white;
-      display: flex;
-      box-shadow: 0px 4px 9px 0px #2c2b2bdd;
-      padding: 0 15px;
-    height: 70px;
+    background: white;
+    display: flex;
+    box-shadow: 0px 4px 9px -5px #ccc;
+    padding: 0 15px;
+    height: 65px;
     position: relative;
     .name {
       margin: 15px 10px;
     }
     img {
-      width: 70px;
-      height: 70px;
-      padding: 10px;
+      width: 60;
+      height: 60px;
+      padding: 5px;
       border-radius: 40px;
     }
 
@@ -34,13 +35,149 @@
       }
     }
   }
-  .chat-area-content{
-    background: #ccc;
-    height: 70vh;
-    padding: 10px 20px;
+  .chat-area-search {
+    padding: 10px;
+    height: 60px;
+    position: absolute;
+    width: 100%;
+    top: 66px;
+    background: white;
+    display: grid;
+    grid-template-columns: 7fr 2fr 1fr;
+    align-items: center;
+    .search-left {
+      border: 1px solid #d9d9d5;
+      margin-left: 15px;
+      height: 35px;
+      border-radius: 15px;
+      display: flex;
+      gap: 15px;
+
+      align-items: center;
+
+      input {
+        width: 80%;
+        border: none;
+      }
+      i {
+        margin-left: 10px;
+        padding: 10pxl;
+      }
+      i:hover {
+        background: #ccc;
+        border-radius: 30px;
+      }
+    }
+    .search-right {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      font-size: 25px;
+      //padding: 10px;
+      i {
+        padding: 5px;
+      }
+      i:hover {
+        background: #ccc;
+        border-radius: 30px;
+      }
+    }
+    button {
+      margin-right: 19px;
+      background: #ccc;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 3px;
+      color: black;
+    }
+    button:hover {
+      color: black;
+      opacity: 0.6;
+    }
   }
-  .chat-area-footer{
+  .chat-area-content {
+    background: #ccc;
+    height: 71vh;
+    padding: 10px 20px;
+    box-shadow: inset 2px -7px 11px -10px;
+  }
+  .chat-area-footer {
     height: 8.7vh;
-    background: purple;
+    background: white;
+    display: grid;
+    grid-template-columns: 0.7fr 0.7fr 7fr 0.7fr;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    gap: 10px;
+
+    .chat-file {
+      padding: 10px;
+      cursor: pointer;
+
+      i {
+        padding: 5px;
+      }
+    }
+    .chat-file:hover {
+      i:hover {
+        border-radius: 40%;
+        background: #ccc;
+      }
+    }
+    .chat-image {
+      padding: 10px 10px 10px;
+      cursor: pointer;
+      i {
+        padding: 5px;
+      }
+    }
+    .chat-image:hover {
+      i:hover {
+        border-radius: 40%;
+        background: #ccc;
+      }
+    }
+    .chat-message {
+      display: flex;
+      background: white;
+      border: 2px solid black;
+      border-radius: 20px;
+      gap: 10px;
+      height: auto;
+      input {
+        margin-left: 12px;
+        border: none;
+        width: 90%;
+        border-radius: 5px;
+        padding-left: 15px;
+        font-size: 16px;
+      }
+      p {
+        cursor: pointer;
+        padding-top: 5px;
+        padding-right: 5px;
+        i:hover {
+          opacity: 0.6;
+          border-radius: 40px;
+          background: #d9d9d5;
+        }
+      }
+    }
+    .chat-send {
+      margin-top: 5px;
+      padding: 5px;
+      cursor: pointer;
+
+      i {
+        padding: 5px;
+      }
+    }
+    .chat-send:hover {
+      i:hover {
+        border-radius: 40%;
+        background: #ccc;
+      }
+    }
   }
 }

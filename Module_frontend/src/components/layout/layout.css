@@ -4,11 +4,11 @@
 
 .layout__content {
     padding-left: var(--sidebar-width);
-    background-color: var(--second-bg);
+    background-color: whitesmoke;
     min-height: 100vh;
 }
 
 .layout__content-main {
-    padding: 0px;
+    padding-top: 1px;
     min-height: 88vh;
 }

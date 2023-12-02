@@ -7,6 +7,9 @@ import { Box, Grid, Paper, styled } from "@mui/material";
 const Item = styled(Paper)(({ theme }) => ({
   padding: "0px",
   textAlign: "center",
+  borderRadius: "none",
+  border:"none",
+  height: "100%"
 }));
 const LiveChat = () => {
   const [selectedInfo, setSelectedInfo] = useState(false);
@@ -16,9 +19,9 @@ const LiveChat = () => {
   };
   return (
     <div className="live-chat">
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container>
-          <Grid item xs={3}>
+      <Box sx={{ flexGrow: 1}}>
+        <Grid container >
+          <Grid  item xs={3}>
             <Item>
               <div>
                 <ContactList></ContactList>

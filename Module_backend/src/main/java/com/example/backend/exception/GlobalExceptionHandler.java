@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler()
+    @ExceptionHandler({ScheduleException.class, UserException.class, RoleException.class, AutoChatException.class})
     public ResponseEntity<ErrorResponse> handleNotFoundException(RuntimeException ex) {
         return new ResponseEntity<>(new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
                 ZonedDateTime.now(), ex.getMessage()), HttpStatus.BAD_REQUEST);

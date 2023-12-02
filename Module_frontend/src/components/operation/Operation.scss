@@ -1,0 +1,35 @@
+.operation {
+  margin-left: auto;
+  position: relative;
+  .operation-open {
+    font-size: 20px;
+  }
+
+  .operation-list-item {
+    background: white;
+    color: black;
+    position: absolute;
+    z-index: 99;
+    right: 0;
+    top: 30px;
+    min-width: 170px;
+    box-shadow: -1px 1px 8px 0px;
+    border-radius: 10px;
+    cursor: pointer;
+    .operation-item {
+      display: flex;
+      align-items: center;
+      height: 50px;
+      i {
+        padding: 0 10px;
+        font-size: 20px;
+      }
+      p {
+      }
+    }
+    .operation-item:hover {
+      background: #ccc;
+      border-radius: 10px;
+    }
+  }
+}
