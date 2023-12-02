@@ -17,9 +17,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "timeline")
+@Table(name = "schedule")
 @Entity
-public class TimeLine {
+public class Schedule {
 	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
