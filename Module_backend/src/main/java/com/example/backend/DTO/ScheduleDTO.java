@@ -9,16 +9,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TimeLineDTO {
+public class ScheduleDTO {
 	private Long id;
 
-	private Date date;
+	private String date;
 
 	private Boolean status;
 
-	private Date timeStart;
+	private String timeStart;
 
-	private Date timeEnd;
+	private String timeEnd;
 
 	private String content;
 

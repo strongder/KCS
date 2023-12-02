@@ -25,7 +25,7 @@ public class UserDTO {
 	
 	private String avt;
 	
-	private Role role;
+	private String role;
 	
 	private Date createDate;
 	
