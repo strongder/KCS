@@ -31,6 +31,7 @@ const Table = props => {
 
     return (
         <div>
+            
             <div className="table-wrapper">
                 <table>
                     {

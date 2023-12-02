@@ -9,6 +9,6 @@
 }
 
 .layout__content-main {
-    padding: 0px;
+    padding-top: 1px;
     min-height: 88vh;
 }
