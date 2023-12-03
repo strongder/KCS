@@ -10,9 +10,7 @@ import UserReducer from "./slices/UserSlice"
 const store = configureStore({
     reducer: {
         theme: ThemeReducer,
-        schedule: ScheduleReducer,
-        user: UserReducer
-
+        users: UserReducer
     }
 })
 
