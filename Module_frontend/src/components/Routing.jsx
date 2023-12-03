@@ -19,7 +19,7 @@ const Routing = () => {
       <Route path="/live" exact component={LiveChat} />
       <Route path="/settings" exact component={Setting} />
       <Route path="/reports" exact component={Report} />
-      <Route path="/customers" exact component={Customers} />
+      {/* <Route path="/customers" exact component={Customers} /> */}
       <Route path="/admin/timeline" exact component={Schedule} />
       <Route path="/admin/user" exact component={Users} />
       <Route path="/admin/user/viewUser/:id" exact component={DetailUser} />

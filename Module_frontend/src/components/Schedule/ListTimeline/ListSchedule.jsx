@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useDispatch } from 'react-redux';
 import { useSelector } from "react-redux";
-import { getAllSchedule } from '../../../Service/ScheduleService';
+import { getAllSchedule } from '../../../redux/services/ScheduleService';
 import { useEffect } from 'react';
 import moment from 'moment';
 
