@@ -23,6 +23,8 @@ public class UserDTO {
 	
 	private String phone;
 	
+	private String MaTK;
+	
 	private String avt;
 	
 	private String role;

@@ -56,6 +56,8 @@ public class UserServiceImpl implements UserService{
 			user.setCreateDate(date);
 			user.setUpdateDate(date);
 			user.setIsDelete(false);
+			user.setMaTK("GV" + date.getTime());
+//			System.out.println(userDTO.getRole());
 			this.userRepository.save(user);
 			return userDTO;
 		} else {
@@ -128,6 +130,18 @@ public class UserServiceImpl implements UserService{
 			return userDTO;
 		} else {
 			throw new UserException("Người dùng không tồn tại");
+		}
+	}
+
+	@Override
+	public UserDTO getByEmail(String email) {
+		// TODO Auto-generated method stub
+		Optional<User> user = this.userRepository.findByEmail(email);
+		if(user.get() != null) {
+			UserDTO userDTO = this.modelMapper.map(user, UserDTO.class);
+			return userDTO;
+		} else {
+			throw new UserException("Khong the tim thay nguoi dung");
 		}
 	}
 
