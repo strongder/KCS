@@ -2,8 +2,6 @@ package com.example.backend.entity;
 
 import java.util.Date;
 
-import org.hibernate.annotations.DialectOverride.ColumnDefault;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,41 +15,23 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "timeline")
+@Table(name = "emailSender")
 @Entity
-public class TimeLine {
-	
+public class EmailSender {
+
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
 	private Long id;
 	
-	@Column(name = "date")
-	private Date date;
+	@Column(name = "verification")
+	private Long verification;
 	
-	@Column(name = "status")
-	private Boolean status;
-	
-	@Column(name = "timeStart")
-	private Date timeStart;
-	
-	@Column(name = "timeEnd")
-	private Date timeEnd;
-	
-	@Column(name = "content")
-	private String content;
+	@Column(name = "email")
+	private String email;
 	
 	@Column(name = "createDate")
 	private Date createDate;
-	
-	@Column(name = "updateDate")
-	private Date updateDate;
-	
-	@Column(name = "createBy")
-	private String createBy;
-	
-	@Column(name = "updateBy")
-	private String updateBy;
 	
 	@Column(name = "isDelete")
 	private Boolean isDelete;

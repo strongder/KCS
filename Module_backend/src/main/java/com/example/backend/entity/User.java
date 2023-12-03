@@ -44,6 +44,9 @@ public class User {
 	@Column(name = "phone")
 	private String phone;
 	
+	@Column(name = "ma_TK")
+	private String MaTK;
+	
 	@Column(name = "avt")
 	private String avt;
 	
