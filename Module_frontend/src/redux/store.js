@@ -6,7 +6,7 @@ import UserReducer from "./slices/UserSlice"
 const store = configureStore({
     reducer: {
         theme: ThemeReducer,
-        user: UserReducer
+        users: UserReducer
     }
 })
 

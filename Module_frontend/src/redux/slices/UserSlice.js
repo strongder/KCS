@@ -1,16 +1,31 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import * as userService from '../services/userService';
+export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
+  return userService.fetchUsers();
+});
 
-export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
-  const response = await axios.get("https://jsonplaceholder.typicode.com/users");
-  console.log("checkrespon" +response.data)
-  return response.data;
+export const fetchUserById = createAsyncThunk('user/fetchUserById', async (userId) => {
+  return userService.fetchUserById(userId);
+});
+
+export const addUser = createAsyncThunk('user/addUser', async (userData) => {
+  return userService.addUser(userData);
+});
+
+export const updateUser = createAsyncThunk('user/updateUser', async ({updatedUser }) => {
+  return userService.updateUser(updatedUser);
+});
+
+export const removeUser = createAsyncThunk('user/removeUser', async (userId) => {
+  return userService.removeUser(userId);
 });
 
 const userSlice = createSlice({
   name: "users",
   initialState: {
-    user: [],
+    data: [],
+    user: null,
     loading: false,
     error: null,
   },
@@ -21,11 +36,44 @@ const userSlice = createSlice({
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.data = action.payload;
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(fetchUserById.pending, (state) => {
+        state.loading =  true;
+      })
+      .addCase(fetchUserById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user= action.payload;
+      })
+      .addCase(fetchUserById.rejected, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.loading =  true;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user= action.payload;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(removeUser.pending, (state) => {
+        state.loading =  true;
+      })
+      .addCase(removeUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user= action.payload;
+      })
+      .addCase(removeUser.rejected, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
       });
   },
 });

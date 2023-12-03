@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Table from "../components/table/Table";
-import customerList from "../assets/JsonData/customers-list.json";
+// import customerList from "../assets/JsonData/customers-list.json";
 import NavCard from "../components/UserManagerment/navcard/NavUser";
 import Sort from "../components/sort/Sort";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../redux/slices/UserSlice";
 import Operation from "../components/operation/Operation";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {fetchUsers} from '../redux/slices/UserSlice'
 
 const customerTableHead = ["", "name", "email", "phone"];
 const renderHead = (item, index) => <th key={index}>{item}</th>;
@@ -26,8 +26,6 @@ const sortBy = [
 const Users = () => {
   const history = useHistory()
   const [sort, setSort] = useState("");
-  const dispatch = useDispatch();
-  const data1 = useSelector((state) => state.users);
   const handleOperationClick = (item, userData) => {
     // Xử lý thông tin người dùng và mục operation khi một mục trong danh sách được chọn
     console.log("Thông tin người dùng:", userData);
@@ -64,10 +62,17 @@ const Users = () => {
     </tr>
   );
 
+  const dispatch = useDispatch();
+  const {data, loading} = useSelector((state) => state.users);
+  console.log ("users: " , data);
+  const customerList = data;
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
-  console.log("chekc" + data1);
+  if(loading){
+    return (<h2>Lodaing</h2>)
+  }
+  // console.log ("users: " , users);
   const handleChange = (event) => {
     setSort(event.target.value);
     // if (event.target.value === "name") {

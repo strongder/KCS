@@ -1,0 +1,41 @@
+.user-detail {
+  margin: auto;
+  margin-top: 50px;
+  padding-bottom: 40px;
+  width: 70%;
+  border-radius: 10px;
+  background: #dad7d7;
+  box-shadow: var(--box-shadow);
+  
+  h2 {
+   
+  }
+
+  .user-detail-container {
+    
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+ 
+    .avatar {
+      background: blue;
+    }
+    .list-field {
+      display: grid;
+      grid-template-columns: 2fr 5fr;
+      gap: 20px;
+      padding: 10px 50px;
+      color: black;
+      label {
+      }
+      input {
+        margin-top: 5px;
+        padding: 7px 15px;
+        padding-right: 50px;
+        flex: 1;
+        font-size: 16px;
+        border-radius: 5px;
+        background: white;
+      }
+    }
+  }
+}
