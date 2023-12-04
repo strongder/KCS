@@ -18,7 +18,7 @@ const UserDetail = () => {
   if(!user){
     return<div>del có đâu mà tìm</div>
   }
-
+  console.log("user", user);
   const bodyData = [
     {
       title: "Mã tài khoản: ",
@@ -64,8 +64,7 @@ const UserDetail = () => {
       <h2>Thông tin chi tiết tài khoản</h2>
       <div className="user-detail-container">
         <div className="avatar">
-          avatar
-          {/* <img src={filteredUser.avatar} alt="ảnh đại diện" /> */}
+          <img src={user.avt} alt="ảnh đại diện" />
         </div>
         <div className="list-field">
           {bodyData.map((item, index) => (

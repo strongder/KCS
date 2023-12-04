@@ -5,18 +5,17 @@ import "./EditUser.scss";
 import { fetchUserById, updateUser } from "../../../redux/slices/UserSlice";
 import { useHistory } from "react-router-dom";
 
-
 const EditUser = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.users);
-  const history = useHistory('')
+  const history = useHistory("");
   const [editUser, setEditUser] = useState({
     name: "",
     email: "",
     phone: "",
     userId: "",
-    role: "",
+    // role: "",
   });
 
   useEffect(() => {
@@ -30,17 +29,18 @@ const EditUser = () => {
         name: user.name,
         email: user.email,
         phone: user.phone,
-        userId: user.userId,
-        role: user.role || "USER",
+        userId: user.userId|| "Gv0110",
+        // role: user.role || "USER",
       });
     }
   }, [user]);
   // console.log("check edit user", editUser);
   const handleUpdateUser = () => {
     const newUser = { ...user, ...editUser };
-    dispatch(updateUser(newUser));
-    console.log(newUser);
-    history.push(`/admin/user`)
+
+    dispatch(updateUser(newUser)).then(() => {
+      history.push("/admin/user");
+    });
   };
   const handleInputChange = (e) => {
     setEditUser((prevState) => ({
@@ -98,7 +98,7 @@ const EditUser = () => {
             value={editUser.phone}
             onChange={handleInputChange}
           />
-          <label>
+          {/* <label>
             <i className="bx bxs-star"></i>
             Vai trò:
           </label>
@@ -109,7 +109,7 @@ const EditUser = () => {
           >
             <option value="USER">USER</option>
             <option value="ADMIN">ADMIN</option>
-          </select>
+          </select> */}
         </div>
       </div>
       <div className="button">

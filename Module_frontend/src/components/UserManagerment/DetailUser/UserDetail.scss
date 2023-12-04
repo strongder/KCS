@@ -6,26 +6,37 @@
   border-radius: 10px;
   background: #dad7d7;
   box-shadow: var(--box-shadow);
-  
+
   h2 {
-   
+    width: 400px;
+    padding: 30px;
+    margin: auto;
   }
 
   .user-detail-container {
-    
     display: grid;
-    grid-template-columns: 2fr 5fr;
- 
+    grid-template-columns: 1.25fr 4fr;
+
     .avatar {
-      background: blue;
+      margin: 12px 20px;
+      margin-left: auto;
+      margin-right: auto;
+      img {
+        border: 1px solid;
+        width: 120px;
+        height: 150px;
+        border-radius: 3px;
+      }
     }
+
     .list-field {
       display: grid;
-      grid-template-columns: 2fr 5fr;
+      grid-template-columns: 1fr 1fr;
       gap: 20px;
-      padding: 10px 50px;
+      padding: 10px;
       color: black;
       label {
+        padding: 0 7px;
       }
       input {
         margin-top: 5px;

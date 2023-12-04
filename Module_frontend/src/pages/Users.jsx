@@ -64,15 +64,16 @@ const Users = () => {
 
   const dispatch = useDispatch();
   const {data, loading} = useSelector((state) => state.users);
-  console.log ("users: " , data);
   const customerList = data;
   useEffect(() => {
     dispatch(fetchUsers());
+
+    console.log(">>>>>>>>>>>>>>>>>")
   }, [dispatch]);
   if(loading){
-    return (<h2>Lodaing</h2>)
+    return (<h2>Loading</h2>)
   }
-  // console.log ("users: " , users);
+  console.log (">>>check data " , customerList);
   const handleChange = (event) => {
     setSort(event.target.value);
     // if (event.target.value === "name") {
