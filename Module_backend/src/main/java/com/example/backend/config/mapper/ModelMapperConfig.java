@@ -38,7 +38,7 @@ public class ModelMapperConfig {
        .setDestinationNamingConvention(NamingConventions.NONE);
        
        modelMapper.createTypeMap(User.class, UserDTO.class)
-       	.addMapping(src -> src.getRole().getName(), UserDTO::setName);
+       	.addMapping(src -> src.getRole().getName(), UserDTO::setRole);
        
        modelMapper.createTypeMap(UserDTO.class, User.class)
        	.addMappings(m -> m.using(stringToSetRoleConverter()).map(UserDTO::getRole, User::setRole));
