@@ -1,15 +1,15 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'http://localhost:8081/api/v1/user';
+const API_URL = "http://localhost:8081/api/v1/user";
 
 export const fetchUsers = async () => {
   try {
     const response = await axios.get(API_URL);
+    console.log("nó có chạy vào đây")
     return response.data;
   } catch (error) {
-    
-    console.error('Error fetching users:', error);
-    throw error; 
+    console.error("Error fetching users:", error);
+    throw error;
   }
 };
 
@@ -24,30 +24,38 @@ export const fetchUserById = async (userId) => {
 };
 
 export const addUser = async (userData) => {
+  console.log("check user data", userData,  typeof(userData.birthDay))
   try {
     const response = await axios.post(API_URL, userData, {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
     return response.data;
   } catch (error) {
-    console.error('Error adding user:', error);
+    console.error("Error adding user:", error);
     throw error;
   }
 };
 
 export const updateUser = async (updatedUser) => {
   try {
-    const response = await axios.patch(`${API_URL}/update/${updatedUser.id}`, updatedUser, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    console.log("-------------", response.data)
+    const response = await axios.put(
+      `${API_URL}/update/${updatedUser.id}`,
+      updatedUser,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     return response.data;
   } catch (error) {
-    console.error(`Error updating user with ID ${updatedUser.id} :`, updatedUser ,error);
+    console.error(
+      `Error updating user with ID ${updatedUser.id} :`,
+      updatedUser,
+      error
+    );
     throw error;
   }
 };
@@ -56,9 +64,10 @@ export const removeUser = async (userId) => {
   try {
     const response = await axios.delete(`${API_URL}/delete/${userId}`, {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
+
     return response.data;
   } catch (error) {
     console.error(`Error removing user with ID ${userId}:`, error);

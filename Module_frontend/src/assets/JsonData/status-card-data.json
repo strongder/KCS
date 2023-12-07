@@ -20,7 +20,7 @@
     {
         "icon": "bx bx-receipt",
         "title": "Quản lý danh sách sinh viên",
-        "path": "admin/student",
+        "path": "admin/students",
         "description": "Có chức năng xem thông tin danh sách sinh viên đã quan tâm"
     }, 
     {

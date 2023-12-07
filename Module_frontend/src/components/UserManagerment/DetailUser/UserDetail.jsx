@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 import "./UserDetail.scss";
 import { fetchUserById } from "../../../redux/slices/UserSlice";
+import { Link } from "react-router-dom";
 
 const UserDetail = () => {
   const { id } = useParams();
@@ -15,10 +16,9 @@ const UserDetail = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  if(!user){
-    return<div>del có đâu mà tìm</div>
+  if (!user) {
+    return <div>del có đâu mà tìm</div>;
   }
-  console.log("user", user);
   const bodyData = [
     {
       title: "Mã tài khoản: ",
@@ -34,11 +34,15 @@ const UserDetail = () => {
     },
     {
       title: "Giới tính:",
-      value: user ? user.gender : "",
+      value: user ? (user.gender===true?'Nam':"Nữ") : "",
     },
     {
       title: "Số điện thoại:",
       value: user ? user.phone : "",
+    },
+    {
+      title: "Ngày sinh:",
+      value: user ? user.birthDay : "",
     },
     {
       title: "Ngưởi tạo:  ",
@@ -56,6 +60,14 @@ const UserDetail = () => {
     {
       title: "Ngày sửa:",
       value: user ? user.updateDate : "",
+    },
+    {
+      title: "Vai trò:",
+      value: user
+        ? user.role === "ROLE_ADMINISTRATOR"
+          ? "ADMIN"
+          : "USER"
+        : "",
     },
   ];
 
@@ -79,10 +91,14 @@ const UserDetail = () => {
           ))}
           <div className="field" style={{ margin: "20px 0" }}>
             <i class="bx bxs-star"></i>
-            <label>Đã xóa:</label>
-            <img src="" alt="" />
+            <label>{user.isDelete===true?"Đã xóa":"Còn sử dụng"}</label>
           </div>
         </div>
+      </div>
+      <div className="cancel">
+        <Link to="/admin/user">
+          <button>Thoát</button>
+        </Link>
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 package com.example.backend.config.mapper;
 
 
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +15,10 @@ import java.time.ZoneId;
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.convention.NamingConventions;
 import org.modelmapper.spi.MatchingStrategy;
-//import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.NamingConventions;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,12 +27,13 @@ import com.example.backend.DTO.UserDTO;
 import com.example.backend.entity.Schedule;
 import com.example.backend.entity.User;
 
-
-
 @Configuration
 public class ModelMapperConfig {
 
-	
+	@Bean
+	public StringToDateConverter stringToDateConverter() {
+		return new StringToDateConverter();
+	}
 	@Bean
 	public StringToSetRoleConverter stringToSetRoleConverter()
 	{

@@ -49,4 +49,16 @@
       }
     }
   }
+  .cancel{
+    display: grid;
+    justify-content: center;
+    margin-top: 25px;
+    button{
+      padding: 12px 22px;
+      font-weight: 600px;
+      color: black;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+  }
 }

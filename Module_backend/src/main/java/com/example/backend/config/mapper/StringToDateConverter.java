@@ -18,8 +18,6 @@ public class StringToDateConverter extends AbstractConverter<String, Date>{
 		Date date;
 		try {
 			date = sdf.parse(source);
-			System.out.println(source);
-			System.out.println(date);
 			return date;
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

@@ -1,26 +1,34 @@
-import React, { useState } from 'react'
-import { FormControl, FormHelperText, Link, MenuItem, Select } from "@mui/material"
-import './Sort.scss'
+import React, { useState } from "react";
+import {
+  FormControl,
+  FormHelperText,
+  Link,
+  MenuItem,
+  Select,
+} from "@mui/material";
+import "./Sort.scss";
 const Sort = (props) => {
-
-  const { sort, handleChange, sortBy } = props
-  const st = {}
+  const { sort, handleChange, sortBy } = props;
   return (
     <div className="sortby">
-      <FormControl sx={{ marginLeft: "auto", }}>
+      <FormControl sx={{ marginLeft: "auto" }}>
         <Select
-          defaultValue={sort}
+          value={sort}
           onChange={handleChange}
           displayEmpty
           inputProps={{ "aria-label": "Without label" }}
         >
           {sortBy.map((item, index) => {
-            return (<MenuItem sx={{ padding: "0" }} key={index} value={item.name}>{item.value}</MenuItem>)
+            return (
+              <MenuItem sx={{ padding: "5px 10px" }} key={index} value={item.name}>
+                {item.value}
+              </MenuItem>
+            );
           })}
         </Select>
       </FormControl>
     </div>
-  )
-}
+  );
+};
 
-export default Sort
+export default Sort;

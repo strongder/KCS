@@ -32,14 +32,14 @@ const Dropdown = (props) => {
         ) : (
           ""
         )}
-        {props.customToggle ? props.customToggle() : console.log("null")}
+        {props.customToggle ? props.customToggle() : null}
       </button>
       {isActive && (<div className="dropdown__content" onClick={(e)=>setIsActive(!isActive)}>
         {props.contentData && props.renderItems
           ? props.contentData.map((item, index) =>
               props.renderItems(item, index)
             )
-          : console.log("check")}
+          : null}
         {props.renderFooter ? (
           <div className="dropdown__footer">{props.renderFooter()}</div>
         ) : (
