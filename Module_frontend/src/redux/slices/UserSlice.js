@@ -1,26 +1,32 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import * as userService from '../services/userService';
-export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
+import * as userService from "../services/userService";
+export const fetchUsers = createAsyncThunk("user/fetchUsers", async () => {
   return userService.fetchUsers();
 });
 
-export const fetchUserById = createAsyncThunk('user/fetchUserById', async (userId) => {
-  return userService.fetchUserById(userId);
-});
+export const fetchUserById = createAsyncThunk( "user/fetchUserById",async (userId) => {
+    return userService.fetchUserById(userId);
+  }
+);
 
-export const addUser = createAsyncThunk('user/addUser', async (userData) => {
+export const addUser = createAsyncThunk("user/addUser", async (userData) => {
   return userService.addUser(userData);
 });
 
-export const updateUser = createAsyncThunk('user/updateUser', async (updatedUser) => {
-  console.log("+++++++++", updatedUser)
-  return userService.updateUser(updatedUser);
-});
+export const updateUser = createAsyncThunk(
+  "user/updateUser",
+  async (updatedUser) => {
+    return userService.updateUser(updatedUser);
+  }
+);
 
-export const removeUser = createAsyncThunk('user/removeUser', async (userId) => {
-  return userService.removeUser(userId);
-});
+export const removeUser = createAsyncThunk(
+  "user/removeUser",
+  async (userId) => {
+    return userService.removeUser(userId);
+  }
+);
 
 const userSlice = createSlice({
   name: "users",
@@ -29,11 +35,29 @@ const userSlice = createSlice({
     user: null,
     loading: false,
     error: null,
+    searchData: '',
+  },
+  reducers: {
+    searchUser: (state, action) => {
+      console.log(action.payload)
+      state.searchData = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
+      .addCase(addUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data.push(action.payload);
+      })
+      .addCase(addUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
       .addCase(fetchUsers.pending, (state) => {
-        state.loading =  true;
+        state.loading = true;
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.loading = false;
@@ -44,40 +68,47 @@ const userSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(fetchUserById.pending, (state) => {
-        state.loading =  true;
+        state.loading = true;
       })
       .addCase(fetchUserById.fulfilled, (state, action) => {
         state.loading = false;
-        state.user= action.payload;
+        state.user = action.payload;
       })
       .addCase(fetchUserById.rejected, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.error = action.payload;
       })
       .addCase(updateUser.pending, (state) => {
         state.loading = true;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user= action.payload;
+        state.user = action.payload;
+        console.log("state", action.payload);
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.error = action.payload;
       })
       .addCase(removeUser.pending, (state) => {
-        state.loading =  true;
+        state.loading = true;
+        console.log("fdsfds");
       })
       .addCase(removeUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user= action.payload;
+        const userIndex = state.data.findIndex(
+          (user) => user.id === action.payload.id
+        );
+        if (userIndex !== -1) {
+          state.data[userIndex] = action.payload;
+        }
       })
       .addCase(removeUser.rejected, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.error = action.payload;
       });
   },
 });
 
 export default userSlice.reducer;
-// export const {fetchUsers} = userSlice.actions;
+ export const {searchUser} = userSlice.actions;

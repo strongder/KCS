@@ -14,8 +14,9 @@ const EditUser = () => {
     name: "",
     email: "",
     phone: "",
-    userId: "",
-    // role: "",
+    birthDay:"",
+    gender:"",
+    role: "",
   });
 
   useEffect(() => {
@@ -29,15 +30,21 @@ const EditUser = () => {
         name: user.name,
         email: user.email,
         phone: user.phone,
-        userId: user.userId|| "Gv0110",
-        // role: user.role || "USER",
+        birthDay: user.birthDay,
+        gender: user.gender===true?'Nam':'Nữ',
+        role: user.role ==="ROLE_USER"?"USER":'ADMIN',
       });
     }
   }, [user]);
   // console.log("check edit user", editUser);
   const handleUpdateUser = () => {
-    const newUser = { ...user, ...editUser };
-
+    
+    let newUser = { ...user, ...editUser };
+    const gender = newUser.gender==='Nam'?true:false;
+    const role = newUser.role==="USER"?"ROLE_USER":'ROLE_ADMINISTRATOR';
+    newUser = ({...newUser, role, gender});
+    console.log("check newUser:" ,newUser)
+    
     dispatch(updateUser(newUser)).then(() => {
       history.push("/admin/user");
     });
@@ -50,24 +57,13 @@ const EditUser = () => {
   };
 
   return (
-    <div className="user-detail">
+    <div className="user-edit">
       <h2>Chỉnh sửa thông tin tài khoản</h2>
-      <div className="user-detail-container">
+      <div className="user-edit-container">
         <div className="avatar">
-          {/* Display avatar */}
-          {/* <img src={filteredUser.avatar} alt="ảnh đại diện" /> */}
+          <img src={user?user.avt:null} alt="ảnh đại diện" />
         </div>
         <div className="list-field">
-          <label>
-            <i className="bx bxs-star"></i>
-            Mã tài khoản:
-          </label>
-          <input
-            type="text"
-            name="userId" // Use item.title as the name for better identification
-            value={editUser.userId}
-            onChange={handleInputChange}
-          />
           <label>
             <i className="bx bxs-star"></i>
             Họ và tên:
@@ -98,7 +94,30 @@ const EditUser = () => {
             value={editUser.phone}
             onChange={handleInputChange}
           />
-          {/* <label>
+          <label>
+            <i className="bx bxs-star"></i>
+            Ngày sinh:
+          </label>
+          <input
+           style={{paddingRight: "20px"}}
+            type="date"
+            name="birthDay" // Use item.title as the name for better identification
+            value={editUser.birthDay}
+            onChange={handleInputChange}
+          />
+          <label>
+            <i className="bx bxs-star"></i>
+            Vai trò:
+          </label>
+          <select
+            name="gender"
+            value={editUser.gender}
+            onChange={handleInputChange}
+          >
+            <option value="Nam">Nam</option>
+            <option value="Nữ">Nữ</option>
+          </select>
+          <label>
             <i className="bx bxs-star"></i>
             Vai trò:
           </label>
@@ -109,7 +128,7 @@ const EditUser = () => {
           >
             <option value="USER">USER</option>
             <option value="ADMIN">ADMIN</option>
-          </select> */}
+          </select>
         </div>
       </div>
       <div className="button">

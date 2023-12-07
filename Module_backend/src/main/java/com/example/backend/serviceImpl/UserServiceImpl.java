@@ -1,16 +1,17 @@
 package com.example.backend.serviceImpl;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-//import org.apache.catalina.User;
+import java.text.ParseException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.DTO.UserDTO;
 import com.example.backend.entity.User;
+import com.example.backend.exception.ScheduleException;
 import com.example.backend.exception.UserException;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.service.UserService;
@@ -59,6 +60,7 @@ public class UserServiceImpl implements UserService{
 			user.setMaTK("GV" + date.getTime());
 //			System.out.println(userDTO.getRole());
 			this.userRepository.save(user);
+			System.out.println(user.getBirthDay());
 			return userDTO;
 		} else {
 			throw new UserException("Email hoặc SĐT đã tồn tại");
@@ -126,6 +128,7 @@ public class UserServiceImpl implements UserService{
 			Date date = new Date();
 			user.get().setIsDelete(true);
 			user.get().setUpdateDate(date);
+			userRepository.save(user.get());
 			UserDTO userDTO = this.modelMapper.map(user, UserDTO.class);
 			return userDTO;
 		} else {

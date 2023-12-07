@@ -7,8 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setMode, setColor } from "../../redux/slices/ThemeSlice"; // Điều chỉnh đường dẫn tùy thuộc vào cấu trúc thư mục của bạn
 
 const Layout = (props) => {
-  const themeReducer = useSelector(state=>state.theme); 
-  console.log("check", themeReducer);
+  const themeReducer = useSelector((state) => state.theme);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,7 +25,6 @@ const Layout = (props) => {
         <TopNav />
         <div className="layout__content-main">
           <Routing></Routing>
-
         </div>
       </div>
     </div>
