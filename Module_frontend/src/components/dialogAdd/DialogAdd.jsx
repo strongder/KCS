@@ -21,7 +21,10 @@ const DialogAdd = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleOnSubscribe =()=>{
+    handleSubscribe();
+    handleClose()
+  }
   return (
     <>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -46,7 +49,7 @@ const DialogAdd = (props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubscribe}>Subscribe</Button>
+          <Button onClick={()=> handleOnSubscribe()}>Subscribe</Button>
         </DialogActions>
       </Dialog>
     </>

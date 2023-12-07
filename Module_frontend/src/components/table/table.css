@@ -1,12 +1,13 @@
 .table-wrapper {
    overflow-y: auto;
-    
+    min-height: 460px;
 }
 
 table {
-    width: 100%;
+    width: 95%;
     min-width: 400px;
     border-spacing: 0;
+    margin:auto;
 }
 
 thead {
@@ -19,8 +20,8 @@ tr {
 
 th,
 td {
-    text-transform: capitalize;
-    padding: 15px 10px;
+    /* text-transform: capitalize; */
+    padding: 10px 10px;
 }
 
 tbody > tr:hover {
