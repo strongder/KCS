@@ -23,17 +23,19 @@ public class UserDTO {
 	
 	private String phone;
 	
+	private String birthDay;
+	
 	private String MaTK;
 	
 	private String avt;
 	
 	private String role;
 	
+	private String createDate;
+
 	private String birthDay;
 	
-	private Date createDate;
-	
-	private Date updateDate;
+	private String updateDate;
 	
 	private String createBy;
 	

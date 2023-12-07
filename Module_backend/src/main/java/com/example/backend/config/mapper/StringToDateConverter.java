@@ -1,19 +1,20 @@
 package com.example.backend.config.mapper;
-import org.modelmapper.AbstractConverter;
-import org.modelmapper.Converter;
-import org.modelmapper.spi.MappingContext;
-
-import com.example.backend.exception.ScheduleException;
-import com.example.backend.exception.UserException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
-public class StringToDateConverter extends AbstractConverter<String, Date> {
-    @Override
-    public Date convert(String source) {
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+import org.modelmapper.AbstractConverter;
+
+import com.example.backend.entity.Role;
+import com.example.backend.exception.UserException;
+
+public class StringToDateConverter extends AbstractConverter<String, Date>{
+
+	@Override
+	protected Date convert(String source) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date;
 		try {
 			date = sdf.parse(source);
@@ -21,7 +22,8 @@ public class StringToDateConverter extends AbstractConverter<String, Date> {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			throw new UserException("Không thể thêm người dùng do ngày sinh không hợp lệ");
+			throw new UserException("Không thể thêm do định dạng ngày không hợp lệ");
 		}
-    }
+	}
+
 }

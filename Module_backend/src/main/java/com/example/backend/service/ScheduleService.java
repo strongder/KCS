@@ -11,6 +11,8 @@ public interface ScheduleService  {
 
 	List<ScheduleDTO> getAll();
 	
+	ScheduleDTO getByID(Long id);
+	
 	ScheduleDTO create(ScheduleDTO timeLineDTO);
 	
 	ScheduleDTO delete(Long id);
