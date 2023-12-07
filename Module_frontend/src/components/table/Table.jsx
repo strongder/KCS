@@ -8,6 +8,8 @@ const Table = props => {
 
     const [dataShow, setDataShow] = useState(initDataShow)
 
+    console.log(dataShow);
+
     let pages = 1
 
     let range = []

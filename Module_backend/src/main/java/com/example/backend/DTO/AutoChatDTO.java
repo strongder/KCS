@@ -18,9 +18,9 @@ public class AutoChatDTO {
 
 	private Long IdParent;
 
-	private Date createDate;
+	private String createDate;
 
-	private Date updateDate;
+	private String updateDate;
 
 	private String createBy;
 

@@ -1,71 +1,78 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
-import "./UserDetail.scss";
-import { fetchUserById } from "../../../redux/slices/UserSlice";
+import "./DetailSchedule.scss";
+import { fetchScheduleById } from "../../../redux/services/ScheduleService";
+import Button from '@mui/material/Button';
 
-const UserDetail = () => {
+const DetailSchedule = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { user, loading, error } = useSelector((state) => state.users);
+  const { schedule, loading, error } = useSelector((state) => state.schedule.getScheduleByID);
   useEffect(() => {
-    dispatch(fetchUserById(id));
-  }, [dispatch, id]);
+    fetchScheduleById(id, dispatch);
+  }, []);
+
+  // console.log(schedule)
 
   if (loading) {
     return <div>Loading...</div>;
+    // console.log(schedule);
   }
-  if(!user){
+  if(!schedule){
     return<div>del có đâu mà tìm</div>
   }
-  console.log("user", user);
+
+  console.log(schedule)
+
+//   console.log("user", schedule);
   const bodyData = [
     {
-      title: "Mã tài khoản: ",
-      value: user ? user.maTK : "",
+      title: "ID: ",
+      value: schedule ? schedule.id : "",
     },
     {
-      title: "Họ và tên:",
-      value: user ? user.name : "",
+      title: "Nội dung:",
+      value: schedule ? schedule.content : "",
     },
     {
-      title: "Email:",
-      value: user ? user.email : "",
+      title: "Ngày:",
+      value: schedule ? schedule.date : "",
     },
     {
-      title: "Giới tính:",
-      value: user ? user.gender : "",
+      title: "Thời gian bắt đầu:",
+      value: schedule ? schedule.timeStart : "",
     },
     {
-      title: "Số điện thoại:",
-      value: user ? user.phone : "",
+      title: "Thời gian kết thúc:",
+      value: schedule ? schedule.timeEnd : "",
     },
     {
       title: "Ngưởi tạo:  ",
-      value: user ? user.createBy : "",
+      value: schedule ? schedule.createBy : "",
     },
     {
       title: "Người sửa",
-      value: user ? user.updateBy : "",
+      value: schedule ? schedule.updateBy : "",
     },
 
     {
       title: "Ngày tạo:",
-      value: user ? user.createDate : "",
+      value: schedule ? schedule.createDate : "",
     },
     {
       title: "Ngày sửa:",
-      value: user ? user.updateDate : "",
+      value: schedule ? schedule.updateDate : "",
     },
   ];
 
   return (
     <div className="user-detail">
-      <h2>Thông tin chi tiết tài khoản</h2>
+      <h2>Thông tin chi tiết lịch làm việc</h2>
       <div className="user-detail-container">
-        <div className="avatar">
+        {/* <div className="avatar">
           <img src={user.avt} alt="ảnh đại diện" />
-        </div>
+        </div> */}
         <div className="list-field">
           {bodyData.map((item, index) => (
             <div key={index} className="field">
@@ -84,8 +91,9 @@ const UserDetail = () => {
           </div>
         </div>
       </div>
+      
     </div>
   );
 };
 
-export default UserDetail;
+export default DetailSchedule;

@@ -1,6 +1,6 @@
 .table-wrapper {
-   overflow-y: auto;
-    
+    overflow-y: auto;
+    min-height: 350px;
 }
 
 table {
@@ -19,11 +19,11 @@ tr {
 
 th,
 td {
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     padding: 15px 10px;
 }
 
-tbody > tr:hover {
+tbody>tr:hover {
     background-color: var(--main-color);
     color: var(--txt-white);
 }
@@ -36,7 +36,7 @@ tbody > tr:hover {
     margin-top: 20px;
 }
 
-.table__pagination-item ~ .table__pagination-item {
+.table__pagination-item~.table__pagination-item {
     margin-left: 10px;
 }
 
