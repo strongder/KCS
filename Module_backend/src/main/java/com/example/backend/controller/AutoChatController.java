@@ -17,7 +17,7 @@ import com.example.backend.DTO.AutoChatDTO;
 import com.example.backend.service.AutoChatService;
 
 @CrossOrigin("*")
-@RequestMapping("/api/v1/autoChat")
+@RequestMapping("/api/v1/auto-chat")
 @RestController
 public class AutoChatController {
 
