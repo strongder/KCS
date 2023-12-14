@@ -1,6 +1,9 @@
 import axios from 'axios';
 import {getAllScheduleSuccess, getAllScheduleStart, getAllScheduleError, getScheduleByIDStart, getScheduleByIDError, getScheduleByIDSuccess} from "../slices/ScheduleSlice"
 import {updateScheduleError, updateScheduleStart, updateScheduleSusscess} from "../slices/ScheduleSlice"
+import {createScheduleError, createScheduleStart, createScheduleSuccess} from "../slices/ScheduleSlice"
+import {deleteScheduleError, deleteScheduleStart, deleteScheduleSuccess} from "../slices/ScheduleSlice"
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 const API_URL = 'http://localhost:8081/api/v1/schedule';
 
@@ -29,17 +32,20 @@ export const fetchScheduleById = async (ScheduleId, dispatch) => {
   }
 };
 
-export const addSchedule = async (ScheduleData) => {
+export const addSchedule = async (ScheduleData, dispatch, navigate) => {
+  dispatch(createScheduleStart())
   try {
     const response = await axios.post(API_URL, ScheduleData, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    return response.data;
+    // return response.data;
+    dispatch(createScheduleSuccess(response.data));
   } catch (error) {
     console.error('Error adding user:', error);
-    throw error;
+    // throw error;
+    dispatch(createScheduleError())
   }
 };
 
@@ -60,16 +66,19 @@ export const updateSchedule = async (updatedSchedule, dispatch) => {
   }
 };
 
-export const removeSchedule = async (ScheduleId) => {
+export const removeSchedule = async (ScheduleId, dispatch) => {
+  dispatch(deleteScheduleStart())
   try {
     const response = await axios.delete(`${API_URL}/delete/${ScheduleId}`, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    return response.data;
+    console.log(response.data)
+    dispatch(deleteScheduleSuccess(response.data))
   } catch (error) {
     console.error(`Error removing user with ID ${ScheduleId}:`, error);
-    throw error;
+    // throw error;
+    dispatch(deleteScheduleError())
   }
 };

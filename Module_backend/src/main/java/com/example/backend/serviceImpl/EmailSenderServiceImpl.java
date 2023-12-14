@@ -44,7 +44,9 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 		// TODO Auto-generated method stub
 		Optional<EmailSender> emailSender = this.emailSenderRepository.findByValidVerification(verification);
 		if (emailSender.isPresent()) {
+			emailSender.get().setIsDelete(true);
 			EmailSenderDTO emailSenderDTO = this.modelMapper.map(emailSender, EmailSenderDTO.class);
+			this.emailSenderRepository.save(emailSender.get());
 			return emailSenderDTO;
 		} else {
 			throw new EmailSenderException("Ma xac nhan khong chinh xac");

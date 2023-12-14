@@ -18,6 +18,16 @@ const ScheduleSlice = createSlice({
       schedule: null,
       isFetching: false,
       error: null,
+    },
+    create: {
+      schedule: null,
+      isFetching: false,
+      error: null
+    },
+    delete: {
+      schedule: null,
+      isFetching: false,
+      error: null
     }
   },
   reducers: {
@@ -56,6 +66,30 @@ const ScheduleSlice = createSlice({
     updateScheduleError: (state) => {
       state.update.isFetching = false;
       state.update.error = true;
+    },
+    createScheduleStart: (state) => {
+      state.create.isFetching = true;
+    },
+    createScheduleSuccess: (state, action) => {
+      state.create.isFetching = false;
+      state.create.schedule = action.payload;
+      state.create.error = false
+    },
+    createScheduleError: (state) => {
+      state.create.isFetching = false;
+      state.create.error = true
+    },
+    deleteScheduleStart: (state) => {
+      state.delete.isFetching = true;
+    },
+    deleteScheduleSuccess: (state, action) => {
+      state.delete.isFetching = true;
+      state.delete.schedule = action.payload;
+      state.delete.error = false;
+    },
+    deleteScheduleError: (state) => {
+      state.delete.isFetching = false;
+      state.delete.error = true;
     }
   },
 });
@@ -69,7 +103,13 @@ export const {
   getScheduleByIDError,
   updateScheduleSusscess,
   updateScheduleError,
-  updateScheduleStart
+  updateScheduleStart,
+  createScheduleError,
+  createScheduleStart,
+  createScheduleSuccess,
+  deleteScheduleStart,
+  deleteScheduleSuccess,
+  deleteScheduleError
 } = ScheduleSlice.actions;
 
 export default ScheduleSlice.reducer;

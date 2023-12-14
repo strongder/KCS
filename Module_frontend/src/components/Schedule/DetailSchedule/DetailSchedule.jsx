@@ -40,6 +40,10 @@ const DetailSchedule = () => {
       value: schedule ? schedule.date : "",
     },
     {
+      title: "Trạng thái:",
+      value: schedule ? ((schedule.status) ?  "Làm việc" : "Nghỉ"): "",
+    },
+    {
       title: "Thời gian bắt đầu:",
       value: schedule ? schedule.timeStart : "",
     },
@@ -63,6 +67,10 @@ const DetailSchedule = () => {
     {
       title: "Ngày sửa:",
       value: schedule ? schedule.updateDate : "",
+    },
+    {
+      title: "Xóa:",
+      value: schedule ? ((schedule.isDelete) ? "Đã xóa" : "Chưa xóa") : "",
     },
   ];
 

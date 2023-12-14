@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import "./NavSchedule.scss"
 import DialogAdd from "../../dialogAdd/DialogAdd";
-const NavCard = () => {
+import { addSchedule } from "../../../redux/services/ScheduleService";
+import { fetchSchedule } from "../../../redux/services/ScheduleService";
+import { useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom';
 
+const NavCard = ({ handleSearch }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    gender: "Nam",
-    birthDate: "",
-    role: "USER"
+    content: "",
+    date: "",
+    timeStart: "",
+    timeEnd: "",
+    status: false
   });
 
   const handleInputChange = (e) => {
@@ -18,127 +22,98 @@ const NavCard = () => {
     setFormData({ ...formData, [name]: value });
   };
   const validateForm = () => {
-    const { fullName, email, password, confirmPassword, birthDate } = formData;
+    const { content, date, timeStart, timeEnd, status } = formData;
 
     // Check if any field is empty
-    if (!fullName || !email || !password || !confirmPassword || !birthDate) {
-      return false;
-    }
-    // Check if password and confirmPassword match
-    if (password !== confirmPassword) {
+    if (!content || !date || !timeStart || !timeEnd) {
       return false;
     }
 
     return true;
   };
-  const handleSubscribe = () => {
+  const handleSubscribe = async () => {
     // if (validateForm()) {
-    if (!validateForm()) {
-      const user = { ...formData };
-      delete user.confirmPassword;
-      alert(user.fullName + "" + user.password + user.gender + user.birthDate+ user.role);
+    if (validateForm()) {
+      const schedule = { ...formData };
+      schedule.date = schedule.date + " 00:00:00"
+      schedule.timeStart = schedule.date + " " + schedule.timeStart;
+      schedule.timeEnd = schedule.date + " " + schedule.timeEnd;
+      // delete user.confirmPassword;
+      console.log(schedule);
+      await addSchedule(schedule, dispatch);
+      await fetchSchedule(dispatch);
     }
-    //   dispatch(addUser(user));
-    //   handleClose();
-    // } else {
-    //   // Handle validation error, show message, etc.
-    //   console.log('Form validation failed');
-    // }
-  };
+  }
   const bodyData = [
     {
-      title: "Họ và tên:",
-      value: (
-        <input
-          type="text"
-          name="fullName"
-          value={formData.fullName}
-          onChange={handleInputChange}
-        />
-      ),
-    },
-    {
-      title: "Email:",
-      value: (
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          required
-        />
-      ),
-    },
-    {
-      title: "Mật khẩu:",
-      value: (
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleInputChange}
-          required
-        />
-      ),
-    },
-    {
-      title: "Nhập lại mật khẩu:",
-      value: (
-        <input
-          type="password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleInputChange}
-          required
-        />
-      ),
-    },
-    {
-      title: "Giới tính:",
-      value: (
-        <select
-          name="gender"
-          value={formData.gender}
-          onChange={handleInputChange}
-        >
-          <option value="Nam">Nam</option>
-          <option value="Nữ">Nữ</option>
-        </select>
-      ),
-    },
-    {
-      title: "Ngày sinh:",
+      title: "Ngày:",
       value: (
         <input
           type="date"
-          name="birthDate"
-          value={formData.birthDate}
+          name="date"
+          value={formData.date}
           onChange={handleInputChange}
         />
       ),
     },
     {
-      title: "Role:",
+      title: "Nội dung:",
+      value: (
+        <input
+          type="text"
+          name="content"
+          value={formData.content}
+          onChange={handleInputChange}
+          required
+        />
+      ),
+    },
+    {
+      title: "Thời gian bắt đầu:",
+      value: (
+        <input
+          type="text"
+          name="timeStart"
+          value={formData.timeStart}
+          onChange={handleInputChange}
+          required
+        />
+      ),
+    },
+    {
+      title: "Thời gian kết thúc:",
+      value: (
+        <input
+          type="test"
+          name="timeEnd"
+          value={formData.timeEnd}
+          onChange={handleInputChange}
+          required
+        />
+      ),
+    },
+    {
+      title: "Trạng thái:",
       value: (
         <select
-          name="role"
-          value={formData.role}
+          name="status"
+          value={formData.status}
           onChange={handleInputChange}
         >
-          <option value="USER">User</option>
-          <option value="ADMIN">Admin</option>
+          <option value={false}>Nghỉ</option>
+          <option value={true}>Làm việc</option>
         </select>
-      ),
+      )
     }
   ];
-  
+
   return (
     <div className="nav-card">
       <div className="row">
         <div className="col-4" style={{ margin: "auto" }}>
           <DialogAdd
-            nameButton="Thêm nhân viên"
-            title="Thêm thông tin người dùng"
+            nameButton="Thêm lịch làm việc"
+            title="Thêm lịch làm việc"
             bodyData={bodyData}
             handleInputChange={handleInputChange}
             handleSubscribe={handleSubscribe}
@@ -146,7 +121,7 @@ const NavCard = () => {
         </div>
         <div style={{ margin: "auto" }} className="col-6">
           <div className="nav-search">
-            <input type="text" />
+            <input type="text" onChange={(e) => handleSearch(e.target.value)} />
             <i class="bx bx-search-alt-2"></i>
           </div>
         </div>

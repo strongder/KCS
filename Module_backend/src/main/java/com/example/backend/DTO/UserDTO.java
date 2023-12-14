@@ -32,8 +32,6 @@ public class UserDTO {
 	private String role;
 	
 	private String createDate;
-
-	private String birthDay;
 	
 	private String updateDate;
 	

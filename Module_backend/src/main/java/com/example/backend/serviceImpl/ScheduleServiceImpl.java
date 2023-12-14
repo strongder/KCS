@@ -86,6 +86,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 			timeLine.get().setIsDelete(true);
 			timeLine.get().setUpdateDate(date);
 			ScheduleDTO timeLineDTO = modelMapper.map(timeLine, ScheduleDTO.class);
+			this.timeLineRepository.save(timeLine.get());
 			return timeLineDTO;
 		} else {
 			throw new ScheduleException("Lịch làm việc không tồn tại");

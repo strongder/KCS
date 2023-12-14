@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import { updateSchedule } from "../../../redux/services/ScheduleService";
 import { fetchScheduleById } from "../../../redux/services/ScheduleService";
 // import { editableInputTypes } from "@testing-library/user-event/dist/utils";
+import { removeSchedule } from "../../../redux/services/ScheduleService";
 
 const EditSchedule = () => {
   const { id } = useParams();
@@ -63,6 +64,11 @@ const EditSchedule = () => {
       ...prev,
       [e.target.name]: e.target.value,
     }));
+  }
+
+  const handleButtonDelete = async() => {
+    await removeSchedule(id, dispatch);
+    history.push("/admin/schedule");
   }
 
   return (
@@ -194,6 +200,9 @@ const EditSchedule = () => {
         </Link>
         <button className="submit" onClick={handleUpdateUser}>
           Xác nhận
+        </button>
+        <button className="delete_schedule" onClick={handleButtonDelete}>
+          Xoá
         </button>
       </div>
     </div>

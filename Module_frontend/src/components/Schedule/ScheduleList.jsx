@@ -13,25 +13,20 @@ const renderHead = (item, index) => <th key={index}>{item}</th>;
 const operationData = [
     { icon: "bx bxs-user-detail", name: "Chi tiết lịch làm việc" },
     { icon: "bx bx-trash", name: "Sửa thông tin lịch làm việc" },
-
-    { icon: "bx bx-trash", name: "Xóa lịch làm việc" },
 ];
 
 const sortBy = [
-    { name: "", value: "Sắp xếp" },
-    { name: "gần", value: "Sắp xếp mới nhất" },
-    { name: "xa", value: "Sắp xếp xa nhất" },
+    { name: "1", value: "Sắp xếp" },
+    { name: "2", value: "Sắp xếp mới nhất" },
+    { name: "3", value: "Sắp xếp xa nhất" },
+    { name: "4", value: "Hiển thị lịch làm việc chưa xóa" },
+    { name: "5", value: "Hiển thị lịch làm việc đã xóa" },
 ];
 
 const ScheduleList = () => {
     const history = useHistory()
-    const [sort, setSort] = useState("");
+    const [sort, setSort] = useState("1");
     const handleOperationClick = (item, Data) => {
-        // Xử lý thông tin người dùng và mục operation khi một mục trong danh sách được chọn
-        console.log("Thông tin người dùng:", Data);
-        console.log("Mục operation:", item.name);
-
-
         // Thực hiện các hành động tùy thuộc vào mục operation
         if (item.name === "Chi tiết lịch làm việc") {
 
@@ -41,18 +36,16 @@ const ScheduleList = () => {
         } else if (item.name === "Sửa thông tin lịch làm việc") {
             console.log("ckeck user data", Data);
             history.push(`/admin/schedule/editSchedule/${Data.id}`)
-
-        } else if (item.name === "Xóa lịch làm việc") {
-
         }
     };
+
     const renderBody = (item, index) => (
         <tr key={index}>
             <td>{item.id}</td>
             <td>{item.content}</td>
             <td>{item.timeStart}</td>
             <td>{item.timeEnd}</td>
-            <td>{(item.isDelete) ? "Chưa xóa" : "Xóa"}</td>
+            <td>{(!item.isDelete) ? "Chưa xóa" : "Xóa"}</td>
             <td style={{ display: "flex" }}>
                 {/* <div style={{ width: "60%" }}>{item.phone}</div> */}
                 <Operation
@@ -67,12 +60,35 @@ const ScheduleList = () => {
     const dispatch = useDispatch();
     const data= useSelector((state) => state.schedule.allSchedule.data)
     const loading= useSelector((state) => state.schedule.allSchedule.isFetching)
-    // const [data, setData] = useState(fetchSchedule());
+    const [list, setList] = useState([]);
+  
+    const filter = () => {
+        if(sort === "2") {
+            list = data.slice().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            // setList(newList
+            console.log(list.length);
+            // list = data.slice().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        } else if (sort === "3") {
+            list = data.slice().sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+            console.log(list);
+        } else  if (sort === "4") {
+            list = data.slice().filter((item) => item.isDelete === false)
+            console.log(list);
+        } else if (sort === "5") {
+            list = data.slice().filter((item) => item.isDelete === true)
+            console.log(list);
+        }
+    }
 
-
-    // const customerList = data;
+    const search = (index) => {
+        console.log(index);
+        setList(data.slice().filter((item) => { return (item.content.includes(index) || item.date.includes(item)) }));
+        // console.log(list)
+        return list;
+    }   
     useEffect(() => {
         fetchSchedule(dispatch)
+        setList(data);
     }, []);
     if (loading) {
         return (<h2>Loading</h2>)
@@ -80,14 +96,14 @@ const ScheduleList = () => {
 
     const handleChange = (event) => {
         setSort(event.target.value);
-        // if (event.target.value === "name") {
-        //   const sortedList = [...list].sort((a, b) => a.name.localeCompare(b.name));
-        //   setList(sortedList);
-        // } else if (event.target.value === "id") {
-        //   const sortedList = [...list].sort((a, b) => a.id - b.id);
-        //   setList(sortedList);
-        // }
+        console.log(sort)
     };
+    filter();
+    // search()
+    // console.log(search());
+
+    console.log(list);
+
     return (
         <div>
             <h2 className="page-header">Quản lý lịch làm việc</h2>
@@ -95,7 +111,7 @@ const ScheduleList = () => {
                 <div className="col-10" style={{ margin: "auto" }}>
                     <div className="card">
                         <div className="card-header">
-                            <NavCard></NavCard>
+                            <NavCard handleSearch={search}></NavCard>
                         </div>
                         <div style={{ margin: "auto", padding: "0 40px" }}>
                             <Sort
@@ -106,10 +122,10 @@ const ScheduleList = () => {
                         </div>
                         <div style={{ margin: "0 40px" }} className="card__body">
                             <Table
-                                limit="6"
+                                limit="10"
                                 headData={customerTableHead}
                                 renderHead={(item, index) => renderHead(item, index)}
-                                bodyData={data}
+                                bodyData={list}
                                 renderBody={(item, index) => renderBody(item, index)}
                             />
                         </div>
