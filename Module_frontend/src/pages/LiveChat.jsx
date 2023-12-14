@@ -4,16 +4,17 @@ import ChatArea from "../components/ChatArea/ChatArea";
 import "./css/LiveChat.scss";
 import { Box, Grid, Paper, styled } from "@mui/material";
 
-const Item = styled(Paper)(({ theme }) => ({
+const Item = styled(Paper)(({ theme,  selectedInfo}) => ({
   padding: "0px",
   textAlign: "center",
   borderRadius: "none",
   border:"none",
-  height: "100%"
+  height: "100%",
+  transition: "transform 0.5s ease", /* Thêm hiệu ứng transition cho transform */
+  transform: `translateX(${selectedInfo ? '-50%' : '0'})`,
 }));
 const LiveChat = () => {
   const [selectedInfo, setSelectedInfo] = useState(false);
-
   const handleClickInfo = () => {
     setSelectedInfo(!selectedInfo);
   };
@@ -35,7 +36,8 @@ const LiveChat = () => {
           </Grid>
           {selectedInfo && (
             <Grid item xs={3}>
-              <Item>infomation</Item>
+              <Item 
+              className="info-item">infomation</Item>
             </Grid>
           )}
         </Grid>

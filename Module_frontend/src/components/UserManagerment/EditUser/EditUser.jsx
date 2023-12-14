@@ -61,7 +61,7 @@ const EditUser = () => {
       <h2>Chỉnh sửa thông tin tài khoản</h2>
       <div className="user-edit-container">
         <div className="avatar">
-          <img src={user?user.avt:null} alt="ảnh đại diện" />
+          <img src={user ? user.avt:null} alt="ảnh đại diện" />
         </div>
         <div className="list-field">
           <label>

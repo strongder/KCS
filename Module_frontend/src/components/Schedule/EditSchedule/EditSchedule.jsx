@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import "./EditSchedule.scss";
 // import { fetchUserById, updateUser } from "../../../redux/slices/UserSlice";
 import { useHistory } from "react-router-dom";
-import { updateSchedule } from "../../../redux/services/ScheduleService";
-import { fetchScheduleById } from "../../../redux/services/ScheduleService";
+import { updateSchedule } from "../../../services/ScheduleService";
+import { fetchScheduleById } from "../../../services/ScheduleService";
 // import { editableInputTypes } from "@testing-library/user-event/dist/utils";
 
 const EditSchedule = () => {

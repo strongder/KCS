@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  transition: width 0.3s ease;
   .chat-area-nav {
     background: white;
     display: flex;
@@ -97,12 +98,12 @@
   }
   .chat-area-content {
     background: #ccc;
-    height: 71vh;
+    height: 73vh;
     padding: 10px 20px;
     box-shadow: inset 2px -7px 11px -10px;
   }
   .chat-area-footer {
-    height: 8.7vh;
+    // height: 8.7vh;
     background: white;
     display: grid;
     grid-template-columns: 0.7fr 0.7fr 7fr 0.7fr;
@@ -110,6 +111,7 @@
     align-items: center;
     font-size: 30px;
     gap: 10px;
+    height: 8.7vh;
 
     .chat-file {
       padding: 10px;
@@ -144,14 +146,23 @@
       border: 2px solid black;
       border-radius: 20px;
       gap: 10px;
-      height: auto;
-      input {
+      height: auto; /* Set the height to 'auto' to allow it to expand based on content */
+      overflow-y: auto; /* Add overflow-y property if you want scrolling when content exceeds the height */
+      .input-container {
+        width: 90%;
+      }
+      textarea {
         margin-left: 12px;
         border: none;
+        outline: none;
         width: 90%;
         border-radius: 5px;
-        padding-left: 15px;
+        padding: 0;
+        /* padding: 8px 15px 0 10px; */
         font-size: 16px;
+        overflow-y: hidden;
+        transition: height 0.3s ease-in-out;
+        /* Add any other styling properties as needed */
       }
       p {
         cursor: pointer;

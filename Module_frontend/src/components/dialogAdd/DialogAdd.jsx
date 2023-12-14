@@ -21,35 +21,37 @@ const DialogAdd = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleOnSubscribe =()=>{
+  const handleOnSubscribe = () => {
     handleSubscribe();
-    handleClose()
-  }
+    handleClose();
+  };
   return (
     <>
       <Button variant="outlined" onClick={handleClickOpen}>
         {nameButton}
       </Button>
-      <Dialog open={open} style={{minWidth: "700px"}}>
+      <Dialog open={open} style={{ minWidth: "700px" }}>
         <DialogTitle style={{ margin: "auto" }}>{title}</DialogTitle>
         <DialogContent>
           <DialogContentText></DialogContentText>
           <div className="info">
             <table>
-              {bodyData.map((item, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{item.title}</td>
-                    <td>{item.value}</td>
-                  </tr>
-                );
-              })}
+              <tbody>
+                {bodyData.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{item.title}</td>
+                      <td>{item.value}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
             </table>
           </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={()=> handleOnSubscribe()}>Subscribe</Button>
+          <Button onClick={() => handleOnSubscribe()}>Subscribe</Button>
         </DialogActions>
       </Dialog>
     </>

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "./NavUser.scss";
-import AddUser from "../AddUser/AddUser";
 import { useDispatch } from "react-redux";
 import { searchUser } from "../../../redux/slices/UserSlice";
+import AddChat from "./AddChat";
 
-const NavUser = () => {
+const NavAutoChat = () => {
   const [searchData, setSearchData]  = useState('');
   const dispatch = useDispatch();
   useEffect (() =>
@@ -15,11 +14,11 @@ const NavUser = () => {
     <div className="nav-card">
       <div className="row">
         <div className="col-4" style={{ margin: "auto" , paddingLeft: "22px"}}>
-          <AddUser></AddUser>
+          <AddChat></AddChat>
         </div>
         <div style={{ margin: "auto",paddingRight: "22px" }} className="col-6">
           <div className="nav-search">
-            <input type="search"  placeholder="Nhập tên hoặc mã tài khoản ..."
+            <input type="search"  placeholder="Nhập nội dung ..."
              value={searchData}
              onChange={(e)=> setSearchData(e.target.value)}
 
@@ -32,4 +31,4 @@ const NavUser = () => {
   );
 };
 
-export default NavUser;
+export default NavAutoChat;

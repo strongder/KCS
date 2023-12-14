@@ -4,8 +4,8 @@ import ThemeReducer from './slices/ThemeSlice';
 import ScheduleReducer from "./slices/ScheduleSlice";
 
 import UserReducer from "./slices/UserSlice"
-// import ScheduleSlice from "./slices/ScheduleSlice";
 
+import AutoChatReducer from "./slices/AutoChatSlice"
 
 
 const store = configureStore({
@@ -13,6 +13,7 @@ const store = configureStore({
         theme: ThemeReducer,
         users: UserReducer,
         schedule: ScheduleReducer,
+        autoChat: AutoChatReducer,
     }
 })
 

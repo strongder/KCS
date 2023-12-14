@@ -1,6 +1,8 @@
 import axios from 'axios';
-import {getAllScheduleSuccess, getAllScheduleStart, getAllScheduleError, getScheduleByIDStart, getScheduleByIDError, getScheduleByIDSuccess} from "../slices/ScheduleSlice"
-import {updateScheduleError, updateScheduleStart, updateScheduleSusscess} from "../slices/ScheduleSlice"
+import {getAllScheduleSuccess, getAllScheduleStart, getAllScheduleError, getScheduleByIDStart, getScheduleByIDError, getScheduleByIDSuccess} from "../redux/slices/ScheduleSlice"
+import {updateScheduleError, updateScheduleStart, updateScheduleSusscess} from "../redux/slices/ScheduleSlice"
+
+
 
 const API_URL = 'http://localhost:8081/api/v1/schedule';
 

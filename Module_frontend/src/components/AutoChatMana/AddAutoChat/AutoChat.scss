@@ -1,0 +1,22 @@
+.chat-info {
+  table {
+    font-size: 16px;
+    tr {
+      display: flex;
+      flex-direction: column;
+
+      td {
+        width: 100%;
+        padding: 10px;
+        input {
+        
+          border: none;
+          border-bottom: 1px solid;
+          padding-left: 10px;
+          width: 97%;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}

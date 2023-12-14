@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const UserDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { user, loading, error } = useSelector((state) => state.users);
+  const { user, loading } = useSelector((state) => state.users);
   useEffect(() => {
     dispatch(fetchUserById(id));
   }, [dispatch, id]);
@@ -83,15 +83,15 @@ const UserDetail = () => {
             <div key={index} className="field">
               <label>
                 {" "}
-                <i class="bx bxs-star"></i>
+                <i className="bx bxs-star"></i>
                 {item.title}
               </label>
-              <input type="text" value={item.value} readOnly />
+              <input type="text" value={item.value||''} readOnly />
             </div>
           ))}
           <div className="field" style={{ margin: "20px 0" }}>
-            <i class="bx bxs-star"></i>
-            <label>{user.isDelete===true?"Đã xóa":"Còn sử dụng"}</label>
+            <i className="bx bxs-star"></i>
+            <label>Trạng thái:<b>{user.isDelete===true?"   Đã xóa":"  Còn sử dụng"}</b></label>
           </div>
         </div>
       </div>
