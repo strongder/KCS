@@ -13,6 +13,9 @@ import Users from "../pages/Users";
 import UserDetail from "./UserManagerment/DetailUser/UserDetail";
 import EditUser from "./UserManagerment/EditUser/EditUser";
 import Students from "./StudentManagerment/Student/Students";
+import AutoChat from "./AutoChatMana/AutoChat";
+import ViewAutoChat from "./AutoChatMana/DetailAutoChat/ViewAutoChat";
+import EditAutoChat from "./AutoChatMana/EditAutoChat/EditAutoChat";
 
 const Routing = () => {
   return (
@@ -31,7 +34,11 @@ const Routing = () => {
       <Route path="/admin/user/viewUser/:id" exact component={UserDetail} />
       <Route path="/admin/user/editUser/:id" exact component={EditUser} />
       <Route path="/admin/students" exact component={Students} />
-
+      <Route path="/admin/auto-chat" exact component={AutoChat} />
+      <Route path="/admin/auto-chat/:id" exact component={ViewAutoChat} />
+      <Route path="/admin/auto-chat/update/:id" exact component={EditAutoChat} />
+      
+      
     </Switch>
   );
 };

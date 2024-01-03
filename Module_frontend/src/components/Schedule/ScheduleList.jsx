@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Table from "../table/Table";
-// import customerList from "../assets/JsonData/customers-list.json";
 import NavCard from "../Schedule/navcard/NavSchedule.jsx"
 import Sort from "../sort/Sort";
 import Operation from "../operation/Operation";

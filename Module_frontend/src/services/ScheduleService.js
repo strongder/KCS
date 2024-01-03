@@ -1,9 +1,14 @@
 import axios from 'axios';
 import {getAllScheduleSuccess, getAllScheduleStart, getAllScheduleError, getScheduleByIDStart, getScheduleByIDError, getScheduleByIDSuccess} from "../redux/slices/ScheduleSlice"
 import {updateScheduleError, updateScheduleStart, updateScheduleSusscess} from "../redux/slices/ScheduleSlice"
+<<<<<<< HEAD
 import {createScheduleError, createScheduleStart, createScheduleSuccess} from "../redux/slices/ScheduleSlice"
 import {deleteScheduleError, deleteScheduleStart, deleteScheduleSuccess} from "../redux/slices/ScheduleSlice"
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+=======
+
+
+>>>>>>> 4f415ebf5e602151ce693e14dabd95864effc4b1
 
 const API_URL = 'http://localhost:8081/api/v1/schedule';
 

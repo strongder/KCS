@@ -32,7 +32,7 @@
     {
         "icon": "bx bx-receipt",
         "title": "Quản lý tin nhăn tự động",
-        "path": "admin/autoChat",
+        "path": "admin/auto-chat",
         "description": "Có chức năng xem, tạo, sửa xóa tin nhắn trả lời tự động "
     }
 ]
