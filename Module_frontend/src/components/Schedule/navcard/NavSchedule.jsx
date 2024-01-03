@@ -6,7 +6,7 @@ import { fetchSchedule } from "../../../redux/services/ScheduleService";
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
 
-const NavCard = ({ handleSearch }) => {
+const NavCard = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [formData, setFormData] = useState({
@@ -121,7 +121,7 @@ const NavCard = ({ handleSearch }) => {
         </div>
         <div style={{ margin: "auto" }} className="col-6">
           <div className="nav-search">
-            <input type="text" onChange={(e) => handleSearch(e.target.value)} />
+            <input type="text" />
             <i class="bx bx-search-alt-2"></i>
           </div>
         </div>

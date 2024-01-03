@@ -60,7 +60,7 @@ const ScheduleList = () => {
     const dispatch = useDispatch();
     const data= useSelector((state) => state.schedule.allSchedule.data)
     const loading= useSelector((state) => state.schedule.allSchedule.isFetching)
-    const [list, setList] = useState([]);
+    let list = data;
   
     const filter = () => {
         if(sort === "2") {
@@ -80,17 +80,17 @@ const ScheduleList = () => {
         }
     }
 
-    const search = (index) => {
-        if(index.length > 0) {
-            console.log(index);
-            setList(data.slice().filter((item) => { return (item.content.includes(index) || item.date.includes(item)) }));
-        }
-        // console.log(list)
-        return list;
-    }   
+    // const search = (index) => {
+    //     if(index.length > 0) {
+    //         console.log(index);
+    //         setList(data.slice().filter((item) => { return (item.content.includes(index) || item.date.includes(item)) }));
+    //     }
+    //     // console.log(list)
+    //     return list;
+    // }   
     useEffect(() => {
         fetchSchedule(dispatch)
-        setList(data);
+        // setList(data);
     }, []);
     if (loading) {
         return (<h2>Loading</h2>)
@@ -113,7 +113,7 @@ const ScheduleList = () => {
                 <div className="col-10" style={{ margin: "auto" }}>
                     <div className="card">
                         <div className="card-header">
-                            <NavCard handleSearch={search}></NavCard>
+                            <NavCard ></NavCard>
                         </div>
                         <div style={{ margin: "auto", padding: "0 40px" }}>
                             <Sort
@@ -127,7 +127,7 @@ const ScheduleList = () => {
                                 limit="10"
                                 headData={customerTableHead}
                                 renderHead={(item, index) => renderHead(item, index)}
-                                bodyData={search}
+                                bodyData={list}
                                 renderBody={(item, index) => renderBody(item, index)}
                             />
                         </div>
