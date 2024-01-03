@@ -33,6 +33,12 @@ public class ScheduleController {
 		return new ResponseEntity<>(listTimeLine, HttpStatus.OK);
 	}
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<ScheduleDTO> getByID(@PathVariable("id") Long id){
+		ScheduleDTO scheduleDTO = this.timeLineService.getByID(id);
+		return new ResponseEntity<>(scheduleDTO, HttpStatus.OK);
+	}
+	
 	@PostMapping("")
 	public ResponseEntity<ScheduleDTO> create(@RequestBody ScheduleDTO timeLineDTO) {
 		this.timeLineService.create(timeLineDTO);

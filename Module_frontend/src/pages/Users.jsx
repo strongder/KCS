@@ -1,118 +1,79 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, memo } from "react";
 import Table from "../components/table/Table";
+import "./css/Users.scss";
 // import customerList from "../assets/JsonData/customers-list.json";
 import NavCard from "../components/UserManagerment/navcard/NavUser";
 import Sort from "../components/sort/Sort";
-import Operation from "../components/operation/Operation";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {fetchUsers} from '../redux/slices/UserSlice'
-
-const customerTableHead = ["", "name", "email", "phone"];
-const renderHead = (item, index) => <th key={index}>{item}</th>;
-const operationData = [
-  { icon: "bx bxs-user-detail", name: "Chi tiết người dùng" },
-  { icon: "bx bx-trash", name: "Sửa thông tin người dùng" },
-
-  { icon: "bx bx-trash", name: "Xóa người dùng" },
-];
-
+import BodyUser from "../components/UserManagerment/BodyUser/BodyUser";
 const sortBy = [
-  { name: "", value: "Sắp xếp" },
-  { name: "name", value: "Sắp xếp theo tên" },
+  { name: "", value: "Lọc danh sách" },
+  { name: "name", value: "Xếp theo tên" },
   { name: "id", value: "Sắp mã id" },
+  { name: "delete", value: "Tài khoản đã xóa" },
+  { name: "Notdelete", value: "Tài khoản còn dùng" },
 ];
 
-const Users = () => {
-  const history = useHistory()
+const Users = memo(() => {
   const [sort, setSort] = useState("");
-  const handleOperationClick = (item, userData) => {
-    // Xử lý thông tin người dùng và mục operation khi một mục trong danh sách được chọn
-    console.log("Thông tin người dùng:", userData);
-    console.log("Mục operation:", item.name);
-    
-
-    // Thực hiện các hành động tùy thuộc vào mục operation
-    if (item.name === "Chi tiết người dùng") {
-
-      console.log("ckeck user data",userData);
-      history.push(`/admin/user/viewUser/${userData.id}`);
-      
-    } else if (item.name === "Sửa thông tin người dùng") {
-      console.log("ckeck user data",userData);
-      history.push(`/admin/user/editUser/${userData.id}`)
-      
-    } else if (item.name === "Xóa người dùng") {
-
+  const { data, loading, searchData } = useSelector((state) => state.users);
+  let list =
+    data &&
+    data.filter((ele) => {
+      if (searchData.length === 0) {
+        return ele;
+      } else {
+        return (
+          ele.name.toLowerCase().includes(searchData.toLowerCase()) ||
+          ele.phone.includes(searchData)
+        );
+      }
+    });
+  const filter = ()=>{
+    if (sort === "name") {
+      list = data.slice().sort((a, b) => a.name.localeCompare(b.name));
+    }else if (sort === "Notdelete") {
+      list = data.filter((ele) => ele.isDelete === false);
     }
-  };
-  const renderBody = (item, index) => (
-    <tr key={index}>
-      <td>{item.id}</td>
-      <td>{item.name}</td>
-      <td>{item.email}</td>
-      <td style={{ display: "flex" }}>
-        <div style={{ width: "60%" }}>{item.phone}</div>
-        <Operation
-          operation={operationData}
-          userData={item}
-          onOperationClick={handleOperationClick}
-        ></Operation>
-      </td>
-    </tr>
-  );
-
-  const dispatch = useDispatch();
-  const {data, loading} = useSelector((state) => state.users);
-  console.log ("users: " , data);
-  const customerList = data;
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
-  if(loading){
-    return (<h2>Lodaing</h2>)
+    else if (sort === "delete") {
+      list = data.filter((ele) => ele.isDelete === true);
+    }
   }
-  // console.log ("users: " , users);
-  const handleChange = (event) => {
-    setSort(event.target.value);
-    // if (event.target.value === "name") {
-    //   const sortedList = [...list].sort((a, b) => a.name.localeCompare(b.name));
-    //   setList(sortedList);
-    // } else if (event.target.value === "id") {
-    //   const sortedList = [...list].sort((a, b) => a.id - b.id);
-    //   setList(sortedList);
-    // }
-  };
+  const handleChange =  (event) => {
+     setSort(event.target.value);
+   
+  }; filter();
+  
+  console.log(sort);
   return (
-    <div>
-      <h2 className="page-header">Quản lý tài khoản</h2>
-      <div className="row">
-        <div className="col-10" style={{ margin: "auto" }}>
-          <div className="card">
-            <div className="card-header">
-              <NavCard></NavCard>
-            </div>
-            <div style={{ margin: "auto", padding: "0 40px" }}>
-              <Sort
-                handleChange={handleChange}
-                sort={sort}
-                sortBy={sortBy}
-              ></Sort>
-            </div>
-            <div style={{ margin: "0 40px" }} className="card__body">
-              <Table
-                limit="6"
-                headData={customerTableHead}
-                renderHead={(item, index) => renderHead(item, index)}
-                bodyData={customerList}
-                renderBody={(item, index) => renderBody(item, index)}
-              />
+    <>
+      {
+        <div className="user-container">
+          <h2 className="page-header">Quản lý tài khoản</h2>
+          <div className="row">
+            <div className="col-10" style={{ margin: "auto" }}>
+              <div className="card">
+                <div className="card-header">
+                  <NavCard></NavCard>
+                </div>
+                <div style={{ margin: "auto", padding: "0 62px" }}>
+                  <Sort
+                    handleChange={handleChange}
+                    sort={sort}
+                    sortBy={sortBy}
+                  ></Sort>
+                </div>
+                <div style={{ margin: "0 40px" }} className="card__body">
+                  <BodyUser data={list} loading={loading}></BodyUser>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      }
+    </>
   );
-};
+});
 
 export default Users;

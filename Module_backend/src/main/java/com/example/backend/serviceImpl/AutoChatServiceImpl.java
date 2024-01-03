@@ -1,11 +1,13 @@
 package com.example.backend.serviceImpl;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.backend.DTO.AutoChatDTO;
 import com.example.backend.entity.AutoChat;
@@ -13,6 +15,7 @@ import com.example.backend.exception.AutoChatException;
 import com.example.backend.repository.AutoChatRepository;
 import com.example.backend.service.AutoChatService;
 
+@Service
 public class AutoChatServiceImpl implements AutoChatService{
 
 	@Autowired
@@ -45,9 +48,11 @@ public class AutoChatServiceImpl implements AutoChatService{
 	public AutoChatDTO create(AutoChatDTO autoChatDTO) {
 		// TODO Auto-generated method stub
 		Date date = new Date();
-		autoChatDTO.setCreateDate(date);
 		autoChatDTO.setIsDelete(false);
 		AutoChat autoChat = this.modelMapper.map(autoChatDTO, AutoChat.class);
+		autoChat.setCreateDate(date);
+		autoChat.setUpdateDate(date);
+		this.autoChatRepository.save(autoChat);
 		return autoChatDTO;
 	}
 

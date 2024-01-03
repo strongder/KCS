@@ -41,7 +41,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public ScheduleDTO create(ScheduleDTO timeLineDTO) {
 		// TODO Auto-generated method stub
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
 			Date dateTest = sdf.parse(timeLineDTO.getDate());
 //			System.out.println(dateTest);
@@ -86,6 +86,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 			timeLine.get().setIsDelete(true);
 			timeLine.get().setUpdateDate(date);
 			ScheduleDTO timeLineDTO = modelMapper.map(timeLine, ScheduleDTO.class);
+			this.timeLineRepository.save(timeLine.get());
 			return timeLineDTO;
 		} else {
 			throw new ScheduleException("Lịch làm việc không tồn tại");
@@ -101,9 +102,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 			if (timeLine.get().getDate().before(date)) {
 				throw new ScheduleException("Không thể sửa lịch làm việc đã qua");
 			} else {
-				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				timeLine.get().setStatus(timeLineDTO.getStatus());
+				timeLine.get().setUpdateDate(date);
 				try {
+					timeLine.get().setContent(timeLineDTO.getContent());
+					timeLine.get().setStatus(timeLineDTO.getStatus());
 					timeLine.get().setTimeStart(sdf.parse(timeLineDTO.getTimeStart()));
 					timeLine.get().setTimeEnd(sdf.parse(timeLineDTO.getTimeEnd()));
 					this.timeLineRepository.save(timeLine.get());
@@ -116,6 +120,18 @@ public class ScheduleServiceImpl implements ScheduleService {
 			}
 		} else {
 			throw new ScheduleException("Lịch làm việc không tồn tại");
+		}
+	}
+
+	@Override
+	public ScheduleDTO getByID(Long id) {
+		// TODO Auto-generated method stub
+		Optional<Schedule> schedule = this.timeLineRepository.findById(id);
+		if(schedule.isPresent()) {
+			ScheduleDTO scheduleDTO = this.modelMapper.map(schedule, ScheduleDTO.class);
+			return scheduleDTO;
+		} else {
+			throw new ScheduleException("Không tìm thấy lịch làm việc");
 		}
 	}
 

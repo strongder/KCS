@@ -4,7 +4,8 @@ import java.util.Collection;
 import java.util.Date;
 
 import jakarta.persistence.Table;
-
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -43,6 +44,10 @@ public class User {
 	
 	@Column(name = "phone")
 	private String phone;
+	
+	@Column(name = "birthDay")
+	@Temporal(TemporalType.DATE)
+	private Date birthDay;
 	
 	@Column(name = "ma_TK")
 	private String MaTK;

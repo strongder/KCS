@@ -1,32 +1,76 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'https://jsonplaceholder.typicode.com/users';
+const API_URL = "http://localhost:8081/api/v1/user";
 
-export const fetchUsers = () =>
-  axios.get(API_URL).
-  then(response => response.data);
+export const fetchUsers = async () => {
+  try {
+    const response = await axios.get(API_URL);
+    console.log("nó có chạy vào đây")
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+};
 
-export const fetchUserById = (userId) =>
-  axios.get(`${API_URL}/${userId}`)
-  .then(response => response.data);
+export const fetchUserById = async (userId) => {
+  try {
+    const response = await axios.get(`${API_URL}/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching user with ID ${userId}:`, error);
+    throw error;
+  }
+};
 
-export const addUser = (userData) =>
-  axios.post(API_URL, userData, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).then(response => response.data);
+export const addUser = async (userData) => {
+  console.log("check user data", userData,  typeof(userData.birthDay))
+  try {
+    const response = await axios.post(API_URL, userData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error adding user:", error);
+    throw error;
+  }
+};
 
-export const updateUser = (updatedUser) =>
-  axios.put(`${API_URL}/update/${updatedUser.id}`, updatedUser, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).then(response => response.data);
+export const updateUser = async (updatedUser) => {
+  try {
+    const response = await axios.put(
+      `${API_URL}/update/${updatedUser.id}`,
+      updatedUser,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Error updating user with ID ${updatedUser.id} :`,
+      updatedUser,
+      error
+    );
+    throw error;
+  }
+};
 
-export const removeUser = (userId) =>
-  axios.delete(`${API_URL}/delete/${userId}`,{
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  }).then(response => response.data);
+export const removeUser = async (userId) => {
+  try {
+    const response = await axios.delete(`${API_URL}/delete/${userId}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(`Error removing user with ID ${userId}:`, error);
+    throw error;
+  }
+};

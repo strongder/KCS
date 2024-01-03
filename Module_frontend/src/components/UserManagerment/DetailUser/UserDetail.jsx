@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 import "./UserDetail.scss";
 import { fetchUserById } from "../../../redux/slices/UserSlice";
+import { Link } from "react-router-dom";
 
 const UserDetail = () => {
   const { id } = useParams();
@@ -15,14 +16,13 @@ const UserDetail = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  if(!user){
-    return<div>del có đâu mà tìm</div>
+  if (!user) {
+    return <div>del có đâu mà tìm</div>;
   }
-
   const bodyData = [
     {
       title: "Mã tài khoản: ",
-      value: user ? user.userId : "",
+      value: user ? user.maTK : "",
     },
     {
       title: "Họ và tên:",
@@ -34,11 +34,15 @@ const UserDetail = () => {
     },
     {
       title: "Giới tính:",
-      value: user ? user.gender : "",
+      value: user ? (user.gender===true?'Nam':"Nữ") : "",
     },
     {
       title: "Số điện thoại:",
       value: user ? user.phone : "",
+    },
+    {
+      title: "Ngày sinh:",
+      value: user ? user.birthDay : "",
     },
     {
       title: "Ngưởi tạo:  ",
@@ -57,6 +61,14 @@ const UserDetail = () => {
       title: "Ngày sửa:",
       value: user ? user.updateDate : "",
     },
+    {
+      title: "Vai trò:",
+      value: user
+        ? user.role === "ROLE_ADMINISTRATOR"
+          ? "ADMIN"
+          : "USER"
+        : "",
+    },
   ];
 
   return (
@@ -64,8 +76,7 @@ const UserDetail = () => {
       <h2>Thông tin chi tiết tài khoản</h2>
       <div className="user-detail-container">
         <div className="avatar">
-          avatar
-          {/* <img src={filteredUser.avatar} alt="ảnh đại diện" /> */}
+          <img src={user.avt} alt="ảnh đại diện" />
         </div>
         <div className="list-field">
           {bodyData.map((item, index) => (
@@ -80,10 +91,14 @@ const UserDetail = () => {
           ))}
           <div className="field" style={{ margin: "20px 0" }}>
             <i class="bx bxs-star"></i>
-            <label>Đã xóa:</label>
-            <img src="" alt="" />
+            <label>{user.isDelete===true?"Đã xóa":"Còn sử dụng"}</label>
           </div>
         </div>
+      </div>
+      <div className="cancel">
+        <Link to="/admin/user">
+          <button>Thoát</button>
+        </Link>
       </div>
     </div>
   );
