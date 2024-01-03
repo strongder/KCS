@@ -6,7 +6,7 @@ import Sort from "../sort/Sort";
 import Operation from "../operation/Operation";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSchedule } from "../../redux/services/ScheduleService.js";
+import { fetchSchedule } from "../../services/ScheduleService.js";
 
 const customerTableHead = ["", "Nội dung", "Thời gian bắt đầu", "Thời gian kết thúc", "Xóa", "Thao tác"];
 const renderHead = (item, index) => <th key={index}>{item}</th>;

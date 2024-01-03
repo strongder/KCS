@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 import "./DetailSchedule.scss";
-import { fetchScheduleById } from "../../../redux/services/ScheduleService";
+import { fetchScheduleById } from "../../../services/ScheduleService";
 import Button from '@mui/material/Button';
 
 const DetailSchedule = () => {
