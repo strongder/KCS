@@ -59,12 +59,13 @@ const AddChat = () => {
   ];
 
   return (
-    <>
+    <div className="addChat">
+
       <Button variant="outlined" onClick={handleClickOpen}>
         Thêm tin nhắn tự động
       </Button>
-      <Dialog open={open} style={{ minWidth: "700px" }}>
-        <DialogTitle style={{ margin: "auto" }}>Tin nhắn tự động</DialogTitle>
+      <Dialog open={open} style={{ minWidth: "700px" }} >
+        <DialogTitle style={{ margin: "auto" }}>Tin nhắn tự độn</DialogTitle>
         <DialogContent>
           <DialogContentText></DialogContentText>
           <div className="chat-info">
@@ -87,7 +88,7 @@ const AddChat = () => {
           <Button onClick={handleOnSubscribe}>Subscribe</Button>
         </DialogActions>
       </Dialog>
-    </>
+      </div>
   );
 };
 
