@@ -64,8 +64,8 @@ const AddChat = () => {
       <Button variant="outlined" onClick={handleClickOpen}>
         Thêm tin nhắn tự động
       </Button>
-      <Dialog open={open} style={{ minWidth: "700px" }} >
-        <DialogTitle style={{ margin: "auto" }}>Tin nhắn tự độn</DialogTitle>
+      <Dialog open={open} >
+        <DialogTitle style={{ margin: "auto" }}>Tin nhắn tự động</DialogTitle>
         <DialogContent>
           <DialogContentText></DialogContentText>
           <div className="chat-info">

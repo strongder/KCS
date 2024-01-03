@@ -30,7 +30,7 @@ const DialogAdd = (props) => {
       <Button variant="outlined" onClick={handleClickOpen}>
         {nameButton}
       </Button>
-      <Dialog open={open} style={{ minWidth: "700px" }}>
+      <Dialog open={open} >
         <DialogTitle style={{ margin: "auto" }}>{title}</DialogTitle>
         <DialogContent>
           <DialogContentText></DialogContentText>
