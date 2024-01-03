@@ -81,8 +81,10 @@ const ScheduleList = () => {
     }
 
     const search = (index) => {
-        console.log(index);
-        setList(data.slice().filter((item) => { return (item.content.includes(index) || item.date.includes(item)) }));
+        if(index.length > 0) {
+            console.log(index);
+            setList(data.slice().filter((item) => { return (item.content.includes(index) || item.date.includes(item)) }));
+        }
         // console.log(list)
         return list;
     }   
@@ -125,7 +127,7 @@ const ScheduleList = () => {
                                 limit="10"
                                 headData={customerTableHead}
                                 renderHead={(item, index) => renderHead(item, index)}
-                                bodyData={list}
+                                bodyData={search}
                                 renderBody={(item, index) => renderBody(item, index)}
                             />
                         </div>
