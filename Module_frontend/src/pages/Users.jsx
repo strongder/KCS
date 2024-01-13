@@ -28,7 +28,6 @@ const Users = () => {
           ele.phone.includes(searchData)
       );
     }
-
     if (sort === "name") {
       return filteredData.slice().sort((a, b) => a.name.localeCompare(b.name));
     } else if (sort === "Notdelete") {
@@ -59,7 +58,7 @@ const Users = () => {
               ></Sort>
             </div>
             <div style={{ margin: "0 40px" }} className="card__body">
-              <BodyUser data={data} loading={loading}></BodyUser>
+              <BodyUser data={filteredList()} loading={loading}></BodyUser>
             </div>
           </div>
         </div>

@@ -1,41 +1,92 @@
+.schedule-detail {
+  max-width: 700px;
+  margin: 50 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-
-
-select {
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    width: 120px;
-    outline: none;
+  h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
   }
-  input {
-    border: none;
-    outline: none;
-  }
-  .button {
-    margin-top: 20px;
-    display: flex;
-    gap: 40px;
-    .cancel {
-      margin-left: auto;
-      button {
-        padding: 15px 38px 15px;
-        cursor: pointer;
+
+  .schedule-detail-container {
+    .list-field {
+      .field {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+
+        label {
+          font-weight: bold;
+          margin-bottom: 5px;
+          color: #555;
+          display: flex;
+          align-items: center;
+
+          .bx {
+            margin-right: 5px;
+          }
+        }
+
+        input {
+          width: 100%;
+          padding: 8px;
+          box-sizing: border-box;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          outline: none;
+        }
+      }
+
+      .field[style] {
+        margin: 20px 0;
+        display: flex;
+        align-items: center;
+
+        label {
+          margin-right: 10px;
+        }
+
+        img {
+          max-width: 100px;
+          max-height: 100px;
+          border-radius: 50%;
+        }
       }
     }
-    .submit {
-      margin-right: 50px;
-      padding: 15px 20px;
+  }
+
+  .button {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    a {
+      text-decoration: none;
+      button {
+        background-color: #ccc;
+      }
     }
+
     button {
-      box-shadow: 0px 1px 11px -5px;
-      border-radius: 5px;
-      color: black;
-      font-weight: 600;
-    }
-    button:active {
-      background: cyan;
-      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &.submit {
+        background-color: #4caf50;
+        color: #fff;
+      }
+
+      &.delete_schedule {
+        background-color: #ff3333;
+        color: #fff;
+      }
     }
   }
-  
+}

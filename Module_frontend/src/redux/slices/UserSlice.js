@@ -40,7 +40,7 @@ const userSlice = createSlice({
   },
   reducers: {
     searchUser: (state, action) => {
-      // console.log(action.payload)
+     console.log(action.payload)
       state.searchData = action.payload;
     }
   },

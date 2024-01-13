@@ -3,19 +3,19 @@
         "icon": "bx bx-shopping-bag",
         "title": "Quản lý tài khoản",
         "path": "admin/user",
-        "description": "Total sales"
+        "description": "Có chức năng xem thông tin, thêm, sửa thông tin tài khoản người dùng."
     },
     {
         "icon": "bx bx-cart",
         "title": "Quản lý thời gian làm việc",
         "path": "admin/schedule",
-        "description": "Daily visits"
+        "description": "Có thể thêm, sửa, xóa lịch làm việc."
     },
     {
         "icon": "bx bx-dollar-circle",
         "title": "Quản lý tin nhắn",
         "path": "admin/message",
-        "description": "Total income"
+        "description": ""
     },
     {
         "icon": "bx bx-receipt",
@@ -27,7 +27,7 @@
         "icon": "bx bx-receipt",
         "title": "Quản lý thông báo",
         "path": "admin/notification",
-        "description": "Total orders"
+        "description": "Có thể xem, sửa các thông báo."
     },
     {
         "icon": "bx bx-receipt",

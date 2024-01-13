@@ -18,10 +18,8 @@ const AddUser = () => {
   });
 
   const handleInputChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
   const validateForm = () => {
     const { name, phone, email, password, confirmPassword } = formData;
