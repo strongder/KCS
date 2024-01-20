@@ -16,15 +16,16 @@ import Students from "./StudentManagerment/Student/Students";
 import AutoChat from "./AutoChatMana/AutoChat";
 import ViewAutoChat from "./AutoChatMana/DetailAutoChat/ViewAutoChat";
 import EditAutoChat from "./AutoChatMana/EditAutoChat/EditAutoChat";
+import Profile from "../pages/Profile";
 
 const Routing = () => {
   return (
     <Switch>
-      <Route path="/admin" exact component={Managerment} />
+      <Route path="/" exact component={Managerment} />
       <Route path="/live" exact component={LiveChat} />
       <Route path="/settings" exact component={Setting} />
       <Route path="/reports" exact component={Report} />
-      {/* <Route path="/customers" exact component={Customers} /> */}
+
 
       <Route path="/admin/schedule" exact component={ScheduleList} />
       <Route path="/admin/schedule/viewSchedule/:id" exact component={DetailSchedule} />
@@ -37,7 +38,7 @@ const Routing = () => {
       <Route path="/admin/auto-chat" exact component={AutoChat} />
       <Route path="/admin/auto-chat/:id" exact component={ViewAutoChat} />
       <Route path="/admin/auto-chat/update/:id" exact component={EditAutoChat} />
-      
+      <Route path="/profile" component = {Profile}/>
       
     </Switch>
   );

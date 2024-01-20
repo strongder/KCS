@@ -13,12 +13,8 @@ const UserDetail = () => {
     dispatch(fetchUserById(id));
   }, [dispatch, id]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  if (!user) {
-    return <div>del có đâu mà tìm</div>;
-  }
+
+
   const bodyData = [
     {
       title: "Mã tài khoản: ",
@@ -34,7 +30,7 @@ const UserDetail = () => {
     },
     {
       title: "Giới tính:",
-      value: user ? (user.gender===true?'Nam':"Nữ") : "",
+      value: user ? (user.gender === true ? 'Nam' : "Nữ") : "",
     },
     {
       title: "Số điện thoại:",
@@ -72,36 +68,39 @@ const UserDetail = () => {
   ];
 
   return (
-    <div className="user-detail">
-      <h2>Thông tin chi tiết tài khoản</h2>
-      <div className="user-detail-container">
-        <div className="avatar">
-          <img src={user.avt} alt="ảnh đại diện" />
-        </div>
-        <div className="list-field">
-          {bodyData.map((item, index) => (
-            <div key={index} className="field">
-              <label>
-                {" "}
-                <i className="bx bxs-star"></i>
-                {item.title}
-              </label>
-              <input type="text" value={item.value||''} readOnly />
+    <>
+
+      {!loading && user &&
+        (<div className="user-detail">
+          <h2>Thông tin chi tiết tài khoản</h2>
+          <div className="user-detail-container">
+            <div className="avatar">
+              <img src={user.avt} alt="ảnh đại diện" />
             </div>
-          ))}
-          <div className="field" style={{ margin: "20px 0" }}>
-            <i className="bx bxs-star"></i>
-            <label>Trạng thái:<b>{user.isDelete===true?"   Đã xóa":"  Còn sử dụng"}</b></label>
+            <div className="list-field">
+              {bodyData.map((item, index) => (
+                <div key={index} className="field">
+                  <label>
+                    {" "}
+                    <i className="bx bxs-star"></i>
+                    {item.title}
+                  </label>
+                  <input type="text" value={item.value || ''} readOnly />
+                </div>
+              ))}
+              <div className="field" style={{ margin: "20px 0" }}>
+                <i className="bx bxs-star"></i>
+                <label>Trạng thái:<b>{user.isDelete === true ? "   Đã xóa" : "  Còn sử dụng"}</b></label>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div className="cancel">
-        <Link to="/admin/user">
-          <button>Thoát</button>
-        </Link>
-      </div>
-    </div>
-  );
+          <div className="cancel">
+            <Link to="/admin/user">
+              <button>Thoát</button>
+            </Link>
+          </div>
+        </div>)}
+    </>);
 };
 
 export default UserDetail;

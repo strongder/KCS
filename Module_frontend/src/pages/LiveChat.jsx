@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import ContactList from "../components/contactList/ContactList";
-import ChatArea from "../components/ChatArea/ChatArea";
+import ContactList from "../components/Chat/contactList/ContactList";
+import ChatArea from "../components/Chat/ChatArea/ChatArea";
 import "./css/LiveChat.scss";
 import { Box, Grid, Paper, styled } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers } from "../redux/slices/UserSlice";
 
 const Item = styled(Paper)(({ theme,  selectedInfo}) => ({
   padding: "0px",
@@ -15,6 +17,11 @@ const Item = styled(Paper)(({ theme,  selectedInfo}) => ({
 }));
 const LiveChat = () => {
   const [selectedInfo, setSelectedInfo] = useState(false);
+  const { data, loading} = useSelector((state) => state.users);
+  const dispatch  = useDispatch();
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
   const handleClickInfo = () => {
     setSelectedInfo(!selectedInfo);
   };
@@ -25,7 +32,7 @@ const LiveChat = () => {
           <Grid  item xs={3}>
             <Item>
               <div>
-                <ContactList></ContactList>
+                <ContactList data = {data} loading = {loading}></ContactList>
               </div>
             </Item>
           </Grid>

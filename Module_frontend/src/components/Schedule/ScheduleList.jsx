@@ -44,7 +44,17 @@ const ScheduleList = () => {
             <td>{item.content}</td>
             <td>{item.timeStart}</td>
             <td>{item.timeEnd}</td>
-            <td>{(!item.isDelete) ? "Chưa xóa" : "Xóa"}</td>
+            <td>{!item.isDelete ? (
+                <i
+                    style={{ margin: "auto", color: "blue", fontSize: "25px" }}
+                    className="bx bx-check-circle"
+                ></i>
+            ) : (
+                <i
+                    style={{ margin: "auto", color: "red", fontSize: "25px" }}
+                    className="bx bx-x-circle"
+                ></i>
+            )}</td>
             <td style={{ display: "flex" }}>
                 {/* <div style={{ width: "60%" }}>{item.phone}</div> */}
                 <Operation
@@ -57,12 +67,12 @@ const ScheduleList = () => {
     );
 
     const dispatch = useDispatch();
-    const data= useSelector((state) => state.schedule.allSchedule.data)
-    const loading= useSelector((state) => state.schedule.allSchedule.isFetching)
+    const data = useSelector((state) => state.schedule.allSchedule.data)
+    const loading = useSelector((state) => state.schedule.allSchedule.isFetching)
     let list = data;
-  
+
     const filter = () => {
-        if(sort === "2") {
+        if (sort === "2") {
             list = data.slice().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
             // setList(newList
             console.log(list.length);
@@ -70,7 +80,7 @@ const ScheduleList = () => {
         } else if (sort === "3") {
             list = data.slice().sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
             console.log(list);
-        } else  if (sort === "4") {
+        } else if (sort === "4") {
             list = data.slice().filter((item) => item.isDelete === false)
             console.log(list);
         } else if (sort === "5") {
@@ -100,14 +110,11 @@ const ScheduleList = () => {
         console.log(sort)
     };
     filter();
-    // search()
-    // console.log(search());
-
     console.log(list);
 
     return (
-        <div>
-            <h2 className="page-header">Quản lý lịch làm việc</h2>
+        <div className="schedule" style={{ display: "flex", flexDirection: "column" }}>
+            <h2 className="title" style={{ margin: "30px auto" }}>Quản lý lịch làm việc</h2>
             <div className="row">
                 <div className="col-10" style={{ margin: "auto" }}>
                     <div className="card">

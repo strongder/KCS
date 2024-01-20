@@ -14,7 +14,6 @@ const ViewAutoChat = () => {
     if (id) {
       dispatch(getChatById(id));
     }
-    console.log("aloo");
   }, [id, dispatch]);
 
   const bodyData = [

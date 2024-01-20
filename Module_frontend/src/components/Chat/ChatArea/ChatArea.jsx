@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ChatArea.scss";
-import avatar from "../../assets/images/tuat.png";
-import ExpandableInput from "../ExpandableInput/ExpandableInput";
+import avatar from "../../../assets/images/tuat.png";
+import ExpandableInput from "../../ExpandableInput/ExpandableInput";
 const ChatArea = (props) => {
   const { handleClickInfo } = props;
   const [selectSearch, SetSelectSearch] = useState(false);

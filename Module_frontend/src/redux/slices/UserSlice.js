@@ -2,13 +2,16 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import * as userService from "../../services/userService";
 export const fetchUsers = createAsyncThunk("user/fetchUsers", async () => {
-
   return userService.fetchUsers();
 });
 
-export const fetchUserById = createAsyncThunk( "user/fetchUserById",async (userId) => {
-    return userService.fetchUserById(userId);
-  }
+export const fetchUserById = createAsyncThunk("user/fetchUserById", async (userId) => {
+  return userService.fetchUserById(userId);
+}
+);
+export const fetchUserByUsername = createAsyncThunk("user/fetchUserByUsername", async (username) => {
+  return userService.fetchUserByUsername(username);
+}
 );
 
 export const addUser = createAsyncThunk("user/addUser", async (userData) => {
@@ -40,7 +43,6 @@ const userSlice = createSlice({
   },
   reducers: {
     searchUser: (state, action) => {
-      // console.log(action.payload)
       state.searchData = action.payload;
     }
   },
@@ -57,9 +59,9 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(fetchUsers.pending, (state) => {
-        state.loading = true;
-      })
+      // .addCase(fetchUsers.pending, (state) => {
+      //   state.loading = true;
+      // })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
@@ -76,6 +78,17 @@ const userSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(fetchUserById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchUserByUsername.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchUserByUsername.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(fetchUserByUsername.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
@@ -111,4 +124,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
- export const {searchUser} = userSlice.actions;
+export const { searchUser } = userSlice.actions;

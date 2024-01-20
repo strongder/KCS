@@ -17,7 +17,6 @@ const Table = (props) => {
     const updateDataShow = () => {
       const start = Number(props.limit) * (currPage - 1);
       const end = start + Number(props.limit);
-      console.log(props.bodyData);
       setDataShow(props.bodyData.slice(start, end));
 
     };
