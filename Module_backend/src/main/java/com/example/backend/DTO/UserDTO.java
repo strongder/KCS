@@ -27,7 +27,7 @@ public class UserDTO {
 	
 	private String MaTK;
 	
-	private String avt;
+	private Long avt;
 	
 	private String role;
 	

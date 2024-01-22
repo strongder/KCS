@@ -53,7 +53,7 @@ public class User {
 	private String MaTK;
 	
 	@Column(name = "avt")
-	private String avt;
+	private Long avt;
 	
 	@ManyToOne
     @JoinColumn(name = "RoleID", referencedColumnName = "id")

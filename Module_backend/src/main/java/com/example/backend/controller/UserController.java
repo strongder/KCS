@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.DTO.UserDTO;
 import com.example.backend.service.UserService;
 
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/v1/user")
 @RestController
 public class UserController {

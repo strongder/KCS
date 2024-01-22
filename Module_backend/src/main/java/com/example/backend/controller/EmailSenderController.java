@@ -15,7 +15,7 @@ import com.example.backend.DTO.EmailSenderDTO;
 import com.example.backend.entity.EmailSender;
 import com.example.backend.service.EmailSenderService;
 
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/sendEmail")
 public class EmailSenderController {

@@ -44,7 +44,7 @@ public class SecurityConfig {
                                                    UserDetailsService userDetailsService, JwtAuthFilter filter) throws Exception {
         return httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
-                    .requestMatchers("/api/v1/auth/**", "/ws/**", "/api/v1/user/**").permitAll()
+                    .requestMatchers("/api/v1/auth/**", "/ws/**", "/api/v1/user/**", "api/v1/file/**").permitAll()
                 .and()
                 .authorizeHttpRequests()
                     .requestMatchers("/products/**","/users/**", "/variant-products/**",

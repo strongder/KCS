@@ -60,9 +60,9 @@ public class UserServiceImpl implements UserService {
 		if (listUsers.isEmpty()) {
 
 			Date date = new Date();
+			Long avt = (long) 1;
 			User user = modelMapper.map(userDTO, User.class);
-			user.setAvt(
-					"https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg");
+//			user.setAvt(avt);
 			user.setCreateDate(date);
 			user.setUpdateDate(date);
 			user.setIsDelete(false);

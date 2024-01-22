@@ -36,7 +36,5 @@ public class Resources {
 	
 	@Column(name = "createBy")
 	private String createBy; //nếu là user: createBy = email, nếu là student: createBy = id
-	
-	@OneToOne(mappedBy = "IDResources")
-    private Chat chatID;
+
 }

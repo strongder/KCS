@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.DTO.AutoChatDTO;
 import com.example.backend.service.AutoChatService;
 
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/v1/autoChat")
 @RestController
 public class AutoChatController {

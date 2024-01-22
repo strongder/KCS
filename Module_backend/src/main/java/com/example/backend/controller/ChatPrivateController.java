@@ -39,4 +39,6 @@ public class ChatPrivateController {
         this.chatPrivateService.create(message);
         return message;
     }
+    
+    
 }                                                            
