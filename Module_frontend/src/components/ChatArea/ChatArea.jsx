@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import "./ChatArea.scss";
 import avatar from "../../assets/images/tuat.png";
+import ExpandableInput from "../ExpandableInput/ExpandableInput";
 const ChatArea = (props) => {
   const { handleClickInfo } = props;
-  const [selectSearch, SetSelectSearch] = useState(true);
+  const [selectSearch, SetSelectSearch] = useState(false);
 
   const handleClickSearch = () => {
     SetSelectSearch(!selectSearch);
@@ -32,20 +33,29 @@ const ChatArea = (props) => {
             <i class="bx bx-up-arrow-circle"></i>
             <i class="bx bx-up-arrow-circle bx-flip-vertical"></i>
           </div>
-          <button onClick={handleClickSearch}><b>Close</b></button>
+          <button onClick={handleClickSearch}>
+            <b>Close</b>
+          </button>
         </div>
       )}
 
       <div className="chat-area-content"></div>
       <div className="chat-area-footer">
         <div className="chat-file">
-          <i class="bx bx-link"></i>
+          <input type="file" id="fileInput" style={{display: "none"}} />
+          <label for="fileInput" class="custom-file-button">
+            <i class="bx bx-link"></i>
+          </label>
         </div>
         <div className="chat-image">
           <i class="bx bx-images"></i>
         </div>
         <div className="chat-message">
-          <input type="text" placeholder="Aa" />
+          <ExpandableInput
+            placeholder="Aa..."
+            maxRows={5}
+            // onChange={handleInputChange}
+          />
           <p>
             <i class="bx bx-smile"></i>
           </p>

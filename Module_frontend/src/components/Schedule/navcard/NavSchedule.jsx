@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./NavSchedule.scss"
 import DialogAdd from "../../dialogAdd/DialogAdd";
-import { addSchedule } from "../../../redux/services/ScheduleService";
-import { fetchSchedule } from "../../../redux/services/ScheduleService";
+import { addSchedule } from "../../../services/ScheduleService";
+import { fetchSchedule } from "../../../services/ScheduleService";
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
 

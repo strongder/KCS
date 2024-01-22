@@ -36,7 +36,7 @@ const Operation = (props) => {
   return (
     <div ref ={dropdownRef} className="operation">
       <div className="operation-open" onClick={handleOpenOperation}>
-        <i class="bx bx-dots-vertical"></i>
+        <i className="bx bx-dots-vertical"></i>
       </div>
       {open && (
         <div className="operation-list-item">
@@ -47,7 +47,7 @@ const Operation = (props) => {
                 key={index}
                 className="operation-item"
               >
-                <i class={item.icon}></i>
+                <i className={item.icon}></i>
                 <p>{item.name}</p>
               </div>
             );

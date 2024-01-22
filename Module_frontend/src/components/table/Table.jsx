@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import './table.css';
+import './table.scss';
 
 const Table = (props) => {
   const [dataShow, setDataShow] = useState([]);
@@ -17,7 +17,9 @@ const Table = (props) => {
     const updateDataShow = () => {
       const start = Number(props.limit) * (currPage - 1);
       const end = start + Number(props.limit);
+      console.log(props.bodyData);
       setDataShow(props.bodyData.slice(start, end));
+
     };
 
     calculatePages();

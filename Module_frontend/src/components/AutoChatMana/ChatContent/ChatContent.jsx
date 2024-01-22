@@ -4,49 +4,39 @@ import Operation from "../../operation/Operation";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers, removeUser } from "../../../redux/slices/UserSlice";
+import { getAllChat, removeChat } from "../../../redux/slices/AutoChatSlice";
 
-const customerTableHead = [
-  "",
-  "Họ tên",
-  "Email",
-  "Điện Thoại",
-  "Hoạt động",
-  "Thao Tác",
-];
+const customerTableHead = ["", "Nội dung", "Trạng thái", "Thao Tác"];
 const renderHead = (item, index) => <th key={index}>{item}</th>;
 const operationData = [
-  { icon: "bx bxs-user-detail", name: "Chi tiết người dùng" },
-  { icon: "bx bx-trash", name: "Sửa thông tin người dùng" },
-
-  { icon: "bx bx-trash", name: "Xóa người dùng" },
+  { icon: "bx bx-message-detail", name: "Chi tiết tin nhắn" },
+  { icon: "bx bx-edit", name: "Sửa tin nhắn" },
+  { icon: "bx bx-trash", name: "Xóa tin nhắn" },
 ];
-
-const sortBy = [
-  { name: "", value: "Sắp xếp" },
-  { name: "name", value: "Sắp xếp theo tên" },
-  { name: "id", value: "Sắp mã id" },
-];
-
-const BodyUser = (props) => {
+const ChatContent = (props) => {
   const history = useHistory();
-  const userList = props.data;
-  const handleOperationClick = (item, userData) => {
-    if (item.name === "Chi tiết người dùng") {
-      console.log("ckeck user data", userData);
-      history.push(`/admin/user/viewUser/${userData.id}`);
-    } else if (item.name === "Sửa thông tin người dùng") {
-      console.log("ckeck user data", userData);
-      history.push(`/admin/user/editUser/${userData.id}`);
-    } else if (item.name === "Xóa người dùng") {
-      dispatch(removeUser(userData.id));
+  const handleOperationClick = (item, autoChat) => {
+    if (item.name === "Chi tiết tin nhắn") {
+      history.push(`/admin/auto-chat/${autoChat.id}`);
+    } else if (item.name === "Sửa tin nhắn") {
+      history.push(`/admin/auto-chat/update/${autoChat.id}`);
+    } else if (item.name === "Xóa tin nhắn") {
+      dispatch(removeChat(autoChat.id));
     }
   };
   const renderBody = (item, index) => (
     <tr key={index}>
       <td>{item.id}</td>
-      <td>{item.name}</td>
-      <td>{item.email}</td>
-      <td> {item.phone}</td>
+      <td
+        style={{
+          maxWidth: "230px" /* Đặt chiều rộng tối đa của ô */,
+          overflow: "hidden" /* Ẩn nội dung vượt quá chiều rộng */,
+          textOverflow:
+            "ellipsis" /* Hiển thị dấu chấm elipsis khi nội dung quá dài */,
+        }}
+      >
+        {item.content}
+      </td>
       <td style={{ width: "140px", margin: "auto" }}>
         <div style={{ width: "75%", display: "flex" }} className="isdelete">
           {!item.isDelete ? (
@@ -75,14 +65,14 @@ const BodyUser = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUsers());
+    dispatch(getAllChat());
   }, [dispatch]);
 
   return (
     <>
       {!props.loading && (
         <Table
-          limit="8"
+          limit= '5'
           headData={customerTableHead}
           renderHead={(item, index) => renderHead(item, index)}
           bodyData={props.data}
@@ -93,4 +83,4 @@ const BodyUser = (props) => {
   );
 };
 
-export default BodyUser;
+export default ChatContent;

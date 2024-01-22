@@ -5,7 +5,7 @@ const API_URL = "http://localhost:8081/api/v1/user";
 export const fetchUsers = async () => {
   try {
     const response = await axios.get(API_URL);
-    console.log("nó có chạy vào đây")
+
     return response.data;
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -24,7 +24,7 @@ export const fetchUserById = async (userId) => {
 };
 
 export const addUser = async (userData) => {
-  console.log("check user data", userData,  typeof(userData.birthDay))
+
   try {
     const response = await axios.post(API_URL, userData, {
       headers: {
