@@ -2,18 +2,23 @@ package com.example.backend.serviceImpl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.text.ParseException;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.internal.bytebuddy.asm.Advice.This;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.backend.DTO.RoomPrivateDTO;
 import com.example.backend.DTO.UserDTO;
+import com.example.backend.entity.RoomPrivate;
 import com.example.backend.entity.User;
 import com.example.backend.exception.ScheduleException;
 import com.example.backend.exception.UserException;
 import com.example.backend.repository.UserRepository;
+import com.example.backend.service.RoomPrivateService;
 import com.example.backend.service.UserService;
 
 @Service
@@ -25,6 +30,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	@Autowired
+	private RoomPrivateService roomPrivateService;
+	
 	@Override
 	public List<UserDTO> getAll() {
 		// TODO Auto-generated method stub
@@ -59,7 +67,9 @@ public class UserServiceImpl implements UserService {
 			user.setUpdateDate(date);
 			user.setIsDelete(false);
 			user.setMaTK("GV" + date.getTime());
-			this.userRepository.save(user);
+//			this.userRepository.save(user);
+			User userSave = this.userRepository.save(user);
+			this.createRoomPrivate(userSave);
 			return userDTO;
 		} else {
 			throw new UserException("Email hoặc SĐT đã tồn tại");
@@ -87,6 +97,7 @@ public class UserServiceImpl implements UserService {
 					userSaved.setId(id);
 					userSaved.setUpdateDate(date);
 					this.userRepository.save(userSaved);
+//					this.createRoomPrivate(userSave);
 					return userDTO;
 				} else {
 					throw new UserException("Số điện thoại đã tồn tại");
@@ -98,6 +109,7 @@ public class UserServiceImpl implements UserService {
 					userSaved.setId(id);
 					userSaved.setUpdateDate(date);
 					this.userRepository.save(userSaved);
+//					this.createRoomPrivate(userSave);
 					return userDTO;
 				} else {
 					throw new UserException("Email đã tồn tại");
@@ -109,6 +121,7 @@ public class UserServiceImpl implements UserService {
 					userSaved.setId(id);
 					userSaved.setUpdateDate(date);
 					this.userRepository.save(userSaved);
+//					this.createRoomPrivate(userSave);
 					return userDTO;
 				} else {
 					throw new UserException("Email hoặc số điện thoại đã tồn tại");
@@ -147,4 +160,21 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	public void createRoomPrivate(User user) {
+		List<UserDTO> listUserDTO = this.getAll();
+		if(listUserDTO.size() > 1) {
+			List<User> listUser = listUserDTO.stream().map((item) -> this.modelMapper.map(item, User.class)).toList();
+			Iterator ItrUser = listUser.iterator();
+			while(ItrUser.hasNext()) {
+				User user1 = (User) ItrUser.next();
+//				User user2 = user1.
+				RoomPrivateDTO roomPrivate = new RoomPrivateDTO();
+				roomPrivate.setStatus(true);
+				roomPrivate.setCreateDate(new Date());
+				roomPrivate.setUser1ID(user.getId());
+				roomPrivate.setUser2ID(user1.getId());
+				this.roomPrivateService.create(roomPrivate);
+			}
+		}
+	}
 }
