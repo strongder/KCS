@@ -27,6 +27,7 @@ const Profile = () => {
           <div className="profile-info">
             <div className="info-item">
               <label>Mã tài khoản</label>
+
               <input type="text" value={currentUser.maTK} />
             </div>
             <div className="info-item">

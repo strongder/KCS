@@ -17,14 +17,13 @@ import AutoChat from "./AutoChatMana/AutoChat";
 import ViewAutoChat from "./AutoChatMana/DetailAutoChat/ViewAutoChat";
 import EditAutoChat from "./AutoChatMana/EditAutoChat/EditAutoChat";
 import Profile from "../pages/Profile";
-import { useSelector } from "react-redux";
 
 const Routing = ({ role }) => {
 
   return (
     <Switch>
       <Route path="/" exact component={Managerment} />
-      <Route path='/profile' exact component={Profile} />
+        <Route path='/profile' exact component={Profile} />
       <Route path="/live" exact component={LiveChat} />
       <Route path="/settings" exact component={Setting} />
       <Route path="/reports" exact component={Report} />
