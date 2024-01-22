@@ -36,7 +36,8 @@ const userSlice = createSlice({
   name: "users",
   initialState: {
     data: [],
-    user: null,
+    user: {},
+    currentUser:{},
     loading: false,
     error: null,
     searchData: [],
@@ -64,6 +65,7 @@ const userSlice = createSlice({
       // })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.loading = false;
+        console.log(state)
         state.data = action.payload;
       })
       .addCase(fetchUsers.rejected, (state, action) => {
@@ -81,16 +83,16 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(fetchUserByUsername.pending, (state) => {
-        state.loading = true;
-      })
+      // .addCase(fetchUserByUsername.pending, (state) => {
+      //   state.loading = true;
+      // })
       .addCase(fetchUserByUsername.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.currentUser = action.payload;
       })
       .addCase(fetchUserByUsername.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.currentUser = action.payload;
       })
       // .addCase(updateUser.pending, (state) => {
       //   state.loading = true;

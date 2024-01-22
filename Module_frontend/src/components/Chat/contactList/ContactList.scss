@@ -1,67 +1,105 @@
-.nav-list {
+.contact-list {
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  .nav-search {
+
+  .tabs {
     display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid #ccc;
-    height: 35px;
-    border-radius: 10px;
-    padding: 16px 0;
-    margin: 10px 0;
-    input {
-      border: none;
-      padding-left: 5px;
-    }
-    i {
-      font-size: 20px;
-      padding: 5px;
-      border-radius: 40px;
-    }
-    i:hover {
-      background: #ccc;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+
+    .tab {
+      padding: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+      user-select: none;
+
+      &.active {
+        background-color: #f0f0f0;
+      }
     }
   }
-  .content {
-    margin-top: 30px;
 
-    .list-item {
-      .item {
-        height: 80px;
+  .nav-list {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 
-        display: grid;
-        grid-template-columns: 1.5fr 5fr 2fr;
-        gap: 5px;
-        border-radius: 5px;
+    .nav-search {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid #ccc;
+      height: 35px;
+      border-radius: 10px;
+      padding: 16px 0;
+      margin: 10px 0;
+
+      input {
+        border: none;
+        padding-left: 5px;
+        width: 80%;
+      }
+
+      i {
+        font-size: 20px;
+        padding: 5px;
+        border-radius: 40px;
         cursor: pointer;
-        .item-avatar {
-          img {
-            width: 50px;
-            height: 50px;
-            padding: 5px;
-            border-radius: 50%;
-          }
-        }
-        .item-content {
-          font-size: 14px;
-          position: relative;
 
-          .name {
-            position: absolute;
-            padding: 5px;
-          }
-          .message {
-            position: absolute;
-            bottom: 5px;
-            padding: 0 0 5px 5px;
-          }
-        }
-        .item-time {
+        &:hover {
+          background: #ccc;
         }
       }
-      .item:hover {
-        background: #dbd4d4;
+    }
+
+    .content {
+      margin-top: 15px;
+
+      .list-item {
+        .item {
+          height: 80px;
+          display: grid;
+          grid-template-columns: 1.5fr 5fr 2fr;
+          gap: 5px;
+          border-radius: 5px;
+          cursor: pointer;
+
+          .item-avatar {
+            img {
+              width: 50px;
+              height: 50px;
+              padding: 5px;
+              border-radius: 50%;
+            }
+          }
+
+          .item-content {
+            font-size: 14px;
+            position: relative;
+
+            .name {
+              position: absolute;
+              padding: 5px;
+            }
+
+            .message {
+              position: absolute;
+              bottom: 5px;
+              padding: 0 0 5px 5px;
+            }
+          }
+
+          .item-time {
+          }
+        }
+
+        .item:hover {
+          background: #dbd4d4;
+        }
       }
     }
   }

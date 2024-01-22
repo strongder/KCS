@@ -5,12 +5,11 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import avatar from "../../../assets/images/tuat.png";
 import { useDispatch } from "react-redux";
 const ContactList = (props) => {
-  const { data, loading } = props
+  const { data, loading, onSelect } = props
   const [value, setValue] = React.useState("1");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   }
-
 
   return (
     <>
@@ -36,36 +35,9 @@ const ContactList = (props) => {
                 </div>
                 <div className="content">
                   <div className="list-item">
-                    <div className="item">
-                      <div className="item-avatar">
-                        <img src={avatar} alt="" />
-                      </div>
-                      <div className="item-content">
-                        <p className="name">thanh</p>
-                        <p className="message"> tin nhan gan nhat</p>
-                      </div>
-                      <p className="item-time">vai giay truoc</p>
-                    </div>
-                    <div className="item">
-                      <div className="item-avatar">
-                        <img src={avatar} alt="" />
-                      </div>
-                      <div className="item-content">
-                        <p className="name">thanh</p>
-                        <p className="message"> tin nhan gan nhat</p>
-                      </div>
-                      <p className="item-time">vai giay truoc</p>
-                    </div>
-                    <div className="item">
-                      <div className="item-avatar">
-                        <img src={avatar} alt="" />
-                      </div>
-                      <div className="item-content">
-                        <p className="name">thanh</p>
-                        <p className="message"> tin nhan gan nhat</p>
-                      </div>
-                      <p className="item-time">vai giay truoc</p>
-                    </div>
+                    
+                    
+                    
                   </div>
                 </div>
               </div>
@@ -81,7 +53,7 @@ const ContactList = (props) => {
 
                     {data.map((item, index) =>{
                       return (
-                      <div className="item" key ={index} >
+                      <div className="item" key ={index} onClick={() => onSelect(item.id)} >
 
                       <div className="item-avatar">
                         <img src={item.avt} alt="" />

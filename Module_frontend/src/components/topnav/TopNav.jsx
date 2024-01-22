@@ -35,7 +35,7 @@ const renderUserToggle = (user) => (
             <img src={user.avt} alt="" />
         </div>
         <div className="topnav__right-user__name">
-            {user.email}
+            {user.name}
         </div>
     </div>
 )

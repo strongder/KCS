@@ -1,0 +1,21 @@
+.not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+  
+    p {
+      font-size: 1.2rem;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  
+    /* Add additional styling as needed */
+  }
+  

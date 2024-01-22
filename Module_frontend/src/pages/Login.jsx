@@ -16,7 +16,11 @@ const Login = () => {
     const { name, value } = event.target;
     setAuth({...auth, [name] : value})
   };
-
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleLogin();
+    }
+  };
   const handleLogin = async () => {
     try {
       const response = await axios.post(`http://localhost:8081/api/v1/auth/login`, auth, {
@@ -63,6 +67,7 @@ const Login = () => {
             name="password"
             value={auth.password}
             onChange={handleChange}
+            onKeyPress={handleKeyPress}
           />
         </div>
         <div className="save">
@@ -72,7 +77,7 @@ const Login = () => {
           <a href="#">Quên mật khẩu?</a>
         </div>
         
-        <button type="submit" onClick={handleLogin}>Submit</button>
+        <button type="submit" onClick={handleLogin} >Submit</button>
       </div>
     </div>
   );

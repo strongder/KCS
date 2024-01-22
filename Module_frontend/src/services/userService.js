@@ -1,3 +1,4 @@
+import axios from "axios";
 import axiosInstance from "../api";
 
 const API_URL = "http://localhost:8081/api/v1/user";
@@ -8,6 +9,7 @@ const API_URL = "http://localhost:8081/api/v1/user";
 export const fetchUserById = async (userId) => {
   try {
     const response = await axiosInstance.get(`${API_URL}/${userId}`);
+    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error(`Error fetching user with ID ${userId}:`, error);
@@ -17,7 +19,12 @@ export const fetchUserById = async (userId) => {
 
 export const fetchUsers = async () => {
   try {
-    const response = await axiosInstance.get(API_URL);
+    const response = await axios.get(API_URL,{
+      headers:{
+        "Authorization":`Bearer ${localStorage.getItem('token')}`
+      }
+    });
+    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error("Error fetching users:", error);
