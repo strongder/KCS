@@ -53,7 +53,7 @@ public class ResourcesServiceImpl implements ResourcesService{
 	@Override
 	public ResourcesDTO UploadFile(MultipartFile newFile, Long id) {
 		fileUtils.validateFile(newFile);
-        try {
+        try {   
 //            String fileName = StringUtils.cleanPath(newFile.getOriginalFilename());
         	UserDTO user = this.userService.getByID(id);
             ResourcesDTO File = new ResourcesDTO();
@@ -70,5 +70,11 @@ public class ResourcesServiceImpl implements ResourcesService{
 		
 	}
 
+	public ResourcesDTO getFileByCreateBy(String createBy) {
+		Resources resources = this.fileRepository.getByCreateBy(createBy).orElseThrow(() -> {
+			throw new NotFoundException("Not found image with createBy = " + createBy);
+		});	
+		return this.modelMapper.map(resources, ResourcesDTO.class);
+	}
 	
 }

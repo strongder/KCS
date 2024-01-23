@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 			Date date = new Date();
 			Long avt = (long) 1;
 			User user = modelMapper.map(userDTO, User.class);
-//			user.setAvt(avt);
+			user.setAvt(avt);
 			user.setCreateDate(date);
 			user.setUpdateDate(date);
 			user.setIsDelete(false);

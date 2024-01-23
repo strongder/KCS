@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 //import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,11 +40,15 @@ public class ResourcesController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> FindByID(@PathVariable("id") Long ID){
+	public ResponseEntity<ResourcesDTO> FindByID(@PathVariable("id") Long ID){
 		ResourcesDTO getFile = this.resourcesService.getFileByID(ID);
-		return ResponseEntity.ok()
-				.contentType(MediaType.parseMediaType(getFile.getType()))
-				.body(getFile.getData());
+		return new ResponseEntity<>(getFile, HttpStatus.OK);
+	}
+	
+	@GetMapping("/get-by-email")
+	public ResponseEntity<ResourcesDTO> FindByID(@RequestBody String email){
+		ResourcesDTO getFile = this.resourcesService.getFileByCreateBy(email);
+		return new ResponseEntity<>(getFile, HttpStatus.OK);
 	}
 	
 	@PostMapping("/upload/{id}")
