@@ -45,12 +45,6 @@ public class ResourcesController {
 		return new ResponseEntity<>(getFile, HttpStatus.OK);
 	}
 	
-	@GetMapping("/get-by-email")
-	public ResponseEntity<ResourcesDTO> FindByID(@RequestBody String email){
-		ResourcesDTO getFile = this.resourcesService.getFileByCreateBy(email);
-		return new ResponseEntity<>(getFile, HttpStatus.OK);
-	}
-	
 	@PostMapping("/upload/{id}")
     public ResponseEntity<?> uploadImage(@ModelAttribute("newFile") MultipartFile newFile, @PathVariable("id") Long id) {
 		System.out.println(newFile.getOriginalFilename() + "file: ");

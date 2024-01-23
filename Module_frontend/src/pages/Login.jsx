@@ -23,17 +23,20 @@ const Login = () => {
   };
   const handleLogin = async () => {
     try {
-      const response = await axios.post(`http://localhost:8081/api/v1/auth/login`, auth, {
+      const response = await axios.post(`http://localhost:8081/api/v1/auth`, auth, {
           headers: {
               "Content-Type": "application/json",
           },
       });
       // history.push("/")
+      console.log(response.data)
       if (response.status === 200) {
         history.push('/')
-        const token = response.data;
+        const token = response.data.token;
+        const id = response.data.id;
         const expirationTime = new Date().getTime() + 3600 * 1000; // Ví dụ: hết hạn sau 1 giờ
         localStorage.setItem('token', token);
+        localStorage.setItem('id', id)
         console.log(localStorage.getItem('token'))
         localStorage.setItem('expTime', expirationTime.toString());
       } else {

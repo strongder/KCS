@@ -16,6 +16,7 @@ import user_menu from '../../assets/JsonData/user_menus.json'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchUserByUsername } from '../../redux/slices/UserSlice'
 import { jwtDecode } from 'jwt-decode';
+import { avatarClasses } from '@mui/material'
 
 const API_URL = "http://localhost:8081/api/v1/user";
 
@@ -28,19 +29,27 @@ const renderNotificationItem = (item, index) => (
     </div>
 )
 
-const renderUserToggle = (user) => (
 
-    <div className="topnav__right-user">
-        <div className="topnav__right-user__image">
-            <img src={user.avt} alt="" />
-        </div>
-        <div className="topnav__right-user__name">
-            {user.name}
-        </div>
-    </div>
-)
+const renderUserToggle = (props) => {
+        const avatarData = props.avatar;
+        const base64 = `data:image; base64, ${avatarData.data}`
+        return (
+          <div className="topnav__right-user">
+            <div className="topnav__right-user__image">
+              <img src={base64} alt="" />
+            </div>
+            <div className="topnav__right-user__name">
+              {props.user.name} {/* Giả sử tên người dùng là trường 'name' */}
+            </div>
+          </div>
+        );
+      };
 
 const Topnav = (props) => {
+
+    
+    
+      
 
     const handleClick = () => {
         localStorage.removeItem('token')
@@ -77,7 +86,7 @@ const Topnav = (props) => {
                     <div className="topnav__right-item">
 
                         <Dropdown
-                            customToggle={() => renderUserToggle(props.user)}
+                            customToggle={() => renderUserToggle(props)}
                             contentData={user_menu}
                             renderItems={(item, index) => renderUserMenu(item, index)}
                         />

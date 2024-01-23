@@ -22,6 +22,7 @@ function App() {
         // Xóa token và thời gian hết hạn nếu token đã hết hạn
         localStorage.removeItem('token');
         localStorage.removeItem('expTime');
+        localStorage.removeItem('id');
       }
     }
   }, []);

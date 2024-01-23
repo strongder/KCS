@@ -11,6 +11,8 @@ const ContactList = (props) => {
   const { data, loading, onSelect } = props
   const [value, setValue] = React.useState("1");
   const [stompClient, setStompClient] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState('');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
