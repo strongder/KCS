@@ -9,8 +9,8 @@ export const fetchUserById = createAsyncThunk("user/fetchUserById", async (userI
   return userService.fetchUserById(userId);
 }
 );
-export const fetchUserByUsername = createAsyncThunk("user/fetchUserByUsername", async (username) => {
-  return userService.fetchUserByUsername(username);
+export const fetchCurrentUser = createAsyncThunk("user/fetchCurrentUser", async (userId) => {
+  return userService.fetchCurrentUser(userId);
 }
 );
 
@@ -83,14 +83,12 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // .addCase(fetchUserByUsername.pending, (state) => {
-      //   state.loading = true;
-      // })
-      .addCase(fetchUserByUsername.fulfilled, (state, action) => {
+  
+      .addCase(fetchCurrentUser.fulfilled, (state, action) => {
         state.loading = false;
         state.currentUser = action.payload;
       })
-      .addCase(fetchUserByUsername.rejected, (state, action) => {
+      .addCase(fetchCurrentUser.rejected, (state, action) => {
         state.loading = false;
         state.currentUser = action.payload;
       })

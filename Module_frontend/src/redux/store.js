@@ -6,6 +6,7 @@ import ScheduleReducer from "./slices/ScheduleSlice";
 import UserReducer from "./slices/UserSlice"
 
 import AutoChatReducer from "./slices/AutoChatSlice"
+import ResourceReducer from "./slices/ResourceSlice"
 
 
 
@@ -15,6 +16,7 @@ const store = configureStore({
         users: UserReducer,
         schedule: ScheduleReducer,
         autoChat: AutoChatReducer,
+        resource: ResourceReducer,
     },
 })
 

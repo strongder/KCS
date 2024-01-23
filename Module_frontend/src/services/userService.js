@@ -17,11 +17,7 @@ export const fetchUserById = async (userId) => {
 
 export const fetchUsers = async () => {
   try {
-    const response = await axios.get(API_URL,{
-      headers:{
-        "Authorization":`Bearer ${localStorage.getItem('token')}`
-      }
-    });
+    const response = await axiosInstance.get(API_URL)
     console.log(response.data)
     return response.data;
   } catch (error) {
@@ -30,12 +26,12 @@ export const fetchUsers = async () => {
   }
 };
 
-export const fetchUserByUsername = async (username) => {
+export const fetchCurrentUser = async (userId) => {
   try {
-    const response = await axiosInstance.get(`${API_URL}/user-current/${username}`);
+    const response = await axiosInstance.get(`${API_URL}/user-current/${userId}`);
     return response.data;
   } catch (error) {
-    console.error(`Error fetching user with ID ${username}:`, error);
+    console.error(`Error fetching user with ID ${userId}:`, error);
     throw error;
   }
 };

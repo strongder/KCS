@@ -17,6 +17,7 @@ axiosInstance.interceptors.request.use(
                 // Token đã hết hạn, xóa token và thực hiện chuyển hướng đến trang đăng nhập
                 localStorage.removeItem('token');
                 localStorage.removeItem('expTime');
+                localStorage.removeItem('id')
                 window.location.href = '/login'; // Chuyển hướng đến trang đăng nhập
             }
         }

@@ -39,9 +39,9 @@ public class UserController {
 		UserDTO userDTO = this.userService.getByID(id);
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
-	@GetMapping("/user-current/{email}")
-	public ResponseEntity<UserDTO> getByEmail(@PathVariable("email") String email) {
-		UserDTO userDTO = this.userService.getByEmail(email);
+	@GetMapping("/user-current/{id}")
+	public ResponseEntity<UserDTO> getCurrentUser(@PathVariable("id") Long id) {
+		UserDTO userDTO = this.userService.getByID(id);
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 	

@@ -40,9 +40,7 @@ public class ResourcesController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> FindByID(@PathVariable("id") Long ID){
 		ResourcesDTO getFile = this.resourcesService.getFileByID(ID);
-		return ResponseEntity.ok()
-				.contentType(MediaType.parseMediaType(getFile.getType()))
-				.body(getFile.getData());
+		return new ResponseEntity<>(getFile, HttpStatus.OK);
 	}
 	
 	@PostMapping("/upload/{id}")

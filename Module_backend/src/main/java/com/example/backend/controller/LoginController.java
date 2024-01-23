@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.backend.DTO.AuthResponse;
 import com.example.backend.DTO.LoginRequest;
 import com.example.backend.DTO.UserDTO;
 import com.example.backend.entity.User;
@@ -31,20 +32,20 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 	
+	
 	@PostMapping("")
-	public ResponseEntity<?> Login(@RequestBody LoginRequest loginRequest) {
+	public ResponseEntity<AuthResponse> Login(@RequestBody LoginRequest loginRequest) {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+		
 		if (authentication.isAuthenticated()) {
-			return new ResponseEntity<>(JwtUtils.generateToken(loginRequest.getUsername()), HttpStatus.OK);
+			String token = JwtUtils.generateToken(loginRequest.getUsername());
+			Long id = userService.getByEmail(loginRequest.getUsername()).getId();
+			
+			AuthResponse authRes = new AuthResponse(token, id);
+			return new ResponseEntity<>(authRes, HttpStatus.OK);
 		}
 		return null;
 
 	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<UserDTO> getByEmail(@PathVariable("id") Long id) {
-		return new ResponseEntity<>(this.userService.getByID(id), HttpStatus.OK);
-	}
-	
 }
