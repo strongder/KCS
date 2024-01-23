@@ -4,18 +4,15 @@ import {getAllScheduleSuccess, getAllScheduleStart, getAllScheduleError, getSche
 import {updateScheduleError, updateScheduleStart, updateScheduleSusscess} from "../redux/slices/ScheduleSlice"
 import {createScheduleError, createScheduleStart, createScheduleSuccess} from "../redux/slices/ScheduleSlice"
 import {deleteScheduleError, deleteScheduleStart, deleteScheduleSuccess} from "../redux/slices/ScheduleSlice"
-import { useHistory } from 'react-router-dom/cjs/react-router-dom';
-
+import axiosInstance from '../api';
 
 const API_URL = 'http://localhost:8081/api/v1/schedule';
-
 export const fetchSchedule = async (dispatch) => {
   dispatch(getAllScheduleStart())
   try {
-    const response = await axios.get(API_URL);
+    const response = await axiosInstance.get(API_URL)
     console.log(response.data);
     dispatch(getAllScheduleSuccess(response.data));
-    // return response.data
   } catch (error) {
     console.error('Error fetching users:', error);
     dispatch(getAllScheduleError());
@@ -25,7 +22,7 @@ export const fetchSchedule = async (dispatch) => {
 export const fetchScheduleById = async (ScheduleId, dispatch) => {
   dispatch(getScheduleByIDStart())
   try {
-    const response = await axios.get(`${API_URL}/${ScheduleId}`)
+    const response = await axiosInstance.get(`${API_URL}/${ScheduleId}`)
     console.log(response.data);
     dispatch(getScheduleByIDSuccess(response.data));
   } catch (error) {
@@ -37,12 +34,7 @@ export const fetchScheduleById = async (ScheduleId, dispatch) => {
 export const addSchedule = async (ScheduleData, dispatch, navigate) => {
   dispatch(createScheduleStart())
   try {
-    const response = await axios.post(API_URL, ScheduleData, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    // return response.data;
+    const response = await axiosInstance.post(API_URL, ScheduleData)
     dispatch(createScheduleSuccess(response.data));
   } catch (error) {
     console.error('Error adding user:', error);
@@ -54,13 +46,7 @@ export const addSchedule = async (ScheduleData, dispatch, navigate) => {
 export const updateSchedule = async (updatedSchedule, dispatch) => {
   dispatch(updateScheduleStart())
   try {
-    const response = await axios.put(`${API_URL}/update/${updatedSchedule.id}`, updatedSchedule, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    console.log("-------------", response.data)
-    // return response.data;
+    const response = await axiosInstance.put(`${API_URL}/update/${updatedSchedule.id}`, updatedSchedule);
     dispatch(updateScheduleSusscess(response.data));
   } catch (error) {
     console.error(`Error updating user with ID ${updatedSchedule.id} :`, updatedSchedule ,error);
@@ -71,12 +57,7 @@ export const updateSchedule = async (updatedSchedule, dispatch) => {
 export const removeSchedule = async (ScheduleId, dispatch) => {
   dispatch(deleteScheduleStart())
   try {
-    const response = await axios.delete(`${API_URL}/delete/${ScheduleId}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    console.log(response.data)
+    const response = await axiosInstance.delete(`${API_URL}/delete/${ScheduleId}`)
     dispatch(deleteScheduleSuccess(response.data))
   } catch (error) {
     console.error(`Error removing user with ID ${ScheduleId}:`, error);

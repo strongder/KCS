@@ -1,21 +1,13 @@
 import axios from "axios";
+import axiosInstance from "../api";
 
 const API_URL = "http://localhost:8081/api/v1/user";
 
-export const fetchUsers = async () => {
-  try {
-    const response = await axios.get(API_URL);
-
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching users:", error);
-    throw error;
-  }
-};
 
 export const fetchUserById = async (userId) => {
   try {
-    const response = await axios.get(`${API_URL}/${userId}`);
+    const response = await axiosInstance.get(`${API_URL}/${userId}`);
+    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error(`Error fetching user with ID ${userId}:`, error);
@@ -23,14 +15,35 @@ export const fetchUserById = async (userId) => {
   }
 };
 
+export const fetchUsers = async () => {
+  try {
+    const response = await axios.get(API_URL,{
+      headers:{
+        "Authorization":`Bearer ${localStorage.getItem('token')}`
+      }
+    });
+    console.log(response.data)
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+};
+
+export const fetchUserByUsername = async (username) => {
+  try {
+    const response = await axiosInstance.get(`${API_URL}/user-current/${username}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching user with ID ${username}:`, error);
+    throw error;
+  }
+};
+
 export const addUser = async (userData) => {
 
   try {
-    const response = await axios.post(API_URL, userData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axiosInstance.post(API_URL, userData);
     return response.data;
   } catch (error) {
     console.error("Error adding user:", error);
@@ -40,14 +53,9 @@ export const addUser = async (userData) => {
 
 export const updateUser = async (updatedUser) => {
   try {
-    const response = await axios.put(
+    const response = await axiosInstance.put(
       `${API_URL}/update/${updatedUser.id}`,
-      updatedUser,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+      updatedUser
     );
     return response.data;
   } catch (error) {
@@ -62,12 +70,7 @@ export const updateUser = async (updatedUser) => {
 
 export const removeUser = async (userId) => {
   try {
-    const response = await axios.delete(`${API_URL}/delete/${userId}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
+    const response = await axiosInstance.delete(`${API_URL}/delete/${userId}`);
     return response.data;
   } catch (error) {
     console.error(`Error removing user with ID ${userId}:`, error);

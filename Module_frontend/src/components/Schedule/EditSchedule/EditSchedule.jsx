@@ -12,7 +12,9 @@ import { removeSchedule } from "../../../services/ScheduleService";
 const EditSchedule = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { schedule, loading } = useSelector((state) => state.schedule.getScheduleByID);
+  const { schedule, loading } = useSelector(
+    (state) => state.schedule.getScheduleByID
+  );
   const history = useHistory("");
   const [editSchedule, setEditschedule] = useState({
     id: "",
@@ -25,7 +27,7 @@ const EditSchedule = () => {
     updateDate: "",
     createBy: "",
     updateBy: "",
-    isDelete: ""
+    isDelete: "",
   });
 
   useEffect(() => {
@@ -46,7 +48,7 @@ const EditSchedule = () => {
         updateDate: schedule.updateDate,
         createBy: schedule.createBy,
         updateBy: schedule.updateBy,
-        isDelete: schedule.isDelete
+        isDelete: schedule.isDelete,
       });
     }
   }, [schedule]);
@@ -57,145 +59,154 @@ const EditSchedule = () => {
     updateSchedule(newSchedule, dispatch).then(() => {
       history.push("/admin/schedule");
     });
-    console.log(newSchedule)
+    console.log(newSchedule);
   };
-  const handleInputChange =(e) =>{
-    setEditschedule((prev) =>({
+  const handleInputChange = (e) => {
+    setEditschedule((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
-  }
+  };
 
-  const handleButtonDelete = async() => {
+  const handleButtonDelete = async () => {
     await removeSchedule(id, dispatch);
     history.push("/admin/schedule");
-  }
+  };
 
   return (
-    <div className="user-detail">
+    <div className="schedule-detail">
       <h2>Chỉnh sửa thông tin lịch làm việc</h2>
-      <div className="user-detail-container">
+      <div className="schedule-detail-container">
         <div className="list-field">
-          <label>
-            <i className="bx bxs-star"></i>
-            Mã lịch:
-          </label>
-          <input
-            type="text"
-            name="id" // Use item.title as the name for better identification
-            value={editSchedule.id}
-            onChange={handleInputChange}
-            readOnly
-          />
-         <label>
-            <i className="bx bxs-star"></i>
-            Nội dung:
-          </label>
-          <input
-            type="text"
-            name="content" // Use item.title as the name for better identification
-            value={editSchedule.content}
-            onChange={handleInputChange}
-          />
-          <label>
-            <i className="bx bxs-star"></i>
-            Trạng thái:
-          </label>
-          <input
-            type="text"
-            name="status" // Use item.title as the name for better identification
-            value={(editSchedule.status) ? "Đi làm" : "Nghỉ"}
-            onChange={e=>setEditschedule(e.target.value)}
-          />
-          <label>
-            <i className="bx bxs-star"></i>
-            date:
-          </label>
-          <input
-            type="text"
-            name="date" // Use item.title as the name for better identification
-            value={editSchedule.date}
-            onChange={handleInputChange}
-          />
-          <label>
-            <i className="bx bxs-star"></i>
-            timeStart:
-          </label>
-          <input
-            type="text"
-            name="timeStart" // Use item.title as the name for better identification
-            value={editSchedule.timeStart}
-            onChange={handleInputChange}
-          />
-          <label>
-            <i className="bx bxs-star"></i>
-            timeEnd:
-          </label>
-          <input
-            type="text"
-            name="timeEnd" // Use item.title as the name for better identification
-            value={editSchedule.timeEnd}
-            onChange={handleInputChange}
-          />
-          <label>
-            <i className="bx bxs-star"></i>
-            createDate:
-          </label>
-          <input
-            type="text"
-            name="createDate" // Use item.title as the name for better identification
-            value={editSchedule.createDate}
-            onChange={handleInputChange}
-            readOnly
-          />
-          <label>
-            <i className="bx bxs-star"></i>
-            createBy:
-          </label>
-          <input
-            type="text"
-            name="createBy" // Use item.title as the name for better identification
-            value={editSchedule.createBy}
-            onChange={handleInputChange}
-            readOnly
-          />
-          <label>
-            <i className="bx bxs-star"></i>
-            updateDate:
-          </label>
-          <input
-            type="text"
-            name="updateDate" // Use item.title as the name for better identification
-            value={editSchedule.updateDate}
-            onChange={handleInputChange}
-            readOnly
-          />
-          <label>
-            <i className="bx bxs-star"></i>
-            updateBy:
-          </label>
-          <input
-            type="text"
-            name="updateBy" // Use item.title as the name for better identification
-            value={editSchedule.updateBy}
-            onChange={handleInputChange}
-            readOnly
-          />
-          <label>
-            <i className="bx bxs-star"></i>
-            isDelete:
-          </label>
-          <input
-            type="text"
-            name="isDelete" // Use item.title as the name for better identification
-            value={editSchedule.isDelete}
-            onChange={handleInputChange}
-            readOnly
-          />
+          <div className="field">
+            <label>
+              <i className="bx bxs-star"></i>
+              Nội dung:
+            </label>
+            <input
+              type="text"
+              name="content" // Use item.title as the name for better identification
+              value={editSchedule.content}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="field">
+            <label>
+              <i className="bx bxs-star"></i>
+              Trạng thái:
+            </label>
+            <input
+              type="text"
+              name="status" // Use item.title as the name for better identification
+              value={editSchedule.status ? "Đi làm" : "Nghỉ"}
+              onChange={(e) => setEditschedule(e.target.value)}
+            />
+          </div>
+          <div className="field">
+            <label>
+              <i className="bx bxs-star"></i>
+              date:
+            </label>
+            <input
+              type="text"
+              name="date" // Use item.title as the name for better identification
+              value={editSchedule.date}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="field">
+            <label>
+              <i className="bx bxs-star"></i>
+              timeStart:
+            </label>
+            <input
+              type="text"
+              name="timeStart" // Use item.title as the name for better identification
+              value={editSchedule.timeStart}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="field">
+            <label>
+              <i className="bx bxs-star"></i>
+              timeEnd:
+            </label>
+            <input
+              type="text"
+              name="timeEnd" // Use item.title as the name for better identification
+              value={editSchedule.timeEnd}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="field">
+            <label>
+              <i className="bx bxs-star"></i>
+              createDate:
+            </label>
+            <input
+              type="text"
+              name="createDate" // Use item.title as the name for better identification
+              value={editSchedule.createDate}
+              onChange={handleInputChange}
+              readOnly
+            />
+          </div>
+          <div className="field">
+            <label>
+              <i className="bx bxs-star"></i>
+              createBy:
+            </label>
+            <input
+              type="text"
+              name="createBy" // Use item.title as the name for better identification
+              value={editSchedule.createBy}
+              onChange={handleInputChange}
+              readOnly
+            />
+          </div>
+          <div className="field">
+            <label>
+              <i className="bx bxs-star"></i>
+              updateDate:
+            </label>
+            <input
+              type="text"
+              name="updateDate" // Use item.title as the name for better identification
+              value={editSchedule.updateDate}
+              onChange={handleInputChange}
+              readOnly
+            />
+          </div>
+          <div className="field">
+            <label>
+              <i className="bx bxs-star"></i>
+              updateBy:
+            </label>
+            <input
+              type="text"
+              name="updateBy" // Use item.title as the name for better identification
+              value={editSchedule.updateBy}
+              onChange={handleInputChange}
+              readOnly
+            />
+          </div>
+          <div className="field">
+            <label>
+              <i className="bx bxs-star"></i>
+              isDelete:
+            </label>
+            <input
+              type="text"
+              name="isDelete" // Use item.title as the name for better identification
+              value={editSchedule.isDelete}
+              onChange={handleInputChange}
+              readOnly
+            />
+          </div>
         </div>
       </div>
       <div className="button">
-        <Link className="cancel" to="/admin/schedule">
+        <Link className="exit" to="/admin/schedule">
           <button>Hủy</button>
         </Link>
         <button className="submit" onClick={handleUpdateUser}>

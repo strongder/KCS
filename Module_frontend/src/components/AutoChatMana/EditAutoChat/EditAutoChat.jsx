@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import "./EditAutoChat.scss"
 import { getAllChat, getChatById, updateChat } from "../../../redux/slices/AutoChatSlice";
 
 const EditAutoChat = () => {
@@ -43,7 +44,7 @@ const EditAutoChat = () => {
   };
 
   return (
-    <div className="view-chat">
+    <div className="edit-chat">
       <h2>Chỉnh sửa tin nhắn tự động</h2>
       <div className="auto-chat-container">
         <div className="list-field">

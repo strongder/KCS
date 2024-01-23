@@ -1,7 +1,7 @@
 [
   {
     "display_name": "Managerment",
-    "route": "/admin",
+    "route": "/",
     "icon": "bx bx-user-pin"
   },
   {

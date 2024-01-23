@@ -1,6 +1,5 @@
 package com.example.backend.config.security;
 
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,8 @@ public class CustomUserServiceDetail implements UserDetailsService {
    
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByEmail(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent()) {
             return new CustomUserDetail(user.get());
         } else {

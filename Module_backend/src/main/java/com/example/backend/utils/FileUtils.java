@@ -46,3 +46,4 @@ public class FileUtils {
         return extensions.contains(fileExtension.toLowerCase());
     }
 }
+

@@ -30,6 +30,7 @@ public class CustomUserDetail implements UserDetails {
         return List.of(this.authorities);
     }
 
+
     @Override
     public String getPassword() {
         return password;
@@ -59,4 +60,6 @@ public class CustomUserDetail implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    
 }

@@ -44,6 +44,7 @@ public class JwtUtils {
                 .setSubject(userName)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+1000*60*30))
+
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
      }
 

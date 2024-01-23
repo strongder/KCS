@@ -1,10 +1,12 @@
 import axios from "axios";
+import axiosInstance from "../api";
 
 const API_URL = "http://localhost:8081/api/v1/auto-chat";
 
+const token = localStorage.getItem('token')
 export const getAllChat = async () => {
   try {
-    const response = await axios.get(API_URL);
+    const response = await axiosInstance.get(API_URL)
     return response.data;
   } catch (error) {
     console.error("Error fetching autoChat:", error);
@@ -14,7 +16,7 @@ export const getAllChat = async () => {
 
 export const getChatById = async (ChatId) => {
   try {
-    const response = await axios.get(`${API_URL}/${ChatId}`);
+    const response = await axiosInstance.get(`${API_URL}/${ChatId}`)
     return response.data;
   } catch (error) {
     console.error(`Error fetching user with ID ${ChatId}:`, error);
@@ -24,11 +26,7 @@ export const getChatById = async (ChatId) => {
 
 export const addChat = async (autoChat) => {
   try {
-    const response = await axios.post(`${API_URL}/create`, autoChat, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axiosInstance.post(`${API_URL}/create`, autoChat)
     return response.data;
   } catch (error) {
     console.error("Error adding autoChat:", error);
@@ -38,19 +36,14 @@ export const addChat = async (autoChat) => {
 
 export const updateChat = async (autoChat) => {
   try {
-    const response = await axios.put(
+    const response = await axiosInstance.put(
       `${API_URL}/update/${autoChat.id}`,
-      autoChat,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+      autoChat)
+
     return response.data;
   } catch (error) {
     console.error(
-      `Error updating autchat with ID ${autoChat.id} :`,error
+      `Error updating autchat with ID ${autoChat.id} :`, error
     );
     throw error;
   }
@@ -58,11 +51,7 @@ export const updateChat = async (autoChat) => {
 
 export const removeChat = async (chatId) => {
   try {
-    const response = await axios.delete(`${API_URL}/delete/${chatId}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axiosInstance.delete(`${API_URL}/delete/${chatId}`);
 
     return response.data;
   } catch (error) {
