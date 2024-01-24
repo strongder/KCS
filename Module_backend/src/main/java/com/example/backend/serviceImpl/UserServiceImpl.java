@@ -162,7 +162,7 @@ public class UserServiceImpl implements UserService {
 
 	public void createRoomPrivate(User user) {
 		List<UserDTO> listUserDTO = this.getAll();
-		if(listUserDTO.size() > 1) {
+		if(listUserDTO.size() >= 1) {
 			List<User> listUser = listUserDTO.stream().map((item) -> this.modelMapper.map(item, User.class)).toList();
 			Iterator ItrUser = listUser.iterator();
 			while(ItrUser.hasNext()) {

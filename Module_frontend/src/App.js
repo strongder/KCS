@@ -11,31 +11,34 @@ import NotFound from './pages/NotFound';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect( () => {
-    const token = localStorage.getItem('token');
-    const expirationTime = localStorage.getItem('expTime');
-    if (token && expirationTime) {
-      const currentTime = new Date().getTime();
-      if (currentTime < parseInt(expirationTime, 10)) {
-       setIsLoggedIn(true);
-      } else {
-        // Xóa token và thời gian hết hạn nếu token đã hết hạn
-        localStorage.removeItem('token');
-        localStorage.removeItem('expTime');
-        localStorage.removeItem('id');
+  useEffect(() => {
+      const token = localStorage.getItem('token');
+      const expirationTime = localStorage.getItem('expTime');
+
+      if (token && expirationTime) {
+        const currentTime = new Date().getTime();
+        if (currentTime < parseInt(expirationTime, 10)) {
+          setIsLoggedIn(true);
+        } else {
+          localStorage.removeItem('token');
+          localStorage.removeItem('expTime');
+          localStorage.removeItem('id');
+        }
       }
-    }
+
   }, []);
+
 
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/login" component={Login} /> 
+        <Route path="/login" component={Login} />
+
         <Route path="/not-found" component={NotFound} />
-        <Route path="/" render={(props) => (
-          console.log(isLoggedIn)&&!isLoggedIn ?<Redirect to='/login' />: <Layout {...props}/> 
-          )} />
-        <Redirect to="/not-found" />
+        {
+          console.log()&&!isLoggedIn ? ('' ):(<Route path="/" render={(props)=><Layout  {...props}/>} />)
+        }
+  
       </Switch>
     </BrowserRouter>
   );

@@ -14,13 +14,11 @@ public class ChatPrivateDTO {
 
 	private Date timeSend;
 
-	private Long IDSender;
-	
-	private Boolean type;
+	private String IdSender;
 
 	private String content;
 
-	private Long IDResources;
+	private String IDResources;
 
 	private Long roomPrivateID;
 }

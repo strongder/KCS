@@ -32,9 +32,9 @@ public class ChatPrivateController {
 
     @MessageMapping("/private-message")
     public ChatPrivateDTO recMessage(@Payload ChatPrivateDTO message){
-    	System.out.print("Private-message");
+    	System.out.print("message: " + message);
         simpMessagingTemplate.convertAndSendToUser(message.getRoomPrivateID() + "","/private",message);
-        System.out.println(message.toString());
+//        System.out.println(message.getIDSender());
 //        this.chat.save();
         this.chatPrivateService.create(message);
         return message;

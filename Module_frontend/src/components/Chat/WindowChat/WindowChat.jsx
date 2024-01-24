@@ -6,17 +6,15 @@ import MessageInput from "../messageInput/MessageInput";
 import Message from "../Message/Message";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserById } from "../../../redux/slices/UserSlice";
+
 const WindowChat = (props) => {
-  const { userId, onClickInfo } = props;
+  const { userId, onClickInfo, listMessages, stompClient } = props;
   const { user } = useSelector(state => state.users)
   const dispatch = useDispatch()
   const [selectSearch, SetSelectSearch] = useState(false);
   const messagesEndRef = useRef(null);
-  const [messages, setMessages] = useState([
-    { id: 1, sender: 'User 1', content: 'Hello!', time: '10:00 AM' },
-    { id: 2, sender: 'User 2', content: 'Hi there!', time: '10:05 AM' },
-    // Add more messages as needed
-  ]);
+  // const [messages, setMessages] = useState([]);
+
   const handleClickSearch = () => {
     SetSelectSearch(!selectSearch);
   };
@@ -27,22 +25,33 @@ const WindowChat = (props) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, []);
+
   useEffect(() => {
     dispatch(fetchUserById(userId))
   }, [userId, dispatch])
 
 
-  const handleSendMessage = (content) => {
-    const newMessage = {
-      id: messages.length + 1,
-      sender: 'User 1',
-      content,
-      time: new Date().toLocaleTimeString(),
-    };
+  const RoomPrivateID = useSelector((state) => state.roomPrivate.getRoomPrivateByIDUsers.RoomPrivateID);
+  const handleSendMessage = (content, IDFile) => {
+    // if (stompClient) {
+      const ChatPrivateDTO = {
+        id: Number,
+        timeSend: new Date(),
+        IdSender: localStorage.getItem("id"),
+        content,
+        IDResources: "5",
+        roomPrivateID: RoomPrivateID
+      };
+      console.log(stompClient)
+      stompClient.send("/app/private-message", {}, JSON.stringify(ChatPrivateDTO));
+      // console.log("Id: " + typeof(localStorage.getItem("id")));
+      // console.log("Room: " + typeof(RoomPrivateID));
 
-    setMessages([...messages, newMessage]);
-  };
+      // setMessages([...messages, newMessage]);
+    // }
+  }
+
   return (
     <div className="chat-area">
       {user && (<div className="chat-area-nav">
@@ -75,18 +84,18 @@ const WindowChat = (props) => {
 
       <div className="chat-area-content">
         <div className="message-list">
-          {messages.map((message) => (
+          {listMessages.map((message) => (
             <Message
-            key={message.id}
-            message={message}
-          />
+              key={message.id}
+              message={message}
+            />
           ))}
-           <div ref={messagesEndRef} />
+          <div ref={messagesEndRef} />
         </div>
       </div>
-      
-        <MessageInput onSendMessage={handleSendMessage}></MessageInput>
-      
+
+      <MessageInput onSendMessage={handleSendMessage}></MessageInput>
+
     </div>
   );
 };

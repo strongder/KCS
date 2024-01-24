@@ -6,6 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../redux/slices/UserSlice";
 import WindowChat from "../components/Chat/WindowChat/WindowChat";
 import InfoPanel from "../components/Chat/InfoPanel/InfoPanel";
+import { fetchRoomPrivate } from "../services/RoomPrivateService"
+import SockJS from "sockjs-client";
+import Stomp from 'stompjs';
+
 
 const Item = styled(Paper)(({ theme,  selectedInfo}) => ({
   padding: "0px",
@@ -17,6 +21,10 @@ const Item = styled(Paper)(({ theme,  selectedInfo}) => ({
   transform: `translateX(${selectedInfo ? '-50%' : '0'})`,
 }));
 const LiveChat = () => {
+  const [stompClient, setStompClient] = useState(null);
+  const [messages, setMessages] = useState([]);
+  // const [message, setMessage] = useState('');
+
   const [selectedChat, setSelectedChat] = useState('');
   const[selectedInfo, setSelectedInfo] = useState(false)
   const { data, loading} = useSelector((state) => state.users);
@@ -24,9 +32,28 @@ const LiveChat = () => {
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
+
+  const subscribe = async (id) => {
+    const id1 = localStorage.getItem("id");
+    const roomPrivate = await fetchRoomPrivate(id1, id, dispatch);
+    const socket = new SockJS('http:/localhost:8081/ws');
+    const client = Stomp.over(socket)
+    console.log("ID1: ", id1);
+    console.log("ID2: ", id);
+    client.connect({},  () => {
+       client.subscribe(roomPrivate + "/private", (message) => {
+        const receivedMessage = JSON.parse(message.body);
+        setMessages((preMessages) => [...preMessages, receivedMessage]);
+      });
+    });
+    setStompClient(client)
+    // onSelect(data.id)
+  }
+
   const handleChatSelect = (userId) => {
     setSelectedChat(userId);
     console.log(userId)
+    subscribe(userId);
   };
 
   const handleSelectedInfo =()=>{
@@ -41,7 +68,7 @@ const LiveChat = () => {
         <div className="window-chat">
           {selectedChat && (
             <div className="window-chat-content">
-              <WindowChat userId={selectedChat} onClickInfo={handleSelectedInfo} />
+              <WindowChat userId={selectedChat} onClickInfo={handleSelectedInfo} listMessages = {messages} stompClient = {stompClient} />
             </div>
           )}
         </div>
