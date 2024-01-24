@@ -29,6 +29,7 @@ const Routing = ({ role }) => {
       <Route path="/reports" exact component={Report} />
       
       
+      
       {role !== 'ROLE_USER' ? (<>
         <Route path="/admin/schedule" exact component={ScheduleList} />
         <Route path="/admin/schedule/viewSchedule/:id" exact component={DetailSchedule} />

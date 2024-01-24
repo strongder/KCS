@@ -43,11 +43,11 @@ const Layout = (props) => {
   return (
     <>
      
-      {!loading &&currentUser && avatar &&  (
+      {!loading &&currentUser &&  (
         <div className={`layout ${themeReducer.mode} ${themeReducer.color}`}>
           <Sidebar {...props} />
           <div className="layout__content">
-            <TopNav user={currentUser} avatar = {avatar} />
+            <TopNav user={currentUser} />
             <div className="layout__content-main">
               <Routing role={currentUser.role}></Routing>
             </div>

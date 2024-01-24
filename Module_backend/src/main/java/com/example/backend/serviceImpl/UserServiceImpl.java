@@ -60,14 +60,12 @@ public class UserServiceImpl implements UserService {
 		if (listUsers.isEmpty()) {
 
 			Date date = new Date();
-			Long avt = (long) 1;
+//			Long avt = (long) 1;
 			User user = modelMapper.map(userDTO, User.class);
-//			user.setAvt(avt);
 			user.setCreateDate(date);
 			user.setUpdateDate(date);
 			user.setIsDelete(false);
 			user.setMaTK("GV" + date.getTime());
-//			this.userRepository.save(user);
 			User userSave = this.userRepository.save(user);
 			this.createRoomPrivate(userSave);
 			return userDTO;

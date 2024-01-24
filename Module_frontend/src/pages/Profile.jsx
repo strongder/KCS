@@ -3,8 +3,8 @@ import "./css/Profile.scss";
 import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrentUser } from "../redux/slices/UserSlice";
-import { Link } from "react-router-dom";
+import { fetchCurrentUser, updateUser } from "../redux/slices/UserSlice";
+import { Link, useHistory } from "react-router-dom";
 
 
 const Profile = () => {
@@ -19,9 +19,10 @@ const Profile = () => {
       role:'',
     }
   )
+  const history= useHistory('');
   const {currentUser, loading} = useSelector(state=> state.users)
-  const {avatar} = useSelector(state => state.resource)
-  const img = `data:image; base64, ${avatar.data}`
+  const [avatar, setAvatar] = useState("");
+  const img = `data:image; base64, ${currentUser.avt}`
   const dispatch = useDispatch()
   const userId = localStorage.getItem('id')
   
@@ -31,6 +32,29 @@ const Profile = () => {
       [e.target.name]: e.target.value,
     }));
   };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setAvatar(reader.result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+  const handleUpdateProfile = () => {
+    
+    let newUser = { ...currentUser, ...profile };
+    const gender = newUser.gender==='Nam'?true:false;
+    newUser = ({...newUser, gender});    
+    dispatch(updateUser(newUser)).then(() => {
+      history.push("/");
+    });
+  };
+  const handleSaveImage = ()=>{
+    // dispatch(updateAvatar({ data: avatar }));
+  }
 
   useEffect(() => {
    dispatch( fetchCurrentUser(userId));
@@ -58,7 +82,9 @@ useEffect(() => {
         <div className="profile">
           <h2>Thông tin cá nhân</h2>
           <div className="profile-avt">
-            <img src={img} alt="" />
+          {avatar && <img src={avatar} alt="" />}
+            <input type="file" onChange={handleImageChange} accept="image/*" />
+            <button onClick={handleSaveImage}>Lưu ảnh</button>
           </div>
           <div className="profile-info">
             <div className="info-item">
@@ -93,7 +119,7 @@ useEffect(() => {
           </div>
           <div className="button">
               <Link to = '/'><button>Thoát</button></Link>
-               <button type="submit">Lưu</button>
+               <button type="submit" onClick={handleUpdateProfile}>Lưu</button>
           </div>
         </div>
       )}
