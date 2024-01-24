@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.text.ParseException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.DTO.UserDTO;
@@ -56,6 +57,7 @@ public class UserServiceImpl implements UserService {
 			user.setAvt(
 					"https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg");
 			user.setCreateDate(date);
+			user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
 			user.setUpdateDate(date);
 			user.setIsDelete(false);
 			user.setMaTK("GV" + date.getTime());
