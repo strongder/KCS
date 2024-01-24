@@ -4,11 +4,34 @@ import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import avatar from "../../../assets/images/tuat.png";
 import { useDispatch } from "react-redux";
+import { fetchRoomPrivate } from "../../../services/RoomPrivateService";
+import { useState } from "react";
+
 const ContactList = (props) => {
   const { data, loading, onSelect } = props
   const [value, setValue] = React.useState("1");
+  const [stompClient, setStompClient] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState('');
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  }
+
+  const subcrible = (data) => {
+    const id1 = localStorage.getItem("id");
+    const roomPrivate = fetchRoomPrivate(id1, data.id);
+    const socket = new SockJS('http:/localhost:8080/ws');
+    const client = Stomp.over(socket)
+    // console.log("test")
+    client.connect({}, () => {
+      client.subscribe(roomPrivate.id + "/private", (message) => {
+        const receivedMessage = JSON.parse(message.body);
+        setMessages((preMessages) => [...preMessages, receivedMessage]);
+      });
+    });
+    setStompClient(client)
+    onSelect(data.id)
   }
 
   return (
@@ -53,7 +76,7 @@ const ContactList = (props) => {
 
                     {data.map((item, index) =>{
                       return (
-                      <div className="item" key ={index} onClick={() => onSelect(item.id)} >
+                      <div className="item" key ={index} onClick={() => subcrible(item)} >
 
                       <div className="item-avatar">
                         <img src={item.avt} alt="" />
