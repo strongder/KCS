@@ -7,16 +7,29 @@ import Message from "../Message/Message";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserById } from "../../../redux/slices/UserSlice";
 const WindowChat = (props) => {
-  const { userId, onClickInfo } = props;
+  const { userId, onClickInfo, messages, roomId, stompClient } = props;
   const { user } = useSelector(state => state.users)
   const dispatch = useDispatch()
   const [selectSearch, SetSelectSearch] = useState(false);
   const messagesEndRef = useRef(null);
-  const [messages, setMessages] = useState([
-    { id: 1, sender: 'User 1', content: 'Hello!', time: '10:00 AM' },
-    { id: 2, sender: 'User 2', content: 'Hi there!', time: '10:05 AM' },
-    // Add more messages as needed
-  ]);
+  
+
+  const sendMessage = (message) => {
+    if (message.trim()) {
+      const chatMessage = {
+        content: message,
+        // Long: "1",
+        idsender: localStorage.getItem('id'),
+        idresources: 1,
+        roomPrivateID: roomId,
+        timeSend: new Date(),
+      }
+
+      stompClient.send(`/app/chat/room/${roomId}`, {}, JSON.stringify(chatMessage));
+    }
+  }
+
+  console.log("check room" ,roomId)
   const handleClickSearch = () => {
     SetSelectSearch(!selectSearch);
   };
@@ -33,16 +46,6 @@ const WindowChat = (props) => {
   }, [userId, dispatch])
 
 
-  const handleSendMessage = (content) => {
-    const newMessage = {
-      id: messages.length + 1,
-      sender: 'User 1',
-      content,
-      time: new Date().toLocaleTimeString(),
-    };
-
-    setMessages([...messages, newMessage]);
-  };
   return (
     <div className="chat-area">
       {user && (<div className="chat-area-nav">
@@ -75,20 +78,20 @@ const WindowChat = (props) => {
 
       <div className="chat-area-content">
         <div className="message-list">
-          {messages.map((message) => (
+          {messages.map((message, index) => (
             <Message
-            key={message.id}
-            message={message}
-          />
+              key={index}
+              message={message}
+            />
           ))}
-           <div ref={messagesEndRef} />
+          <div ref={messagesEndRef} />
         </div>
       </div>
-      
-        <MessageInput onSendMessage={handleSendMessage}></MessageInput>
-      
+
+      <MessageInput onSendMessage={sendMessage}></MessageInput>
+
     </div>
   );
-};
 
+}
 export default WindowChat;

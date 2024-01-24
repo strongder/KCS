@@ -39,9 +39,6 @@ public class ChatPrivate {
 	@Column(name = "content")
 	private String content;
 	
-//	@OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "IDResources", referencedColumnName = "id")
-//	private Resources IDResources;
 	
 	@Column(name = "id_resource")
 	private Long IDResource;

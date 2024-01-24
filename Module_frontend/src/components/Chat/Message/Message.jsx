@@ -3,12 +3,12 @@ import React from 'react';
 import './Message.scss';
 import { useSelector } from 'react-redux';
 
-const Message = ({ message }) => {
-
-  const {user, currentUser, loadin} = useSelector(state => state.users)
-  const who  = message.sender ==="User 1"?'own-message':'other-message'
-
-  const avatar = message.sender ==="User 1"? currentUser.avt : user.avt;
+const Message = (props) => {
+  const {message} = props;
+  const {user, currentUser} = useSelector(state => state.users)
+  
+  const who  = message.idsender === currentUser.id?'own-message':'other-message'
+  const avatar = message.idsender ===currentUser.id ? currentUser.avt : user.avt;
   return (
     <div className={`message ${who}`}>
       <div className="avavtar">

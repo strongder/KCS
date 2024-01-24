@@ -27,7 +27,7 @@ public class UserDTO {
 	
 	private String MaTK;
 	
-	private byte[] avt;
+	private Long avt;
 	
 	private String role;
 	

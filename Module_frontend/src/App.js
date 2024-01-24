@@ -7,17 +7,13 @@ import "./assets/css/index.css";
 import Login from "./pages/Login";
 import Layout from "./components/layout/Layout";
 import NotFound from './pages/NotFound';
+import Router from './Router';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      const value = localStorage.getItem(key);
-      console.log(`Key: ${key}, Value: ${value}`);
-    }
-
+    
     const token = localStorage.getItem('token');
     const expirationTime = localStorage.getItem('expTime');
     
@@ -36,17 +32,7 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/login" component={Login} />
-        {isLoggedIn ? (
-          <Route path="/" render={(props) => <Layout {...props} />} />
-        ) : (
-          <Redirect to="/login" />
-        )}
-        <Route path="/not-found" component={NotFound} />
-      </Switch>
-    </BrowserRouter>
+   <Router isLoggedIn = {isLoggedIn}/>
   );
 }
 

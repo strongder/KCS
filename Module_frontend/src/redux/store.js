@@ -7,7 +7,7 @@ import UserReducer from "./slices/UserSlice"
 
 import AutoChatReducer from "./slices/AutoChatSlice"
 import ResourceReducer from "./slices/ResourceSlice"
-
+import RoomPrivateReducer from "./slices/RoomPrivateSlice";
 
 
 const store = configureStore({
@@ -17,6 +17,7 @@ const store = configureStore({
         schedule: ScheduleReducer,
         autoChat: AutoChatReducer,
         resource: ResourceReducer,
+        roomPrivate: RoomPrivateReducer,
     },
 })
 
