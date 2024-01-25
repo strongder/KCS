@@ -80,7 +80,6 @@ const LiveChat = () => {
                 stompClient={stompClient}
                 messages={messages}
                 roomId={roomId}
-                setMessages={setMessages}
                 onClickInfo={handleSelectedInfo} />
             </div>
           )}

@@ -18,22 +18,6 @@ const ContactList = (props) => {
     setValue(newValue);
   }
 
-  const subcrible = (data) => {
-    const id1 = localStorage.getItem("id");
-    const roomPrivate = fetchRoomPrivate(id1, data.id);
-    const socket = new SockJS('http:/localhost:8080/ws');
-    const client = Stomp.over(socket)
-    // console.log("test")
-    client.connect({}, () => {
-      client.subscribe(roomPrivate.id + "/private", (message) => {
-        const receivedMessage = JSON.parse(message.body);
-        setMessages((preMessages) => [...preMessages, receivedMessage]);
-      });
-    });
-    setStompClient(client)
-    onSelect(data.id)
-  }
-
   return (
     <>
 
@@ -76,7 +60,7 @@ const ContactList = (props) => {
 
                     {data.map((item, index) =>{
                       return (
-                      <div className="item" key ={index} onClick={() => subcrible(item)} >
+                      <div className="item" key ={index} onClick={() => onSelect(item.id)} >
 
                       <div className="item-avatar">
                         <img src={item.avt} alt="" />
