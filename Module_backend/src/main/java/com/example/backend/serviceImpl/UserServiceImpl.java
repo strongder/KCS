@@ -9,11 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.DTO.RoomPrivateDTO;
 import com.example.backend.DTO.UserDTO;
+import com.example.backend.entity.Resources;
 import com.example.backend.entity.RoomPrivate;
 import com.example.backend.entity.User;
 import com.example.backend.exception.UserException;
+import com.example.backend.repository.ResourcesRepository;
 import com.example.backend.repository.RoomPrivateRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.service.UserService;
@@ -29,6 +30,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private RoomPrivateRepository roomPrivateRepository;
+	
+	@Autowired
+	private ResourcesRepository  resourcesRepository;
 
 	@Override
 	public List<UserDTO> getAll() {
@@ -56,9 +60,11 @@ public class UserServiceImpl implements UserService {
 		List<User> listUsers = this.userRepository.findByEmailOrPhone(userDTO.getEmail(), userDTO.getPhone());
 		if (listUsers.isEmpty()) {
 
+			Optional<Resources> resourcesDTO = this.resourcesRepository.findById((long) 1);
 			Date date = new Date();
 			User user = modelMapper.map(userDTO, User.class);
-			user.setAvt(1);
+//			
+			user.setAvt(resourcesDTO.get().getData());
 			user.setCreateDate(date);
 			user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
 			user.setUpdateDate(date);
@@ -71,6 +77,7 @@ public class UserServiceImpl implements UserService {
 			throw new UserException("Email hoặc SĐT đã tồn tại");
 		}
 	}
+	
 
 	@Override
 	public UserDTO update(Long id, UserDTO userDTO) {
@@ -186,5 +193,16 @@ public class UserServiceImpl implements UserService {
 >>>>>>> d125702383c32bfc3c28bf2c09bd5278561ae6c9
 		}
 	}
+	
+	public UserDTO updateAvt(Long id) {
+		Optional<Resources> resourcesDTO = this.resourcesRepository.findById((long) 1);
+		Optional<User> user = this.userRepository.findById(id);
+		user.get().setAvt(resourcesDTO.get().getData());
+		this.userRepository.save(user.get());
+		UserDTO userDTO = this.modelMapper.map(user, UserDTO.class);
+		return userDTO;
+	}
+	
+	
 
 }

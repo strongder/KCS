@@ -41,7 +41,7 @@ const ContactList = (props) => {
               <div className="nav-list">
                 <div className="nav-search">
                   <input type="text" placeholder="Search..." />
-                  <i class="bx bx-search-alt"></i>
+                  <i className="bx bx-search-alt"></i>
                 </div>
                 <div className="content">
                   <div className="list-item">
@@ -56,7 +56,7 @@ const ContactList = (props) => {
               <div className="nav-list">
                 <div className="nav-search">
                   <input type="text" placeholder="Search..." />
-                  <i class="bx bx-search-alt"></i>
+                  <i className="bx bx-search-alt"></i>
                 </div>
                 <div className="content">
                   <div className="list-item">

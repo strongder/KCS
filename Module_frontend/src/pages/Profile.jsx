@@ -1,90 +1,123 @@
-import React, { useEffect } from "react";
-import "./css/Profile.scss";
-import { jwtDecode } from "jwt-decode";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrentUser, updateUser } from "../redux/slices/UserSlice";
+import { updateCurrentUser, updateUser } from "../redux/slices/UserSlice";
 import { Link, useHistory } from "react-router-dom";
 
+import './css/Profile.scss'
+import { current } from "@reduxjs/toolkit";
 
 const Profile = () => {
-  const [profile, setProfile] = useState(
-    {
-      maTK:'',
-      name:'',
-      email:'',
-      phone:'',
-      birthDay:'',
-      gender:'',
-      role:'',
-    }
-  )
-  const history= useHistory('');
-  const {currentUser, loading} = useSelector(state=> state.users)
-  const [avatar, setAvatar] = useState("");
-  const img = `data:image; base64, ${currentUser.avt}`
-  const dispatch = useDispatch()
-  const userId = localStorage.getItem('id')
-  
+  const [selectFile, setSelectFile] = useState(null);
+  const [fileBase64String, setFileBase64String] = useState("");
+  const [profile, setProfile] = useState({
+    maTK: "",
+    name: "",
+    avt: ` `,
+    email: "",
+    phone: "",
+    birthDay: "",
+    gender: "",
+    role: "",
+  });
+
+  const history = useHistory();
+  const { currentUser, loading } = useSelector((state) => state.users);
+  const dispatch = useDispatch();
+
   const handleInputChange = (e) => {
     setProfile((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
+      avt: `data:image; base64, ${fileBase64String} `
     }));
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setAvatar(reader.result);
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+    setSelectFile(e.target.files[0]);
+
   };
-  const handleUpdateProfile = () => {
-    
-    let newUser = { ...currentUser, ...profile };
-    const gender = newUser.gender==='Nam'?true:false;
-    newUser = ({...newUser, gender});    
-    dispatch(updateUser(newUser)).then(() => {
-      history.push("/");
+
+  const encodeFileBase64 = async (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result.split(",")[1]);
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
     });
   };
-  const handleSaveImage = ()=>{
-    // dispatch(updateAvatar({ data: avatar }));
-  }
 
   useEffect(() => {
-   dispatch( fetchCurrentUser(userId));
-}, [dispatch,currentUser]);
+    const loadFile = async () => {
+      if (selectFile) {
+        try {
+          const base64String = await encodeFileBase64(selectFile);
+          setFileBase64String(base64String);
+        } catch (error) {
+          console.error("Error encoding file to base64:", error);
+        }
+      }
+    };
+    loadFile();
+  }, [selectFile]);
 
-useEffect(() => {
-  // Set editUser values when user data is available
-  if (currentUser) {
-    setProfile({
-      maTK: currentUser.maTK,
-      name: currentUser.name,
-      email: currentUser.email,
-      phone: currentUser.phone,
-      birthDay: currentUser.birthDay,
-      gender: currentUser.gender===true?'Nam':'Nữ',
-      role: currentUser.role ==="ROLE_USER"?"USER":'ADMIN',
-    });
-  }
-}, [currentUser]);
+  useEffect(() => {
+    // Set editUser values when user data is available
+    if (currentUser) {
+      setProfile({
+        maTK: currentUser.maTK,
+        avt: `data:image; base64, ${currentUser.avt} `,
+        name: currentUser.name,
+        email: currentUser.email,
+        phone: currentUser.phone,
+        birthDay: currentUser.birthDay,
+        gender: currentUser.gender === true ? "Nam" : "Nữ",
+        role: currentUser.role === "ROLE_USER" ? "USER" : "ADMIN",
+      });
 
-  
+      setFileBase64String(currentUser.avt)
+    }
+  }, [currentUser]);
+
+  const handleUpdateProfile = async () => {
+    try {
+      let newUser = { ...currentUser, ...profile };
+
+      // Convert gender and role if needed
+      const gender = newUser.gender === "Nam";
+      const role = newUser.role === "USER" ? "ROLE_USER" : "ROLE_ADMINISTRATOR";
+
+
+      newUser = { ...newUser, gender, role, avt: fileBase64String };
+
+
+      await dispatch(updateCurrentUser(newUser));
+      history.push("/admin/user");
+    } catch (error) {
+      // Handle error, e.g., show an error message
+      console.error("Error updating profile:", error);
+    }
+  };
+
+  console.log("/////////", fileBase64String)
   return (
     <>
       {!loading && currentUser && (
         <div className="profile">
-          <h2>Thông tin cá nhân</h2>
           <div className="profile-avt">
-          {avatar && <img src={avatar} alt="" />}
-            <input type="file" onChange={handleImageChange} accept="image/*" />
-            <button onClick={handleSaveImage}>Lưu ảnh</button>
+            <label htmlFor="avatarInput" className="change-avatar-text">
+            <img src={`data:image/png;base64, ${fileBase64String || ""}`} alt="Avatar" />
+            </label>
+            <input
+              id="avatarInput"
+              type="file"
+              style={{ display: 'none' }} /* Hide the file input */
+              onChange={handleImageChange}
+              accept="image/*"
+            />
           </div>
           <div className="profile-info">
             <div className="info-item">
@@ -94,23 +127,23 @@ useEffect(() => {
             </div>
             <div className="info-item">
               <label>Họ tên</label>
-              <input type="text" name="name"  value={profile.name} onChange={handleInputChange} />
+              <input type="text" name="name" value={profile.name} onChange={handleInputChange} />
             </div>
             <div className="info-item">
               <label>Email</label>
-              <input type="text" name="email" value={profile.email} onChange={handleInputChange}/>
+              <input type="text" name="email" value={profile.email} onChange={handleInputChange} />
             </div>
             <div className="info-item">
               <label>Số điện thoại</label>
-              <input type="text" name= "phone" value={profile.phone} onChange={handleInputChange}/>
+              <input type="text" name="phone" value={profile.phone} onChange={handleInputChange} />
             </div>
             <div className="info-item">
               <label>Ngày sinh</label>
-              <input type="text" name= "birtDay" value={profile.birthDay} onChange={handleInputChange}/>
+              <input type="text" name="birtDay" value={profile.birthDay} onChange={handleInputChange} />
             </div>
             <div className="info-item">
               <label>Giới tính</label>
-              <input type="text" name= "gender" value={profile.gender} readOnly/>
+              <input type="text" name="gender" value={profile.gender} readOnly />
             </div>
             <div className="info-item">
               <label>Vai trò</label>
@@ -118,8 +151,8 @@ useEffect(() => {
             </div>
           </div>
           <div className="button">
-              <Link to = '/'><button>Thoát</button></Link>
-               <button type="submit" onClick={handleUpdateProfile}>Lưu</button>
+            <Link to='/'><button>Thoát</button></Link>
+            <button type="submit" onClick={handleUpdateProfile}>Lưu</button>
           </div>
         </div>
       )}
@@ -128,3 +161,6 @@ useEffect(() => {
 };
 
 export default Profile;
+
+
+

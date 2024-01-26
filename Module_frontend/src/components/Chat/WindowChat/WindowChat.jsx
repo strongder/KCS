@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./WindowChat.scss";
-import avatar from "../../../assets/images/tuat.png";
-import ExpandableInput from "../../ExpandableInput/ExpandableInput";
 import MessageInput from "../messageInput/MessageInput";
 import Message from "../Message/Message";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +13,7 @@ const WindowChat = (props) => {
   const dispatch = useDispatch()
   const [selectSearch, SetSelectSearch] = useState(false);
   const messagesEndRef = useRef(null);
-  
+  console.log("-----------", roomId)
 
   const sendMessage = async (message, selectFile) => {
     var file
@@ -62,10 +60,10 @@ const WindowChat = (props) => {
         <p className="name"> {user.name}</p>
         <div className="logo">
           <p className="search" onClick={handleClickSearch}>
-            <i class="bx bx-search"></i>
+            <i className="bx bx-search"></i>
           </p>
           <p className="info" onClick={onClickInfo}>
-            <i class="bx bx-info-circle"></i>
+            <i className="bx bx-info-circle"></i>
           </p>
         </div>
       </div>)}
@@ -76,8 +74,8 @@ const WindowChat = (props) => {
             <input type="text" placeholder="Search here..." />
           </div>
           <div className="search-right">
-            <i class="bx bx-up-arrow-circle"></i>
-            <i class="bx bx-up-arrow-circle bx-flip-vertical"></i>
+            <i className="bx bx-up-arrow-circle"></i>
+            <i className="bx bx-up-arrow-circle bx-flip-vertical"></i>
           </div>
           <button onClick={handleClickSearch}>
             <b>Close</b>

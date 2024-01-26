@@ -51,6 +51,12 @@ public class UserController {
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 	
+
+	@PutMapping("/update-avt/{id}")
+		public ResponseEntity<UserDTO> update(@PathVariable("id") Long id) {
+			return new ResponseEntity<>(this.userService.updateAvt(id), HttpStatus.OK);
+		}
+	
 	@PostMapping("")
 	public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
 //		System.out.println(userDTO);
@@ -60,6 +66,11 @@ public class UserController {
 	
 	@PutMapping("/update/{id}")
 	public ResponseEntity<UserDTO> update(@PathVariable("id") Long id, @RequestBody UserDTO userDTO) {
+		return new ResponseEntity<>(this.userService.update(id, userDTO), HttpStatus.OK);
+	}
+	
+	@PutMapping("/update-current/{id}")
+	public ResponseEntity<UserDTO> updateCurrent(@PathVariable("id") Long id, @RequestBody UserDTO userDTO) {
 		return new ResponseEntity<>(this.userService.update(id, userDTO), HttpStatus.OK);
 	}
 	

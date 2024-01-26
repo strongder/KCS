@@ -1,36 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import "./assets/boxicons-2.0.7/css/boxicons.min.css";
 import "./assets/css/grid.css";
 import "./assets/css/theme.css";
 import "./assets/css/index.css";
-import Router from './Router';
+import Login from "./pages/Login";
+import Layout from "./components/layout/Layout";
+import NotFound from './pages/NotFound';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    
+  const history = useHistory();
+  const checkLogin = useCallback(() => {
     const token = localStorage.getItem('token');
     const expirationTime = localStorage.getItem('expTime');
-    
+
     if (token && expirationTime) {
       const currentTime = new Date().getTime();
       if (currentTime < parseInt(expirationTime, 10)) {
-        setIsLoggedIn(true);
+        setIsLoggedIn(!isLoggedIn);
       } else {
-        // Xóa token và thời gian hết hạn nếu token đã hết hạn
         localStorage.removeItem('token');
         localStorage.removeItem('expTime');
         localStorage.removeItem('id')
-        setIsLoggedIn(false);
+        setIsLoggedIn(!isLoggedIn);
       }
 
-  }}, []);
+    }
+  }, [isLoggedIn]);
 
+  useEffect(() => {
+    checkLogin();
+  }, []);
 
+  console.log (isLoggedIn)
   return (
-   <Router isLoggedIn = {isLoggedIn}/>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/not-found" component={NotFound} />
+        {isLoggedIn ? (
+          <Route path="/" component={Layout} />
+        ) : (
+          <Login/>
+        )}
+      </Switch>
+    </BrowserRouter>
   );
 }
 

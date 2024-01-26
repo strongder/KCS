@@ -9,9 +9,7 @@ import InfoPanel from "../components/Chat/InfoPanel/InfoPanel";
 import Stomp from "stompjs";
 import SockJS from 'sockjs-client';
 import { getRoomByUser } from "../services/RoomPrivateService";
-// import { getRoomByUser } from "../redux/slices/RoomPrivateSlice";
-
-
+import axiosInstance from "../api";
 
 const Item = styled(Paper)(({ theme, selectedInfo }) => ({
   padding: "0px",
@@ -19,31 +17,49 @@ const Item = styled(Paper)(({ theme, selectedInfo }) => ({
   borderRadius: "none",
   border: "none",
   height: "100%",
-  transition: "transform 0.5s ease", /* Thêm hiệu ứng transition cho transform */
+  transition: "transform 0.5s ease",
   transform: `translateX(${selectedInfo ? '-50%' : '0'})`,
 }));
-const LiveChat = () => {
 
+const LiveChat = () => {
   const [messages, setMessages] = useState([]);
   const [stompClient, setStompClient] = useState(null);
   const [selectedChat, setSelectedChat] = useState('');
-  const [selectedInfo, setSelectedInfo] = useState(false)
+  const [selectedInfo, setSelectedInfo] = useState(false);
   const { data, loading } = useSelector((state) => state.users);
-  const [roomId, setRoomId] = useState('')
+  const [roomId, setRoomId] = useState('');
   const stompClientRef = useRef(null);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
+  useEffect(() => {
+    const unsubscribe = () => {
+      if (stompClient) {
+        stompClient.disconnect();
+      }
+    };
 
+    return unsubscribe;
+  }, [stompClient]);
 
-  const subscribe = (room) => {
+  const fetchRoom = async (id1, id2) => {
+    const roomId = await getRoomByUser(id1, id2);
+    setRoomId(roomId);
+    return roomId;
+  };
+
+  const getChatbyRoom = async (roomId) => {
+    const response = await axiosInstance.get(`http://localhost:8081/api/v1/message/${roomId}`);
+    setMessages(response.data);
+  };
+
+  const subscribe = async (room) => {
     const socket = new SockJS('http://localhost:8081/ws');
     const client = Stomp.over(socket);
-    // if (stompClientRef.current) {
-    //   stompClientRef.current.disconnect();
-    // }
+
     client.connect({}, () => {
       client.subscribe(`/topic/room/${room}`, (message) => {
         const receivedMessage = JSON.parse(message.body);
@@ -52,21 +68,27 @@ const LiveChat = () => {
     });
     setStompClient(client);
 
-    // stompClientRef.current = client; 
+    return () => {
+      client.disconnect();
+    };
   };
 
   const handleChatSelect = async (userId) => {
     const userId1 = localStorage.getItem('id');
-    const room = await getRoomByUser(userId1, userId);
-    setRoomId(room)
-    subscribe(room);
+    const room = await fetchRoom(userId1, userId);
+    await getChatbyRoom(room);
+    const unsubscribe = subscribe(room);
     setSelectedChat(userId);
-    console.log(userId)
+
+    return () => {
+      unsubscribe();
+    };
   };
 
   const handleSelectedInfo = () => {
-    setSelectedInfo(!selectedInfo)
-  }
+    setSelectedInfo(!selectedInfo);
+  };
+
   return (
     <div className="live-chat">
       <div className="live-chat-container">
@@ -76,21 +98,17 @@ const LiveChat = () => {
         <div className="window-chat">
           {selectedChat && (
             <div className="window-chat-content">
-              <WindowChat userId={selectedChat}
+              <WindowChat
+                userId={selectedChat}
                 stompClient={stompClient}
                 messages={messages}
                 roomId={roomId}
-                onClickInfo={handleSelectedInfo} />
+                onClickInfo={handleSelectedInfo}
+              />
             </div>
           )}
         </div>
-        {selectedInfo && (
-
-          <InfoPanel userId={selectedChat} />
-          // <div className="info-panel">
-          //   <div className="info-item">Information</div>
-          // </div>
-        )}
+        {selectedInfo && <InfoPanel userId={selectedChat} />}
       </div>
     </div>
   );
