@@ -16,7 +16,7 @@ export const getAllFile = async () => {
 export const getFileById = async (fileId) => {
     try {
         const response = await axiosInstance.get(`${API_URL}/${fileId}`)
-        console.log(response.data);
+        console.log(response.data)
         return response.data;
     } catch (error) {
         console.error(`Error fetching user with ID ${fileId}:`, error);

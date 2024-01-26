@@ -61,7 +61,7 @@ const ViewAutoChat = () => {
               <div className="field" style={{ margin: "20px 0" }}>
                 <i className="bx bxs-star"></i>
                 <label>Trạng thái: </label>
-                <b> {autoChat.isDelete === true ? "Đã xóa" : "Còn sử dụng"}</b>
+                <b> {autoChat.isDelete === true ? "Đã xóa" : "Hoạt động"}</b>
               </div>
             </div>
           </div>

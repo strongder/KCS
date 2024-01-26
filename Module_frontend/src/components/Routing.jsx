@@ -34,7 +34,6 @@ const Routing = ({ role }) => {
         <Route path="/admin/schedule" exact component={ScheduleList} />
         <Route path="/admin/schedule/viewSchedule/:id" exact component={DetailSchedule} />
         <Route path="/admin/schedule/editSchedule/:id" exact component={EditSchedule} />
-        <Route path="/admin/user/editUser/:id" exact component={EditUser} />
         <Route path="/admin/user" exact component={Users} />
         <Route path="/admin/user/viewUser/:id" exact component={UserDetail} />
         <Route path="/admin/user/editUser/:id" exact component={EditUser} />
