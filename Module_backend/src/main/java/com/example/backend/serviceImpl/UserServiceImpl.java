@@ -62,6 +62,7 @@ public class UserServiceImpl implements UserService {
 
 			Optional<Resources> resourcesDTO = this.resourcesRepository.findById((long) 1);
 			Date date = new Date();
+//			Long avt = (long) 1;
 			User user = modelMapper.map(userDTO, User.class);
 //			
 			user.setAvt(resourcesDTO.get().getData());
@@ -170,9 +171,8 @@ public class UserServiceImpl implements UserService {
 			room.setUser1ID(user.getId());
 			room.setUser2ID(u.getId());
 			room.setCreateDate(new Date());
-			this.roomPrivateRepository.save(room);
+			this.roomPrivateRepository.save(room);}
 			
-		}
 	}
 	
 	public UserDTO updateAvt(Long id) {

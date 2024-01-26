@@ -4,7 +4,10 @@ import MessageInput from "../messageInput/MessageInput";
 import Message from "../Message/Message";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserById } from "../../../redux/slices/UserSlice";
+import { addFile } from "../../../services/ResourceService";
+
 const WindowChat = (props) => {
+
   const { userId, onClickInfo, messages, roomId, stompClient } = props;
   const { user } = useSelector(state => state.users)
   const dispatch = useDispatch()
@@ -12,12 +15,17 @@ const WindowChat = (props) => {
   const messagesEndRef = useRef(null);
   console.log("-----------", roomId)
 
-  const sendMessage = (message) => {
-    if (message.trim()) {
+  const sendMessage = async (message, selectFile) => {
+    var file
+    if(selectFile !== null) {
+      file = await addFile (localStorage.getItem('id'), selectFile)
+      console.log(selectFile);
+    }
+    if (message.trim() || selectFile !== null) {
       const chatMessage = {
-        content: message,
+        content: (message === null) ? "" : message,
         idsender: localStorage.getItem('id'),
-        // idresources: 1,
+        idresources: (selectFile === null) ? null : file.id,
         roomPrivateID: roomId,
         timeSend: new Date(),
       }
@@ -27,6 +35,7 @@ const WindowChat = (props) => {
   }
 
   console.log("check room" ,roomId)
+
   const handleClickSearch = () => {
     SetSelectSearch(!selectSearch);
   };
@@ -37,11 +46,11 @@ const WindowChat = (props) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, []);
+
   useEffect(() => {
     dispatch(fetchUserById(userId))
   }, [userId, dispatch])
-
 
   return (
     <div className="chat-area">
@@ -75,6 +84,7 @@ const WindowChat = (props) => {
 
       <div className="chat-area-content">
         <div className="message-list">
+
           {messages.map((message, index) => (
             <Message
               key={index}
@@ -84,9 +94,7 @@ const WindowChat = (props) => {
           <div ref={messagesEndRef} />
         </div>
       </div>
-
       <MessageInput onSendMessage={sendMessage}></MessageInput>
-
     </div>
   );
 

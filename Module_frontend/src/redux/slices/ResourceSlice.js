@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getAllFile, getFileById, addFile, getFileByUsername, downloadFile } from '../../services/ResourceService';
+import { getAllFile, addFile, getFileByUsername, downloadFile, getFileById } from '../../services/ResourceService';
 
 // Define một asynchronous thunk để lấy tất cả các tệp tin
 export const fetchAllFile = createAsyncThunk('file/fetchAllFile', async () => {
@@ -55,10 +55,6 @@ const ResouceSlice = createSlice({
           state.loading = false;
           state.error = action.error.message;
         })
-        // .addCase(fetchFileById.pending, (state) => {
-        //   state.loading = true;
-        //   state.error = null;
-        // })
 
         .addCase(fetchFileByUsername.fulfilled, (state, action) => {
             state.loading = false;

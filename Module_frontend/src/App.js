@@ -26,6 +26,7 @@ function App() {
         localStorage.removeItem('id')
         setIsLoggedIn(!isLoggedIn);
       }
+
     }
   }, [isLoggedIn]);
 
@@ -33,7 +34,6 @@ function App() {
     checkLogin();
   }, []);
 
-  console.log (isLoggedIn)
   return (
     <BrowserRouter>
       <Switch>

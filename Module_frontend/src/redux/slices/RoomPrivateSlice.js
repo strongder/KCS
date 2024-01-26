@@ -30,4 +30,3 @@ const RoomPrivateSlice = createSlice({
   });
   
   export default RoomPrivateSlice.reducer;
-  

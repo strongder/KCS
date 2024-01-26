@@ -23,17 +23,6 @@ public class ChatPrivateController {
     
     @Autowired
     private ChatPrivateService chatPrivateService;
-
-    
-//    @MessageMapping("/private-message")
-//    public ChatPrivateDTO recMessage(@Payload ChatPrivateDTO message){
-//    	System.out.print("Private-message");
-//        simpMessagingTemplate.convertAndSendToUser(message.getRoomPrivateID() + "","/private",message);
-//        System.out.println(message.toString());
-////        this.chat.save();
-//        this.chatPrivateService.create(message);
-//        return message;
-//    }
     
     @MessageMapping("/chat/room/{roomId}")
     @SendTo("/topic/room/{roomId}")
