@@ -11,6 +11,7 @@ import SockJS from 'sockjs-client';
 import { getRoomByUser } from "../services/RoomPrivateService";
 import axiosInstance from "../api";
 
+
 const Item = styled(Paper)(({ theme, selectedInfo }) => ({
   padding: "0px",
   textAlign: "center",
@@ -25,6 +26,7 @@ const LiveChat = () => {
   const [messages, setMessages] = useState([]);
   const [stompClient, setStompClient] = useState(null);
   const [selectedChat, setSelectedChat] = useState('');
+
   const [selectedInfo, setSelectedInfo] = useState(false);
   const { data, loading } = useSelector((state) => state.users);
   const [roomId, setRoomId] = useState('');
@@ -34,6 +36,7 @@ const LiveChat = () => {
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
+
 
   useEffect(() => {
     const unsubscribe = () => {
@@ -79,7 +82,6 @@ const LiveChat = () => {
     await getChatbyRoom(room);
     const unsubscribe = subscribe(room);
     setSelectedChat(userId);
-    console.log(userId);
 
     return () => {
       unsubscribe();

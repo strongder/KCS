@@ -16,6 +16,7 @@ export const getAllFile = async () => {
 export const getFileById = async (fileId) => {
     try {
         const response = await axiosInstance.get(`${API_URL}/${fileId}`)
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error(`Error fetching user with ID ${fileId}:`, error);
@@ -40,7 +41,7 @@ export const addFile = async (userId, file) => {
         formData.append('file', file);
 
         // Sử dụng axiosInstance để gửi yêu cầu POST với FormData
-        const response = await axiosInstance.post(`${API_URL}/upload/${userId}`, formData, {
+        const response = await axiosInstance.post(`${API_URL}/upload/${userId}`, file, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

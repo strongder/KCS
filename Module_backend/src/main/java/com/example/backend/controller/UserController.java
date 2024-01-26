@@ -40,10 +40,7 @@ public class UserController {
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 	
-//	@GetMapping("/user-current")
-//	public ResponseEntity<UserDTO> getByEmail(@RequestBody String email) {
-//		UserDTO userDTO = this.userService.getByEmail(email);
-//	}
+
 	
 	@GetMapping("/user-current/{id}")
 	public ResponseEntity<UserDTO> getCurrentUser(@PathVariable("id") Long id) {
@@ -53,7 +50,7 @@ public class UserController {
 	
 
 	@PutMapping("/update-avt/{id}")
-		public ResponseEntity<UserDTO> update(@PathVariable("id") Long id) {
+		public ResponseEntity<UserDTO> updateAvt(@PathVariable("id") Long id) {
 			return new ResponseEntity<>(this.userService.updateAvt(id), HttpStatus.OK);
 		}
 	
@@ -78,4 +75,6 @@ public class UserController {
 	public ResponseEntity<UserDTO> delete(@PathVariable("id") Long id) {
 		return new ResponseEntity<>(this.userService.delete(id), HttpStatus.OK);
 	}
+	
+	
 }

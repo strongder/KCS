@@ -46,5 +46,12 @@ public class RoomPrivateServiceImpl implements RoomPrivateService{
 		return roomPrivateDTO;
 	}
 
+	@Override
+	public RoomPrivateDTO getByID(Long id) {
+		// TODO Auto-generated method stub
+		Optional<RoomPrivate> roomPrivate = this.roomPrivateRepository.findById(id);
+		return this.modelMapper.map(roomPrivate, RoomPrivateDTO.class);
+	}
+
 	
 }

@@ -52,7 +52,8 @@ public class User {
 	@Column(name = "ma_TK")
 	private String MaTK;
 	
-	@Column(name = "avt",  columnDefinition = "LONGBLOB")
+	@Column(name = "avt", columnDefinition = "LONGBLOB")
+
 	private byte[] avt;
 	
 	@ManyToOne

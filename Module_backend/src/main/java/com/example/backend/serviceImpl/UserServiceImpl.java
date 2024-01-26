@@ -9,12 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.backend.DTO.ResourcesDTO;
+import com.example.backend.DTO.RoomPrivateDTO;
 import com.example.backend.DTO.UserDTO;
 import com.example.backend.entity.Resources;
 import com.example.backend.entity.RoomPrivate;
 import com.example.backend.entity.User;
 import com.example.backend.exception.UserException;
 import com.example.backend.repository.ResourcesRepository;
+import com.example.backend.repository.UserRepository;
+import com.example.backend.service.ResourcesService;
+import com.example.backend.service.RoomPrivateService;
 import com.example.backend.repository.RoomPrivateRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.service.UserService;
@@ -29,10 +34,10 @@ public class UserServiceImpl implements UserService {
 	private ModelMapper modelMapper;
 	
 	@Autowired
-	private RoomPrivateRepository roomPrivateRepository;
+	private ResourcesRepository  resourcesRepository;
 	
 	@Autowired
-	private ResourcesRepository  resourcesRepository;
+	private RoomPrivateRepository roomPrivateRepository;
 
 	@Override
 	public List<UserDTO> getAll() {
@@ -63,7 +68,6 @@ public class UserServiceImpl implements UserService {
 			Optional<Resources> resourcesDTO = this.resourcesRepository.findById((long) 1);
 			Date date = new Date();
 			User user = modelMapper.map(userDTO, User.class);
-//			
 			user.setAvt(resourcesDTO.get().getData());
 			user.setCreateDate(date);
 			user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
@@ -159,7 +163,7 @@ public class UserServiceImpl implements UserService {
 			throw new UserException("Khong the tim thay nguoi dung");
 		}
 	}
-	
+
 	public void generateRoom(User user)
 	{
 		List<User> list = userRepository.findAll();
@@ -170,9 +174,7 @@ public class UserServiceImpl implements UserService {
 			room.setUser1ID(user.getId());
 			room.setUser2ID(u.getId());
 			room.setCreateDate(new Date());
-			this.roomPrivateRepository.save(room);
-			
-		}
+			this.roomPrivateRepository.save(room);}
 	}
 	
 	public UserDTO updateAvt(Long id) {
@@ -183,7 +185,6 @@ public class UserServiceImpl implements UserService {
 		UserDTO userDTO = this.modelMapper.map(user, UserDTO.class);
 		return userDTO;
 	}
-	
+}
 	
 
-}

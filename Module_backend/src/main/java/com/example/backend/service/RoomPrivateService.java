@@ -16,4 +16,6 @@ public interface RoomPrivateService {
 	
 	RoomPrivateDTO getByUser1IDAndUser2ID(Long id1, Long id2);
 	
+	RoomPrivateDTO getByID(Long id);
+	
 }
