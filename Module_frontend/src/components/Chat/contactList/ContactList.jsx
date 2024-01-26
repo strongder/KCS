@@ -65,7 +65,7 @@ const ContactList = (props) => {
                       <div className="item" key ={index} onClick={() => onSelect(item.id)} >
 
                       <div className="item-avatar">
-                        <img src={item.avt} alt="" />
+                        <img src={`data:image/jpg;base64,${item.avt}`} alt="" />
                       </div>
                       <div className="item-content">
                         <p className="name">{item.name}</p>

@@ -79,7 +79,6 @@ const LiveChat = () => {
     await getChatbyRoom(room);
     const unsubscribe = subscribe(room);
     setSelectedChat(userId);
-    console.log(userId);
 
     return () => {
       unsubscribe();

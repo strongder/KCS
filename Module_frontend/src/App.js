@@ -26,6 +26,7 @@ function App() {
         localStorage.removeItem('id')
         setIsLoggedIn(!isLoggedIn);
       }
+
     }
   }, [isLoggedIn]);
 
@@ -37,7 +38,6 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route path="/login" component={Login} />
-
         <Route path="/not-found" component={NotFound} />
         {isLoggedIn ? (
           <Route path="/" component={Layout} />

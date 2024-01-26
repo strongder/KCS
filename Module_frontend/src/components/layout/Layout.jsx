@@ -22,8 +22,6 @@ const Layout = (props) => {
     dispatch(setColor(colorClass));
   }, [dispatch]);
 
-  
-
   useEffect(() => {
     dispatch(fetchCurrentUser(localStorage.getItem('id')))
   }, [dispatch ]);
