@@ -13,7 +13,7 @@ const WindowChat = (props) => {
   const dispatch = useDispatch()
   const [selectSearch, SetSelectSearch] = useState(false);
   const messagesEndRef = useRef(null);
-  // const [messages, setMessages] = useState([]);
+  // const [messages, setMessages] = useState(listMessages);
 
   const handleClickSearch = () => {
     SetSelectSearch(!selectSearch);
@@ -25,12 +25,16 @@ const WindowChat = (props) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, []);
+  }, [listMessages]);
 
   useEffect(() => {
     dispatch(fetchUserById(userId))
   }, [userId, dispatch])
 
+
+  // useEffect(() => {
+  //   console.log(messages);
+  // }, [messages])
 
   const RoomPrivateID = useSelector((state) => state.roomPrivate.getRoomPrivateByIDUsers.RoomPrivateID);
   const handleSendMessage = (content, IDFile) => {
@@ -38,17 +42,17 @@ const WindowChat = (props) => {
       const ChatPrivateDTO = {
         id: Number,
         timeSend: new Date(),
-        IdSender: localStorage.getItem("id"),
+        idsender: Number(localStorage.getItem("id")),
         content,
-        IDResources: "5",
+        idresources: 5,
         roomPrivateID: RoomPrivateID
       };
       console.log(stompClient)
-      stompClient.send("/app/private-message", {}, JSON.stringify(ChatPrivateDTO));
-      // console.log("Id: " + typeof(localStorage.getItem("id")));
-      // console.log("Room: " + typeof(RoomPrivateID));
+      stompClient.send(`/app/private-message`, {}, JSON.stringify(ChatPrivateDTO));
+      console.log("Id: " + typeof(localStorage.getItem("id")));
+      console.log("Room: " + typeof(RoomPrivateID));
 
-      // setMessages([...messages, newMessage]);
+      // setMessages([...messages, ChatPrivateDTO]);
     // }
   }
 
@@ -84,9 +88,9 @@ const WindowChat = (props) => {
 
       <div className="chat-area-content">
         <div className="message-list">
-          {listMessages.map((message) => (
+          {listMessages.map((message, index) => (
             <Message
-              key={message.id}
+              key={index}
               message={message}
             />
           ))}

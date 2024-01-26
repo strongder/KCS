@@ -14,7 +14,7 @@ const NavCard = () => {
     date: "",
     timeStart: "",
     timeEnd: "",
-    status: false
+    status: true
   });
 
   const handleInputChange = (e) => {
@@ -35,9 +35,9 @@ const NavCard = () => {
     // if (validateForm()) {
     if (validateForm()) {
       const schedule = { ...formData };
-      schedule.date = schedule.date + " 00:00:00"
       schedule.timeStart = schedule.date + " " + schedule.timeStart;
       schedule.timeEnd = schedule.date + " " + schedule.timeEnd;
+      schedule.date = schedule.date + " 00:00:00"
       // delete user.confirmPassword;
       console.log(schedule);
       await addSchedule(schedule, dispatch);

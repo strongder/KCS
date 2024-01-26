@@ -11,11 +11,11 @@ import SockJS from "sockjs-client";
 import Stomp from 'stompjs';
 
 
-const Item = styled(Paper)(({ theme,  selectedInfo}) => ({
+const Item = styled(Paper)(({ theme, selectedInfo }) => ({
   padding: "0px",
   textAlign: "center",
   borderRadius: "none",
-  border:"none",
+  border: "none",
   height: "100%",
   transition: "transform 0.5s ease", /* Thêm hiệu ứng transition cho transform */
   transform: `translateX(${selectedInfo ? '-50%' : '0'})`,
@@ -26,9 +26,9 @@ const LiveChat = () => {
   // const [message, setMessage] = useState('');
 
   const [selectedChat, setSelectedChat] = useState('');
-  const[selectedInfo, setSelectedInfo] = useState(false)
-  const { data, loading} = useSelector((state) => state.users);
-  const dispatch  = useDispatch();
+  const [selectedInfo, setSelectedInfo] = useState(false)
+  const { data, loading } = useSelector((state) => state.users);
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
@@ -40,9 +40,10 @@ const LiveChat = () => {
     const client = Stomp.over(socket)
     console.log("ID1: ", id1);
     console.log("ID2: ", id);
-    client.connect({},  () => {
-       client.subscribe(roomPrivate + "/private", (message) => {
+    client.connect({}, () => {
+      client.subscribe(roomPrivate + "/private", (message) => {
         const receivedMessage = JSON.parse(message.body);
+        console.log(receivedMessage)
         setMessages((preMessages) => [...preMessages, receivedMessage]);
       });
     });
@@ -54,9 +55,10 @@ const LiveChat = () => {
     setSelectedChat(userId);
     console.log(userId)
     subscribe(userId);
+    // console.log(messages);
   };
 
-  const handleSelectedInfo =()=>{
+  const handleSelectedInfo = () => {
     setSelectedInfo(!selectedInfo)
   }
   return (
@@ -68,13 +70,13 @@ const LiveChat = () => {
         <div className="window-chat">
           {selectedChat && (
             <div className="window-chat-content">
-              <WindowChat userId={selectedChat} onClickInfo={handleSelectedInfo} listMessages = {messages} stompClient = {stompClient} />
+              <WindowChat userId={selectedChat} onClickInfo={handleSelectedInfo} listMessages={messages} stompClient={stompClient} />
             </div>
           )}
         </div>
         {selectedInfo && (
 
-          <InfoPanel  userId={selectedChat}/>
+          <InfoPanel userId={selectedChat} />
           // <div className="info-panel">
           //   <div className="info-item">Information</div>
           // </div>

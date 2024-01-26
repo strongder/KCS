@@ -61,4 +61,9 @@ public class ResourcesController {
                 .body(new ByteArrayResource(image.getData()));
     }
     
+    public void test()
+    
+    {
+    	
+    }
 }

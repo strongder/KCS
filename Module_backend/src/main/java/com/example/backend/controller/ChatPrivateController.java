@@ -25,24 +25,15 @@ public class ChatPrivateController {
     private ChatPrivateService chatPrivateService;
 
     
-//    @MessageMapping("/private-message")
-//    public ChatPrivateDTO recMessage(@Payload ChatPrivateDTO message){
-//    	System.out.print("Private-message");
-//        simpMessagingTemplate.convertAndSendToUser(message.getRoomPrivateID() + "","/private",message);
-//        System.out.println(message.toString());
-////        this.chat.save();
-//        this.chatPrivateService.create(message);
-//        return message;
-//    }
-    
-    @MessageMapping("/chat/room/{roomId}")
-    @SendTo("/topic/room/{roomId}")
-    public ChatPrivateDTO sendRoomMessage(@Payload ChatPrivateDTO message, @DestinationVariable String roomId) {
+
+	@MessageMapping("/chat/room/{roomId}")
+	@SendTo("/topic/room/{roomId}")
+	public ChatPrivateDTO sendRoomMessage(@Payload ChatPrivateDTO message, @DestinationVariable String roomId) {
 //        message.setTimestamp(new Date());
-        System.out.println("check" + message);
-        this.chatPrivateService.create(message);
-      return message;
-    }
+		System.out.println("check" + message);
+		this.chatPrivateService.create(message);
+		return message;
+	}
     
     
 }                                                            
