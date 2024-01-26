@@ -35,5 +35,4 @@ public class Role {
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private Collection<User> listUser;
-
 }

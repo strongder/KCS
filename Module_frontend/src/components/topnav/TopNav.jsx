@@ -31,12 +31,12 @@ const renderNotificationItem = (item, index) => (
 
 
 const renderUserToggle = (props) => {
-        const avatarData = props.avatar;
-        const base64 = `data:image; base64, ${avatarData.data}`
+        const avatarData = props.user.avt;
+        // const base64 = `data:image; base64, ${avatarData}`
         return (
           <div className="topnav__right-user">
             <div className="topnav__right-user__image">
-              <img src={base64} alt="" />
+              <img src={`data:image; base64, ${avatarData}`} alt="" />
             </div>
             <div className="topnav__right-user__name">
               {props.user.name} {/* Giả sử tên người dùng là trường 'name' */}

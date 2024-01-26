@@ -18,6 +18,13 @@ export const addUser = createAsyncThunk("user/addUser", async (userData) => {
   return userService.addUser(userData);
 });
 
+export const updateCurrentUser = createAsyncThunk(
+  "user/updateCurrentUser",
+  async (updatedUser) => {
+    return userService.updateCurrentUser(updatedUser);
+  }
+);
+
 export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (updatedUser) => {
@@ -102,6 +109,15 @@ const userSlice = createSlice({
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+
+      .addCase(updateCurrentUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentUser = action.payload;
+      })
+      .addCase(updateCurrentUser.rejected, (state, action) => {
+        state.loading = false;
+        state.currentUser = action.payload;
       })
       // .addCase(removeUser.pending, (state) => {
       //   state.loading = true;

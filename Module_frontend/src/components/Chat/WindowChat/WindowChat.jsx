@@ -1,19 +1,41 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./WindowChat.scss";
-import avatar from "../../../assets/images/tuat.png";
-import ExpandableInput from "../../ExpandableInput/ExpandableInput";
 import MessageInput from "../messageInput/MessageInput";
 import Message from "../Message/Message";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserById } from "../../../redux/slices/UserSlice";
+import { addFile } from "../../../services/ResourceService";
 
 const WindowChat = (props) => {
-  const { userId, onClickInfo, listMessages, stompClient } = props;
+
+  const { userId, onClickInfo, messages, roomId, stompClient } = props;
   const { user } = useSelector(state => state.users)
   const dispatch = useDispatch()
   const [selectSearch, SetSelectSearch] = useState(false);
   const messagesEndRef = useRef(null);
-  // const [messages, setMessages] = useState([]);
+  console.log("-----------", roomId)
+
+  const sendMessage = async (message, selectFile) => {
+    var file
+    if(selectFile !== null) {
+      file = await addFile (localStorage.getItem('id'), selectFile)
+      console.log(selectFile);
+    }
+    if (message.trim() || selectFile !== null) {
+      const chatMessage = {
+        content: (message === null) ? "" : message,
+        // Long: "1",
+        idsender: localStorage.getItem('id'),
+        idresources: (selectFile === null) ? null : file.id,
+        roomPrivateID: roomId,
+        timeSend: new Date(),
+      }
+
+      stompClient.send(`/app/chat/room/${roomId}`, {}, JSON.stringify(chatMessage));
+    }
+  }
+
+  console.log("check room" ,roomId)
 
   const handleClickSearch = () => {
     SetSelectSearch(!selectSearch);
@@ -31,27 +53,6 @@ const WindowChat = (props) => {
     dispatch(fetchUserById(userId))
   }, [userId, dispatch])
 
-
-  const RoomPrivateID = useSelector((state) => state.roomPrivate.getRoomPrivateByIDUsers.RoomPrivateID);
-  const handleSendMessage = (content, IDFile) => {
-    // if (stompClient) {
-      const ChatPrivateDTO = {
-        id: Number,
-        timeSend: new Date(),
-        IdSender: localStorage.getItem("id"),
-        content,
-        IDResources: "5",
-        roomPrivateID: RoomPrivateID
-      };
-      console.log(stompClient)
-      stompClient.send("/app/private-message", {}, JSON.stringify(ChatPrivateDTO));
-      // console.log("Id: " + typeof(localStorage.getItem("id")));
-      // console.log("Room: " + typeof(RoomPrivateID));
-
-      // setMessages([...messages, newMessage]);
-    // }
-  }
-
   return (
     <div className="chat-area">
       {user && (<div className="chat-area-nav">
@@ -59,10 +60,10 @@ const WindowChat = (props) => {
         <p className="name"> {user.name}</p>
         <div className="logo">
           <p className="search" onClick={handleClickSearch}>
-            <i class="bx bx-search"></i>
+            <i className="bx bx-search"></i>
           </p>
           <p className="info" onClick={onClickInfo}>
-            <i class="bx bx-info-circle"></i>
+            <i className="bx bx-info-circle"></i>
           </p>
         </div>
       </div>)}
@@ -73,8 +74,8 @@ const WindowChat = (props) => {
             <input type="text" placeholder="Search here..." />
           </div>
           <div className="search-right">
-            <i class="bx bx-up-arrow-circle"></i>
-            <i class="bx bx-up-arrow-circle bx-flip-vertical"></i>
+            <i className="bx bx-up-arrow-circle"></i>
+            <i className="bx bx-up-arrow-circle bx-flip-vertical"></i>
           </div>
           <button onClick={handleClickSearch}>
             <b>Close</b>
@@ -84,20 +85,19 @@ const WindowChat = (props) => {
 
       <div className="chat-area-content">
         <div className="message-list">
-          {listMessages.map((message) => (
+
+          {messages.map((message, index) => (
             <Message
-              key={message.id}
+              key={index}
               message={message}
             />
           ))}
           <div ref={messagesEndRef} />
         </div>
       </div>
-
-      <MessageInput onSendMessage={handleSendMessage}></MessageInput>
-
+      <MessageInput onSendMessage={sendMessage}></MessageInput>
     </div>
   );
-};
 
+}
 export default WindowChat;

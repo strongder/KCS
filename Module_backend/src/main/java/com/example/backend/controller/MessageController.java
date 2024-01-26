@@ -29,10 +29,9 @@ public class MessageController {
 	@Autowired
 	private ChatPrivateService chatPrivateService;
 	
-	@GetMapping("/{id1}/{id2}")
-	public ResponseEntity<List<ChatPrivateDTO>> getByUsers(@PathVariable("id1") Long id1, @PathVariable("id2") Long id2) {
-		RoomPrivateDTO roomPrivateDTO = this.roomPrivateService.getByUser1IDAndUser2ID(id1, id2);
-		List<ChatPrivateDTO> listChatPrivateDTO = this.chatPrivateService.getByRoomID(roomPrivateDTO.getId());
+	@GetMapping("/{roomId}")
+	public ResponseEntity<List<ChatPrivateDTO>> getByUsers(@PathVariable("roomId") Long roomId) {
+		List<ChatPrivateDTO> listChatPrivateDTO = this.chatPrivateService.getByRoomID(roomId);
 		return new ResponseEntity<>(listChatPrivateDTO, HttpStatus.OK);
 	}
 }

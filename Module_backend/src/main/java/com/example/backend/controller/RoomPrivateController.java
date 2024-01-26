@@ -22,7 +22,7 @@ public class RoomPrivateController {
 	private RoomPrivateService roomPrivateService;
 	
 	@GetMapping("/{id1}/{id2}")
-	public ResponseEntity<RoomPrivateDTO> getByUsers(@PathVariable("id1") Long id1, @PathVariable("id2") Long id2) {
+	public ResponseEntity<RoomPrivateDTO> getRoomByUser(@PathVariable("id1") Long id1, @PathVariable("id2") Long id2) {
 		RoomPrivateDTO roomPrivateDTO = this.roomPrivateService.getByUser1IDAndUser2ID(id1, id2);
 		return new ResponseEntity<>(roomPrivateDTO, HttpStatus.OK);
 	}

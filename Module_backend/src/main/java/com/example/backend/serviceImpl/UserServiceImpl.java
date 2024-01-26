@@ -1,24 +1,22 @@
 package com.example.backend.serviceImpl;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.text.ParseException;
+
 import org.modelmapper.ModelMapper;
-import org.modelmapper.internal.bytebuddy.asm.Advice.This;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.DTO.RoomPrivateDTO;
 import com.example.backend.DTO.UserDTO;
+import com.example.backend.entity.Resources;
 import com.example.backend.entity.RoomPrivate;
 import com.example.backend.entity.User;
-import com.example.backend.exception.ScheduleException;
 import com.example.backend.exception.UserException;
+import com.example.backend.repository.ResourcesRepository;
+import com.example.backend.repository.RoomPrivateRepository;
 import com.example.backend.repository.UserRepository;
-import com.example.backend.service.RoomPrivateService;
 import com.example.backend.service.UserService;
 
 @Service
@@ -29,10 +27,13 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private ModelMapper modelMapper;
-
-	@Autowired
-	private RoomPrivateService roomPrivateService;
 	
+	@Autowired
+	private RoomPrivateRepository roomPrivateRepository;
+	
+	@Autowired
+	private ResourcesRepository  resourcesRepository;
+
 	@Override
 	public List<UserDTO> getAll() {
 		// TODO Auto-generated method stub
@@ -59,22 +60,25 @@ public class UserServiceImpl implements UserService {
 		List<User> listUsers = this.userRepository.findByEmailOrPhone(userDTO.getEmail(), userDTO.getPhone());
 		if (listUsers.isEmpty()) {
 
+			Optional<Resources> resourcesDTO = this.resourcesRepository.findById((long) 1);
 			Date date = new Date();
-			Long avt = (long) 1;
+//			Long avt = (long) 1;
 			User user = modelMapper.map(userDTO, User.class);
-			user.setAvt(avt);
+//			
+			user.setAvt(resourcesDTO.get().getData());
 			user.setCreateDate(date);
+			user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
 			user.setUpdateDate(date);
 			user.setIsDelete(false);
 			user.setMaTK("GV" + date.getTime());
-//			this.userRepository.save(user);
-			User userSave = this.userRepository.save(user);
-			this.createRoomPrivate(userSave);
+			this.userRepository.save(user);
+			generateRoom(user);
 			return userDTO;
 		} else {
 			throw new UserException("Email hoặc SĐT đã tồn tại");
 		}
 	}
+	
 
 	@Override
 	public UserDTO update(Long id, UserDTO userDTO) {
@@ -97,7 +101,6 @@ public class UserServiceImpl implements UserService {
 					userSaved.setId(id);
 					userSaved.setUpdateDate(date);
 					this.userRepository.save(userSaved);
-//					this.createRoomPrivate(userSave);
 					return userDTO;
 				} else {
 					throw new UserException("Số điện thoại đã tồn tại");
@@ -109,7 +112,6 @@ public class UserServiceImpl implements UserService {
 					userSaved.setId(id);
 					userSaved.setUpdateDate(date);
 					this.userRepository.save(userSaved);
-//					this.createRoomPrivate(userSave);
 					return userDTO;
 				} else {
 					throw new UserException("Email đã tồn tại");
@@ -121,7 +123,6 @@ public class UserServiceImpl implements UserService {
 					userSaved.setId(id);
 					userSaved.setUpdateDate(date);
 					this.userRepository.save(userSaved);
-//					this.createRoomPrivate(userSave);
 					return userDTO;
 				} else {
 					throw new UserException("Email hoặc số điện thoại đã tồn tại");
@@ -159,22 +160,31 @@ public class UserServiceImpl implements UserService {
 			throw new UserException("Khong the tim thay nguoi dung");
 		}
 	}
-
-	public void createRoomPrivate(User user) {
-		List<UserDTO> listUserDTO = this.getAll();
-		if(listUserDTO.size() >= 1) {
-			List<User> listUser = listUserDTO.stream().map((item) -> this.modelMapper.map(item, User.class)).toList();
-			Iterator ItrUser = listUser.iterator();
-			while(ItrUser.hasNext()) {
-				User user1 = (User) ItrUser.next();
-//				User user2 = user1.
-				RoomPrivateDTO roomPrivate = new RoomPrivateDTO();
-				roomPrivate.setStatus(true);
-				roomPrivate.setCreateDate(new Date());
-				roomPrivate.setUser1ID(user.getId());
-				roomPrivate.setUser2ID(user1.getId());
-				this.roomPrivateService.create(roomPrivate);
-			}
+	
+	public void generateRoom(User user)
+	{
+		List<User> list = userRepository.findAll();
+		
+		for(User u : list)
+		{
+			RoomPrivate room= new RoomPrivate();
+			room.setUser1ID(user.getId());
+			room.setUser2ID(u.getId());
+			room.setCreateDate(new Date());
+			this.roomPrivateRepository.save(room);
+			
 		}
 	}
+	
+	public UserDTO updateAvt(Long id) {
+		Optional<Resources> resourcesDTO = this.resourcesRepository.findById((long) 1);
+		Optional<User> user = this.userRepository.findById(id);
+		user.get().setAvt(resourcesDTO.get().getData());
+		this.userRepository.save(user.get());
+		UserDTO userDTO = this.modelMapper.map(user, UserDTO.class);
+		return userDTO;
+	}
+	
+	
+
 }
