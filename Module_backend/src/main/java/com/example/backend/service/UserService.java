@@ -23,6 +23,6 @@ public interface UserService {
 
 	UserDTO updateAvt(Long id);
 	
-	UserDTO updateAvt(Long id);
+//	UserDTO updateAvt(Long id);
 	
 }

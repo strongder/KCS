@@ -35,6 +35,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private ResourcesRepository  resourcesRepository;
+	
+	@Autowired
+	private RoomPrivateRepository roomPrivateRepository;
 
 	@Override
 	public List<UserDTO> getAll() {
@@ -172,7 +175,6 @@ public class UserServiceImpl implements UserService {
 			room.setUser2ID(u.getId());
 			room.setCreateDate(new Date());
 			this.roomPrivateRepository.save(room);}
-			
 	}
 	
 	public UserDTO updateAvt(Long id) {
@@ -186,4 +188,3 @@ public class UserServiceImpl implements UserService {
 }
 	
 
-}
