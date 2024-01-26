@@ -160,10 +160,6 @@ public class UserServiceImpl implements UserService {
 			throw new UserException("Khong the tim thay nguoi dung");
 		}
 	}
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 79ba30925b72e163c5bdf9ccbeeda0a3cf2e26fb
 	
 	public void generateRoom(User user)
 	{
@@ -175,30 +171,8 @@ public class UserServiceImpl implements UserService {
 			room.setUser1ID(user.getId());
 			room.setUser2ID(u.getId());
 			room.setCreateDate(new Date());
-			this.roomPrivateRepository.save(room);
+			this.roomPrivateRepository.save(room);}
 			
-<<<<<<< HEAD
-=======
-=======
-
-	public void createRoomPrivate(User user) {
-		List<UserDTO> listUserDTO = this.getAll();
-		if(listUserDTO.size() >= 1) {
-			List<User> listUser = listUserDTO.stream().map((item) -> this.modelMapper.map(item, User.class)).toList();
-			Iterator ItrUser = listUser.iterator();
-			while(ItrUser.hasNext()) {
-				User user1 = (User) ItrUser.next();
-//				User user2 = user1.
-				RoomPrivateDTO roomPrivate = new RoomPrivateDTO();
-				roomPrivate.setStatus(true);
-				roomPrivate.setCreateDate(new Date());
-				roomPrivate.setUser1ID(user.getId());
-				roomPrivate.setUser2ID(user1.getId());
-				this.roomPrivateService.create(roomPrivate);
-			}
->>>>>>> d125702383c32bfc3c28bf2c09bd5278561ae6c9
->>>>>>> 79ba30925b72e163c5bdf9ccbeeda0a3cf2e26fb
-		}
 	}
 	
 	public UserDTO updateAvt(Long id) {
