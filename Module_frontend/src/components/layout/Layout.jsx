@@ -14,10 +14,6 @@ const Layout = (props) => {
   const dispatch = useDispatch();
   const {currentUser, loading} = useSelector(state=>state.users)
 
-  const {avatar} = useSelector(state=>state.resource)
-
-  const token = localStorage.getItem('token');
-
   useEffect(() => {
     const themeClass = localStorage.getItem("themeMode") || "theme-mode-light";
     const colorClass = localStorage.getItem("colorMode") || "theme-mode-light";
@@ -32,14 +28,6 @@ const Layout = (props) => {
     dispatch(fetchCurrentUser(localStorage.getItem('id')))
   }, [dispatch ]);
  
-  useEffect(() => {
-    if (currentUser && currentUser.avt) {
-      dispatch(fetchFileById(currentUser.avt));
-    }
-  }, [dispatch, currentUser]);
-  
-  
-
   return (
     <>
      

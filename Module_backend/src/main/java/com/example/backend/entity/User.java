@@ -52,8 +52,8 @@ public class User {
 	@Column(name = "ma_TK")
 	private String MaTK;
 	
-	@Column(name = "avt")
-	private long avt;
+	@Column(name = "avt",  columnDefinition = "LONGBLOB")
+	private byte[] avt;
 	
 	@ManyToOne
     @JoinColumn(name = "RoleID", referencedColumnName = "id")

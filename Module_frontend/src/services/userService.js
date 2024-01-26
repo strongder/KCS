@@ -63,6 +63,22 @@ export const updateUser = async (updatedUser) => {
     throw error;
   }
 };
+export const updateCurrentUser = async (updatedUser) => {
+  try {
+    const response = await axiosInstance.put(
+      `${API_URL}/update-current/${updatedUser.id}`,
+      updatedUser
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Error updating user with ID ${updatedUser.id} :`,
+      updatedUser,
+      error
+    );
+    throw error;
+  }
+};
 
 export const removeUser = async (userId) => {
   try {
