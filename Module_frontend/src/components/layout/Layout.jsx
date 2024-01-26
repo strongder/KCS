@@ -29,7 +29,7 @@ const Layout = (props) => {
   return (
     <>
      
-      {!loading &&currentUser &&  (
+      {!loading &&currentUser && currentUser.avt&&  (
         <div className={`layout ${themeReducer.mode} ${themeReducer.color}`}>
           <Sidebar {...props} />
           <div className="layout__content">

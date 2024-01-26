@@ -99,7 +99,7 @@ const LiveChat = () => {
           <ContactList data={data} loading={loading} onSelect={handleChatSelect} />
         </div>
         <div className="window-chat">
-          {selectedChat && (
+          {selectedChat ? (
             <div className="window-chat-content">
               <WindowChat
                 userId={selectedChat}
@@ -109,7 +109,11 @@ const LiveChat = () => {
                 onClickInfo={handleSelectedInfo}
               />
             </div>
-          )}
+          ):
+          (<div className="window-chat-logo">
+            <i style={{fontSize :"100px"}} class='bx bxl-messenger bx-tada bx-flip-horizontal' ></i>
+            <p style={{fontSize :"25px", color:"#000"}}>Tin nhắn của bạn</p>
+            </div>)}
         </div>
         {selectedInfo && <InfoPanel userId={selectedChat} />}
       </div>
