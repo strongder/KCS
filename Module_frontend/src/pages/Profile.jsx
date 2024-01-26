@@ -102,7 +102,6 @@ const Profile = () => {
     }
   };
 
-  console.log("/////////", fileBase64String)
   return (
     <>
       {!loading && currentUser && (
