@@ -1,0 +1,66 @@
+.forgot-password {
+    display: flex;
+    margin: 0px, auto
+}
+
+.reset-password-container {
+    max-width: 700px;
+    margin: 0px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .reset-password-container label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  .reset-password-container input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .reset-password-container button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    align-items: end;
+  }
+  
+  .reset-success {
+    color: #4caf50;
+    margin-top: 20px;
+  }
+
+  .logo-image > img{
+    height: 100px;
+    width: 200px;
+    margin-top: 50px;
+    margin-left: 660px;
+    margin-bottom: 10px;
+  }
+
+  .label {
+    margin-left: 640px;
+    margin-bottom: 10px;
+    font-weight: 300;
+  }
+
+  .input-email {
+    border-radius: 2px;
+    border: 1px solid #000;
+  }
+
+  .label-p {
+    margin-bottom: 10px;
+    font-weight: 400;
+  }
+
+
+  

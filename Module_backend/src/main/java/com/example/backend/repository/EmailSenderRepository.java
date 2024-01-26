@@ -13,10 +13,14 @@ import java.util.Optional;
 public interface EmailSenderRepository extends JpaRepository<EmailSender, Long>{
 
 	
-	@Query(value = "select e from EmailSender e where e.verification = :verification and e.isDelete = false")
-	Optional<EmailSender> findByValidVerification(Long verification);
+	@Query(value = "SELECT e\r\n"
+			+ "FROM EmailSender e where e.email = :email \r\n"
+			+ "ORDER BY e.createDate DESC\r\n"
+			+ "LIMIT 1")
+	Optional<EmailSender> findByEmailUser(String email);
 	
 	@Query(value = "select e from EmailSender e where e.isDelete = false")
 	List<EmailSender> findByIsDeleteFalse();
+	
 }
 

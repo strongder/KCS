@@ -51,7 +51,7 @@ public class ResourcesServiceImpl implements ResourcesService{
 	}
 
 	@Override
-	public Resources UploadFile(MultipartFile newFile, Long id) {
+	public Resources UploadFile(MultipartFile newFile, Long id, Long roomID) {
 		fileUtils.validateFile(newFile);
         try {   
 //            String fileName = StringUtils.cleanPath(newFile.getOriginalFilename());
@@ -61,6 +61,8 @@ public class ResourcesServiceImpl implements ResourcesService{
             File.setCreateBy(user.getEmail());
             File.setData(newFile.getBytes());
             File.setType(newFile.getContentType());
+            File.setIdRoomPrivate(roomID);
+            File.setName(newFile.getName());
             Resources resources = this.modelMapper.map(File,Resources.class);
             Resources resources2 = this.fileRepository.save(resources);
             return resources2;

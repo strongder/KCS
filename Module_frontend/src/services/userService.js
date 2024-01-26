@@ -15,6 +15,17 @@ export const fetchUserById = async (userId) => {
   }
 };
 
+export const fetchUserByEmail = async (email) => {
+  try {
+    const response = await axiosInstance.get(`${API_URL}/find-by-email/${email}`);
+    // console.log(response.data)
+    return response.data;
+  } catch (error) { 
+    console.error(`Error fetching user with ID ${email}:`, error);
+    return null;
+  }
+};
+
 export const fetchUsers = async () => {
   try {
     const response = await axiosInstance.get(API_URL)

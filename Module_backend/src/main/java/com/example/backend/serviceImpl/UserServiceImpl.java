@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.DTO.ResourcesDTO;
@@ -38,6 +39,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private RoomPrivateRepository roomPrivateRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public List<UserDTO> getAll() {
@@ -68,6 +72,7 @@ public class UserServiceImpl implements UserService {
 			Optional<Resources> resourcesDTO = this.resourcesRepository.findById((long) 1);
 			Date date = new Date();
 			User user = modelMapper.map(userDTO, User.class);
+			user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 			user.setAvt(resourcesDTO.get().getData());
 			user.setCreateDate(date);
 			user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
@@ -94,6 +99,7 @@ public class UserServiceImpl implements UserService {
 				Date date = new Date();
 				User userSaved = this.modelMapper.map(userDTO, User.class);
 				userSaved.setId(id);
+				userSaved.setPassword(passwordEncoder.encode(userSaved.getPassword()));;
 				userSaved.setUpdateDate(date);
 				this.userRepository.save(userSaved);
 				return userDTO;
@@ -101,6 +107,7 @@ public class UserServiceImpl implements UserService {
 				if (userCheckPhone.get().getId() == id) {
 					Date date = new Date();
 					User userSaved = this.modelMapper.map(userDTO, User.class);
+					userSaved.setPassword(passwordEncoder.encode(userSaved.getPassword()));
 					userSaved.setId(id);
 					userSaved.setUpdateDate(date);
 					this.userRepository.save(userSaved);
@@ -112,6 +119,7 @@ public class UserServiceImpl implements UserService {
 				if (userCheckEmail.get().getId() == id) {
 					Date date = new Date();
 					User userSaved = this.modelMapper.map(userDTO, User.class);
+					userSaved.setPassword(passwordEncoder.encode(userSaved.getPassword()));
 					userSaved.setId(id);
 					userSaved.setUpdateDate(date);
 					this.userRepository.save(userSaved);
@@ -123,6 +131,7 @@ public class UserServiceImpl implements UserService {
 				if (userCheckEmail.get().getId() == id && userCheckPhone.get().getId() == id) {
 					Date date = new Date();
 					User userSaved = this.modelMapper.map(userDTO, User.class);
+					userSaved.setPassword(passwordEncoder.encode(userSaved.getPassword()));
 					userSaved.setId(id);
 					userSaved.setUpdateDate(date);
 					this.userRepository.save(userSaved);

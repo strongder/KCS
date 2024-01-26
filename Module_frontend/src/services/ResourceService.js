@@ -34,14 +34,14 @@ export const getFileByUsername= async (username) => {
     }
 };
 
-export const addFile = async (userId, file) => {
+export const addFile = async (roomID, userId, file) => {
     try {
         // Tạo FormData để chứa tệp tin và các dữ liệu khác nếu cần
         const formData = new FormData();
         formData.append('file', file);
 
         // Sử dụng axiosInstance để gửi yêu cầu POST với FormData
-        const response = await axiosInstance.post(`${API_URL}/upload/${userId}`, file, {
+        const response = await axiosInstance.post(`${API_URL}/upload/${roomID}/${userId}`, file, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

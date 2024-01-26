@@ -14,7 +14,7 @@ public interface ResourcesService {
 
 	ResourcesDTO getFileByID(Long ID);
 
-	Resources UploadFile(MultipartFile image, Long id);
+	Resources UploadFile(MultipartFile image, Long id, Long roomID);
 	
 	ResourcesDTO getFileByCreateBy(String createBy);
 

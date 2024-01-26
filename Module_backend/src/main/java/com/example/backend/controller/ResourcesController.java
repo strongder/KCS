@@ -1,5 +1,8 @@
 package com.example.backend.controller;
 
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.example.backend.DTO.ResourcesDTO;
 import com.example.backend.entity.Resources;
+import com.example.backend.repository.ResourcesRepository;
 import com.example.backend.service.ResourcesService;
 
 import org.springframework.http.HttpHeaders;
@@ -34,6 +38,12 @@ public class ResourcesController {
 	@Autowired
 	private ResourcesService resourcesService;
 	
+	@Autowired
+	private ResourcesRepository resourcesRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	@GetMapping("")
 	public ResponseEntity<?> GetAllFile() {
 		return ResponseEntity.ok(this.resourcesService.getAllFile());
@@ -45,10 +55,10 @@ public class ResourcesController {
 		return new ResponseEntity<>(getFile, HttpStatus.OK);
 	}
 	
-	@PostMapping("/upload/{id}")
-    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file, @PathVariable("id") Long id) {
+	@PostMapping("/upload/{roomID}/{id}")
+    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file, @PathVariable("id") Long id, @PathVariable("roomID") Long roomID) {
 		System.out.println(file.getOriginalFilename() + "file: ");
-        return new ResponseEntity<>(this.resourcesService.UploadFile(file, id), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.resourcesService.UploadFile(file, id, roomID), HttpStatus.CREATED);
     }
 
     @GetMapping("/download/{id}")
@@ -57,13 +67,14 @@ public class ResourcesController {
         System.out.println(image.getType());
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(image.getType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getId() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getName() + "\"")
                 .body(new ByteArrayResource(image.getData()));
     }
     
-    public void test()
-    
-    {
-    	
-    }
+    @GetMapping("/get-by-room-private/{id}")
+    public ResponseEntity<List<ResourcesDTO>> FindByIDRoom(@PathVariable("id") Long ID){
+		List<Resources> listResources = this.resourcesRepository.getByIdRoomPrivate(ID);
+		List<ResourcesDTO> listResourcesDTOs = listResources.stream().map((item) -> this.modelMapper.map(item, ResourcesDTO.class)).toList();
+		return new ResponseEntity<>(listResourcesDTOs, HttpStatus.OK);
+	}
 }

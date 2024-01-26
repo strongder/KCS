@@ -12,8 +12,9 @@ import lombok.NoArgsConstructor;
 public class ResourcesDTO {
 	private Long id;
 	private String type;
+	private String name;
 	private byte[] Data;
 	private Date createAt;  
 	private String createBy; // neu la user thi se la email , học sinh sẽ là id
-//	private Long chatID; 
+	private Long idRoomPrivate;
 }

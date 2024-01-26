@@ -25,6 +25,9 @@ public class Resources {
     @Column(name = "id")
 	private Long id;
 	
+	@Column(name = "name")
+	private String name;
+	
 	@Column(name = "type")
 	private String type;
 	
@@ -36,5 +39,8 @@ public class Resources {
 	
 	@Column(name = "createBy")
 	private String createBy; //nếu là user: createBy = email, nếu là student: createBy = id
+	
+	@Column(name = "id_room_private")
+	private Long idRoomPrivate;
 
 }

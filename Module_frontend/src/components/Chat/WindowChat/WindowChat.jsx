@@ -18,7 +18,7 @@ const WindowChat = (props) => {
   const sendMessage = async (message, selectFile) => {
     var file
     if(selectFile !== null) {
-      file = await addFile (localStorage.getItem('id'), selectFile)
+      file = await addFile (roomId, localStorage.getItem('id'), selectFile)
       console.log(selectFile);
     }
     if (message.trim() || selectFile !== null) {

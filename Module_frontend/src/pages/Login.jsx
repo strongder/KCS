@@ -77,7 +77,7 @@ const Login = () => {
           <input type="checkbox" name="save" />
           <p>Lưu tài khoản</p>
 
-          <a href="#">Quên mật khẩu?</a>
+          <a href="/forgot-password">Quên mật khẩu?</a>
         </div>
         
         <button type="submit" onClick={handleLogin} >Submit</button>

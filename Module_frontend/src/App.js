@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import Layout from "./components/layout/Layout";
 import NotFound from './pages/NotFound';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+// import ResetPassword from './pages/ResetPassword';
+import AcceptEmail from './pages/AcceptEmail';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -39,6 +41,7 @@ function App() {
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/not-found" component={NotFound} />
+        <Route path="/forgot-password" component={AcceptEmail} />
         {isLoggedIn ? (
           <Route path="/" component={Layout} />
         ) : (

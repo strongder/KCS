@@ -1,13 +1,14 @@
 package com.example.backend.service;
 
 import com.example.backend.DTO.EmailSenderDTO;
+import com.example.backend.DTO.UserDTO;
 
 public interface EmailSenderService {
 	
-	EmailSenderDTO getByVerification(Long verification);
+	Boolean getVerificationByEmail(String email);
 	
-	void create(String email);
+	EmailSenderDTO create(String email);
 	
-	void delete();
+//	void delete();
 	
 }
