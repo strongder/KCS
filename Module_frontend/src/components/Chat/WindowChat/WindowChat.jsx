@@ -46,7 +46,8 @@ const WindowChat = (props) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, []);
+
+  }, [messages]);
 
   useEffect(() => {
     dispatch(fetchUserById(userId))

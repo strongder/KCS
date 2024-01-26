@@ -38,8 +38,8 @@ public class ChatPrivateServiceImpl implements ChatPrivateService {
 	@Override
 	public ChatPrivateDTO create(ChatPrivateDTO chatPrivateDTO) {
 		// TODO Auto-generated method stub
-//		ChatPrivate chatPrivate = this.modelMapper.map(chatPrivateDTO, ChatPrivate.class);
-//		this.chatPrivateRepository.save(chatPrivate);
+		ChatPrivate chatPrivate = this.modelMapper.map(chatPrivateDTO, ChatPrivate.class);
+		this.chatPrivateRepository.save(chatPrivate);
 		return chatPrivateDTO;
 	}
 
