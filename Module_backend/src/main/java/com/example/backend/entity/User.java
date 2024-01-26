@@ -53,6 +53,7 @@ public class User {
 	private String MaTK;
 	
 	@Column(name = "avt", columnDefinition = "LONGBLOB")
+
 	private byte[] avt;
 	
 	@ManyToOne

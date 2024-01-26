@@ -1,35 +1,32 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import * as roomPrivateService from '../../services/RoomPrivateService';
+
+export const getRoomByUser = createAsyncThunk("roomPrivate/getRoomByUser", async (id1, id2) => {
+    return roomPrivateService.getRoomByUser(id1, id2);
+  });
 
 const RoomPrivateSlice = createSlice({
-    name: "RoomPrivate",
+    name: "roomPrivate",
     initialState: {
-        getRoomPrivateByIDUsers: {
-            RoomPrivateID: null,
-            isFetching: false,
-            error: null,
-        }
+      roomId: '',
+      loading: false,
+      error: null,
     },
     reducers: {
-        getRoomPrivateByIDUsersStart: (state) => {
-            state.getRoomPrivateByIDUsers.isFetching = true;
-        },
-        getRoomPrivateByIDUsersSuccess: (state, action) => {
-            state.getRoomPrivateByIDUsers.isFetching = false;
-            state.getRoomPrivateByIDUsers.RoomPrivateID = action.payload;
-            state.getRoomPrivateByIDUsers.error = false;
-        },
-        getRoomPrivateByIDUsersError: (state) => {
-            state.getRoomPrivateByIDUsers.isFetching = false;
-            state.getRoomPrivateByIDUsers.error = true;
-        }
+    
     },
-});
-
-export const {
-    getRoomPrivateByIDUsersStart,
-    getRoomPrivateByIDUsersSuccess,
-    getRoomPrivateByIDUsersError,
-} = RoomPrivateSlice.actions;
-
-export default RoomPrivateSlice.reducer;
-// export const {fetchSchedules} = userSlice.actions;
+    extraReducers: (builder) => {
+      builder
+        .addCase(getRoomByUser.fulfilled, (state, action) => {
+          state.loading = false;
+          state.roomId = action.payload;
+        })
+        .addCase(getRoomByUser.rejected, (state, action) => {
+          state.loading = true;
+          state.error = action.error.message;
+        })
+        
+    },
+  });
+  
+  export default RoomPrivateSlice.reducer;

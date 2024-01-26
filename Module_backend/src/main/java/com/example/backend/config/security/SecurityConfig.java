@@ -44,7 +44,7 @@ public class SecurityConfig {
                                                    UserDetailsService userDetailsService, JwtAuthFilter filter) throws Exception {
         return httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
-                    .requestMatchers("/api/v1/auth/**", "ws://localhost:8081/ws/**","/ws/**", "/api/v1/user/**", "api/v1/file/**", "/api/v1/room-private/**").permitAll()
+                    .requestMatchers("/api/v1/**",  "/api/v1/user/**","/ws/**", "api/v1/file/**").permitAll()
                 .and()
                 .authorizeHttpRequests()
                     .requestMatchers("").hasAnyRole("ADMINISTRATOR", "USER")

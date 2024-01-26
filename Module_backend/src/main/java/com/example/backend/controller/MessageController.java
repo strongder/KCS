@@ -29,10 +29,16 @@ public class MessageController {
 	@Autowired
 	private ChatPrivateService chatPrivateService;
 	
+<<<<<<< HEAD
 	@GetMapping("/{roomID}")
 	public ResponseEntity<List<ChatPrivateDTO>> getByUsers(@PathVariable("roomID") Long id) {
 		RoomPrivateDTO roomPrivateDTO = this.roomPrivateService.getByID(id);
 		List<ChatPrivateDTO> listChatPrivateDTO = this.chatPrivateService.getByRoomID(roomPrivateDTO.getId());
+=======
+	@GetMapping("/{roomId}")
+	public ResponseEntity<List<ChatPrivateDTO>> getByUsers(@PathVariable("roomId") Long roomId) {
+		List<ChatPrivateDTO> listChatPrivateDTO = this.chatPrivateService.getByRoomID(roomId);
+>>>>>>> dfa1cc6e27e21e8f044dc0e71902cb8769d41e9f
 		return new ResponseEntity<>(listChatPrivateDTO, HttpStatus.OK);
 	}
 }

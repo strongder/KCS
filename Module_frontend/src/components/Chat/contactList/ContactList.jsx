@@ -20,8 +20,6 @@ const ContactList = (props) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   }
-
-
   return (
     <>
 
@@ -42,7 +40,7 @@ const ContactList = (props) => {
               <div className="nav-list">
                 <div className="nav-search">
                   <input type="text" placeholder="Search..." />
-                  <i class="bx bx-search-alt"></i>
+                  <i className="bx bx-search-alt"></i>
                 </div>
                 <div className="content">
                   <div className="list-item">
@@ -57,7 +55,7 @@ const ContactList = (props) => {
               <div className="nav-list">
                 <div className="nav-search">
                   <input type="text" placeholder="Search..." />
-                  <i class="bx bx-search-alt"></i>
+                  <i className="bx bx-search-alt"></i>
                 </div>
                 <div className="content">
                   <div className="list-item">
@@ -67,7 +65,7 @@ const ContactList = (props) => {
                       <div className="item" key ={index} onClick={() => onSelect(item.id)} >
 
                       <div className="item-avatar">
-                        <img src={item.avt} alt="" />
+                        <img src={`data:image/jpg;base64,${item.avt}`} alt="" />
                       </div>
                       <div className="item-content">
                         <p className="name">{item.name}</p>

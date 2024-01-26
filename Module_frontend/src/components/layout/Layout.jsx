@@ -14,10 +14,6 @@ const Layout = (props) => {
   const dispatch = useDispatch();
   const {currentUser, loading} = useSelector(state=>state.users)
 
-  const {avatar} = useSelector(state=>state.resource)
-
-  const token = localStorage.getItem('token');
-
   useEffect(() => {
     const themeClass = localStorage.getItem("themeMode") || "theme-mode-light";
     const colorClass = localStorage.getItem("colorMode") || "theme-mode-light";
@@ -26,28 +22,18 @@ const Layout = (props) => {
     dispatch(setColor(colorClass));
   }, [dispatch]);
 
-  
-
   useEffect(() => {
     dispatch(fetchCurrentUser(localStorage.getItem('id')))
   }, [dispatch ]);
  
-  useEffect(() => {
-    if (currentUser && currentUser.avt) {
-      dispatch(fetchFileById(currentUser.avt));
-    }
-  }, [dispatch, currentUser]);
-  
-  
-
   return (
     <>
      
-      {!loading &&currentUser && avatar &&  (
+      {!loading &&currentUser &&  (
         <div className={`layout ${themeReducer.mode} ${themeReducer.color}`}>
           <Sidebar {...props} />
           <div className="layout__content">
-            <TopNav user={currentUser} avatar = {avatar} />
+            <TopNav user={currentUser} />
             <div className="layout__content-main">
               <Routing role={currentUser.role}></Routing>
             </div>

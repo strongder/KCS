@@ -42,9 +42,7 @@ const EditUser = () => {
     let newUser = { ...user, ...editUser };
     const gender = newUser.gender==='Nam'?true:false;
     const role = newUser.role==="USER"?"ROLE_USER":'ROLE_ADMINISTRATOR';
-    newUser = ({...newUser, role, gender});
-    console.log("check newUser:" ,newUser)
-    
+    newUser = ({...newUser, role, gender});    
     dispatch(updateUser(newUser)).then(() => {
       history.push("/admin/user");
     });
