@@ -20,7 +20,6 @@ const ContactList = (props) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   }
-
   return (
     <>
 

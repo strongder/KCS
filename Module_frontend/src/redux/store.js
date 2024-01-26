@@ -7,8 +7,7 @@ import UserReducer from "./slices/UserSlice"
 
 import AutoChatReducer from "./slices/AutoChatSlice"
 import ResourceReducer from "./slices/ResourceSlice"
-import RoomPrivateReducer from "./slices/RoomPrivateSlice";
-
+import RoomPrivateReducer from "./slices/RoomPrivateSlice"
 
 
 const store = configureStore({

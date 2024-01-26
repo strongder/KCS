@@ -34,7 +34,6 @@ function App() {
     checkLogin();
   }, []);
 
-  console.log (isLoggedIn)
   return (
     <BrowserRouter>
       <Switch>
