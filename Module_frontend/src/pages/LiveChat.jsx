@@ -38,15 +38,12 @@ const LiveChat = () => {
 
 
 
-  const subscribe = async (userId2) => {
+  const subscribe = (room) => {
     const socket = new SockJS('http://localhost:8081/ws');
     const client = Stomp.over(socket);
-    const userId1 = localStorage.getItem('id');
-    const room = await getRoomByUser(userId1, userId2)
-    setRoomId(room)
-    if (stompClientRef.current) {
-      stompClientRef.current.disconnect();
-    }
+    // if (stompClientRef.current) {
+    //   stompClientRef.current.disconnect();
+    // }
     client.connect({}, () => {
       client.subscribe(`/topic/room/${room}`, (message) => {
         const receivedMessage = JSON.parse(message.body);
@@ -55,11 +52,14 @@ const LiveChat = () => {
     });
     setStompClient(client);
 
-    stompClientRef.current = client; 
+    // stompClientRef.current = client; 
   };
 
-  const handleChatSelect = (userId) => {
-    subscribe(userId);
+  const handleChatSelect = async (userId) => {
+    const userId1 = localStorage.getItem('id');
+    const room = await getRoomByUser(userId1, userId);
+    setRoomId(room)
+    subscribe(room);
     setSelectedChat(userId);
     console.log(userId)
   };

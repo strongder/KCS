@@ -25,8 +25,9 @@ function App() {
         localStorage.removeItem('id')
         setIsLoggedIn(false);
       }
-    }
-  }, []);
+
+  }}, []);
+
 
   return (
    <Router isLoggedIn = {isLoggedIn}/>

@@ -34,7 +34,7 @@ const Layout = (props) => {
  
   useEffect(() => {
     if (currentUser && currentUser.avt) {
-      dispatch(fetchFileById(currentUser.avt));
+      // dispatch(fetchFileById(currentUser.avt));
     }
   }, [dispatch, currentUser]);
   

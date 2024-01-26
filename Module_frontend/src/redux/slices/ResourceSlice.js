@@ -55,10 +55,10 @@ const ResouceSlice = createSlice({
           state.loading = false;
           state.error = action.error.message;
         })
-        // .addCase(fetchFileById.pending, (state) => {
-        //   state.loading = true;
-        //   state.error = null;
-        // })
+        .addCase(fetchFileById.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+        })
 
         .addCase(fetchFileByUsername.fulfilled, (state, action) => {
             state.loading = false;

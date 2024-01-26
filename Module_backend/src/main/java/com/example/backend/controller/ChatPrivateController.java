@@ -25,6 +25,7 @@ public class ChatPrivateController {
     private ChatPrivateService chatPrivateService;
 
     
+<<<<<<< HEAD
 //    @MessageMapping("/private-message")
 //    public ChatPrivateDTO recMessage(@Payload ChatPrivateDTO message){
 //    	System.out.print("Private-message");
@@ -40,6 +41,15 @@ public class ChatPrivateController {
     public ChatPrivateDTO sendRoomMessage(@Payload ChatPrivateDTO message, @DestinationVariable String roomId) {
 //        message.setTimestamp(new Date());
         System.out.println("check" + message);
+=======
+
+    @MessageMapping("/private-message")
+    public ChatPrivateDTO recMessage(@Payload ChatPrivateDTO message){
+    	System.out.print("message: " + message);
+        simpMessagingTemplate.convertAndSendToUser(message.getRoomPrivateID() + "","/private",message);
+//        System.out.println(message.getIDSender());
+//        this.chat.save();
+>>>>>>> d125702383c32bfc3c28bf2c09bd5278561ae6c9
         this.chatPrivateService.create(message);
       return message;
     }
