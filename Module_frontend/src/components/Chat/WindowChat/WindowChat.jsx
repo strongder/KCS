@@ -24,7 +24,6 @@ const WindowChat = (props) => {
     if (message.trim() || selectFile !== null) {
       const chatMessage = {
         content: (message === null) ? "" : message,
-        // Long: "1",
         idsender: localStorage.getItem('id'),
         idresources: (selectFile === null) ? null : file.id,
         roomPrivateID: roomId,
