@@ -1,30 +1,47 @@
 // Message.scss
 
 .message {
-    max-width: 70%;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    word-wrap: break-word;
-  
-    &.own-message {
-      align-self: flex-end;
-      background-color: #DCF8C6;
-    }
-  
-    &.other-message {
-      align-self: flex-start;
-      background-color: #E5E5EA;
-    }
-  
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  word-wrap: break-word;
+
+  &.own-message {
+    flex-flow: row-reverse;
+    align-self: flex-end;
+
     .content {
-      font-size: 14px;
+
+      .message{
+
+
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        background-color: #62b4ff;
+        color: #000;
+        padding: 10px 15px;
+        border-radius: 15px;
+      }
     }
-  
-    .time {
-      font-size: 12px;
-      margin-top: 5px;
-      color: #808080;
+  }
+
+  &.other-message {
+    align-self: flex-start;
+    .content {
+      .message {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        background-color: #62b4ff;
+        color: #000;
+        padding: 10px 15px;
+        border-radius: 15px;
+      }
+
     }
   }
 
@@ -36,4 +53,11 @@
       border-radius: 50%;
     }
   }
-  
+
+
+  .time {
+    font-size: 12px;
+    margin-top: 5px;
+    color: #808080;
+  }
+}

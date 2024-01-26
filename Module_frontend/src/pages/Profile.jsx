@@ -102,11 +102,11 @@ const Profile = () => {
     }
   };
 
-  console.log("/////////", fileBase64String)
   return (
     <>
       {!loading && currentUser && (
         <div className="profile">
+          <h2>Thông tin cá nhân</h2>
           <div className="profile-avt">
             <label htmlFor="avatarInput" className="change-avatar-text">
             <img src={`data:image/png;base64, ${fileBase64String || ""}`} alt="Avatar" />

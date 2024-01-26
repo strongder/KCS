@@ -15,10 +15,10 @@
       margin: 15px 10px;
     }
     img {
-      width: 60;
+      width: 60px;
       height: 60px;
       padding: 5px;
-      border-radius: 40px;
+      border-radius: 50%;
     }
 
     .logo {
@@ -99,7 +99,7 @@
   }
   .chat-area-content {
     flex:1;
-    background: #ccc;
+    background: #fff;
     box-shadow: inset 2px -7px 11px -10px;
     overflow: hidden; 
 

@@ -75,7 +75,7 @@ const UserDetail = () => {
           <h2>Thông tin chi tiết tài khoản</h2>
           <div className="user-detail-container">
             <div className="avatar">
-              <img src={user.avt} alt="ảnh đại diện" />
+              <img src={`data:image; base64, ${user.avt}`} alt="ảnh đại diện" />
             </div>
             <div className="list-field">
               {bodyData.map((item, index) => (
@@ -90,7 +90,7 @@ const UserDetail = () => {
               ))}
               <div className="field" style={{ margin: "20px 0" }}>
                 <i className="bx bxs-star"></i>
-                <label>Trạng thái:<b>{user.isDelete === true ? "   Đã xóa" : "  Còn sử dụng"}</b></label>
+                <label>Trạng thái:<b>{user.isDelete === true ? "   Đã xóa" : " Hoạt động"}</b></label>
               </div>
             </div>
           </div>

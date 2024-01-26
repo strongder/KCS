@@ -56,7 +56,7 @@ const WindowChat = (props) => {
   return (
     <div className="chat-area">
       {user && (<div className="chat-area-nav">
-        <img src={user.avt} alt="" />
+        <img src={`data:image/jpg;base64,${user.avt}`} alt="" />
         <p className="name"> {user.name}</p>
         <div className="logo">
           <p className="search" onClick={handleClickSearch}>

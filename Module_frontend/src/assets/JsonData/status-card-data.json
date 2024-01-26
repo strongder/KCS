@@ -1,27 +1,27 @@
 [
     {
-        "icon": "bx bx-shopping-bag",
+        "icon": "bx bx-receipt",
         "title": "Quản lý tài khoản",
         "path": "admin/user",
         "description": "Có chức năng xem thông tin, thêm, sửa thông tin tài khoản người dùng."
     },
     {
-        "icon": "bx bx-cart",
+        "icon": "bx bx-receipt",
         "title": "Quản lý thời gian làm việc",
         "path": "admin/schedule",
         "description": "Có thể thêm, sửa, xóa lịch làm việc."
     },
     {
-        "icon": "bx bx-dollar-circle",
+        "icon": "bx bx-receipt",
         "title": "Quản lý tin nhắn",
         "path": "admin/message",
-        "description": ""
+        "description": "Có thể xem được tin nhắn giữa sinh viên và giáo viên."
     },
     {
         "icon": "bx bx-receipt",
         "title": "Quản lý danh sách sinh viên",
         "path": "students",
-        "description": "Có chức năng xem thông tin danh sách sinh viên đã quan tâm"
+        "description": "Có chức năng xem thông tin danh sách sinh viên đã quan tâm."
     }, 
     {
         "icon": "bx bx-receipt",
