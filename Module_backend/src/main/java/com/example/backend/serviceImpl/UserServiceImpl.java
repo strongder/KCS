@@ -11,13 +11,17 @@ import org.modelmapper.internal.bytebuddy.asm.Advice.This;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.backend.DTO.ResourcesDTO;
 import com.example.backend.DTO.RoomPrivateDTO;
 import com.example.backend.DTO.UserDTO;
+import com.example.backend.entity.Resources;
 import com.example.backend.entity.RoomPrivate;
 import com.example.backend.entity.User;
 import com.example.backend.exception.ScheduleException;
 import com.example.backend.exception.UserException;
+import com.example.backend.repository.ResourcesRepository;
 import com.example.backend.repository.UserRepository;
+import com.example.backend.service.ResourcesService;
 import com.example.backend.service.RoomPrivateService;
 import com.example.backend.service.UserService;
 
@@ -32,6 +36,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RoomPrivateService roomPrivateService;
+	
+	@Autowired
+	private ResourcesRepository resourcesRepository;
 	
 	@Override
 	public List<UserDTO> getAll() {
@@ -59,10 +66,11 @@ public class UserServiceImpl implements UserService {
 		List<User> listUsers = this.userRepository.findByEmailOrPhone(userDTO.getEmail(), userDTO.getPhone());
 		if (listUsers.isEmpty()) {
 
+			Optional<Resources> resourcesDTO = this.resourcesRepository.findById((long) 1);
 			Date date = new Date();
-			Long avt = (long) 1;
+//			Long avt = (long) 1;
 			User user = modelMapper.map(userDTO, User.class);
-			user.setAvt(avt);
+			user.setAvt(resourcesDTO.get().getData());
 			user.setCreateDate(date);
 			user.setUpdateDate(date);
 			user.setIsDelete(false);
@@ -163,18 +171,23 @@ public class UserServiceImpl implements UserService {
 	public void createRoomPrivate(User user) {
 		List<UserDTO> listUserDTO = this.getAll();
 		if(listUserDTO.size() >= 1) {
-			List<User> listUser = listUserDTO.stream().map((item) -> this.modelMapper.map(item, User.class)).toList();
-			Iterator ItrUser = listUser.iterator();
-			while(ItrUser.hasNext()) {
-				User user1 = (User) ItrUser.next();
-//				User user2 = user1.
+			for(UserDTO u: listUserDTO){
 				RoomPrivateDTO roomPrivate = new RoomPrivateDTO();
 				roomPrivate.setStatus(true);
 				roomPrivate.setCreateDate(new Date());
 				roomPrivate.setUser1ID(user.getId());
-				roomPrivate.setUser2ID(user1.getId());
+				roomPrivate.setUser2ID(u.getId());
 				this.roomPrivateService.create(roomPrivate);
 			}
 		}
+	}
+	
+	public UserDTO updateAvt(Long id) {
+		Optional<Resources> resourcesDTO = this.resourcesRepository.findById((long) 1);
+		Optional<User> user = this.userRepository.findById(id);
+		user.get().setAvt(resourcesDTO.get().getData());
+		this.userRepository.save(user.get());
+		UserDTO userDTO = this.modelMapper.map(user, UserDTO.class);
+		return userDTO;
 	}
 }

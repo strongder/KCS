@@ -67,4 +67,9 @@ public class UserController {
 	public ResponseEntity<UserDTO> delete(@PathVariable("id") Long id) {
 		return new ResponseEntity<>(this.userService.delete(id), HttpStatus.OK);
 	}
+	
+	@PutMapping("/update-avt/{id}")
+	public ResponseEntity<UserDTO> update(@PathVariable("id") Long id) {
+		return new ResponseEntity<>(this.userService.updateAvt(id), HttpStatus.OK);
+	}
 }

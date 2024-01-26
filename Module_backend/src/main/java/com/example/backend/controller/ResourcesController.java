@@ -46,14 +46,15 @@ public class ResourcesController {
 	}
 	
 	@PostMapping("/upload/{id}")
-    public ResponseEntity<?> uploadImage(@ModelAttribute("newFile") MultipartFile newFile, @PathVariable("id") Long id) {
-		System.out.println(newFile.getOriginalFilename() + "file: ");
-        return new ResponseEntity<>(this.resourcesService.UploadFile(newFile, id), HttpStatus.CREATED);
+    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file, @PathVariable("id") Long id) {
+		System.out.println(file.getOriginalFilename() + "file: ");
+        return new ResponseEntity<>(this.resourcesService.UploadFile(file, id), HttpStatus.CREATED);
     }
 
     @GetMapping("/download/{id}")
     public ResponseEntity<?> downloadImage(@PathVariable("id") Long id) {
         ResourcesDTO image = this.resourcesService.getFileByID(id);
+        System.out.println(image.getType());
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(image.getType()))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getId() + "\"")

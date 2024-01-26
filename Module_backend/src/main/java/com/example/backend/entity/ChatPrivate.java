@@ -44,7 +44,7 @@ public class ChatPrivate {
 //	private Resources IDResources;
 	
 	@Column(name = "id_resource")
-	private Long IDResource;
+	private Long IDResources;
 	
 	@ManyToOne
 	@JoinColumn(name = "room_private_ID")

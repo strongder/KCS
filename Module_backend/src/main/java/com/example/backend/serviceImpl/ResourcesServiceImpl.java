@@ -51,7 +51,7 @@ public class ResourcesServiceImpl implements ResourcesService{
 	}
 
 	@Override
-	public ResourcesDTO UploadFile(MultipartFile newFile, Long id) {
+	public Resources UploadFile(MultipartFile newFile, Long id) {
 		fileUtils.validateFile(newFile);
         try {   
 //            String fileName = StringUtils.cleanPath(newFile.getOriginalFilename());
@@ -62,8 +62,8 @@ public class ResourcesServiceImpl implements ResourcesService{
             File.setData(newFile.getBytes());
             File.setType(newFile.getContentType());
             Resources resources = this.modelMapper.map(File,Resources.class);
-            this.fileRepository.save(resources);
-            return File;
+            Resources resources2 = this.fileRepository.save(resources);
+            return resources2;
         } catch (Exception e) {
             throw new RuntimeException("Upload image error");
         }
