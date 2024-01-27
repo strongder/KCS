@@ -42,10 +42,10 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/not-found" component={NotFound} />
         <Route path="/forgot-password" component={AcceptEmail} />
-        {isLoggedIn ? (
-          <Route path="/" component={Layout} />
+        {console.log()&&!isLoggedIn ? (
+          <Redirect to = "/login"/>
         ) : (
-          <Login/>
+          <Route path="/" component={Layout} />
         )}
       </Switch>
     </BrowserRouter>

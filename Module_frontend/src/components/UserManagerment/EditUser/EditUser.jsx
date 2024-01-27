@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 
 const EditUser = () => {
   const { id } = useParams();
+  const {currentUser} = useSelector(state => state.users)
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.users);
   const history = useHistory("");
@@ -42,7 +43,7 @@ const EditUser = () => {
     let newUser = { ...user, ...editUser };
     const gender = newUser.gender==='Nam'?true:false;
     const role = newUser.role==="USER"?"ROLE_USER":'ROLE_ADMINISTRATOR';
-    newUser = ({...newUser, role, gender});    
+    newUser = ({...newUser, role, gender, updateBy: currentUser.email});    
     dispatch(updateUser(newUser)).then(() => {
       history.push("/admin/user");
     });

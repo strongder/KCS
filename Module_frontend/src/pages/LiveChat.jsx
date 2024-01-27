@@ -10,6 +10,7 @@ import Stomp from "stompjs";
 import SockJS from 'sockjs-client';
 import { getRoomByUser } from "../services/RoomPrivateService";
 import axiosInstance from "../api";
+import { fetchAllFileByRoom } from "../redux/slices/ResourceSlice";
 
 
 const Item = styled(Paper)(({ theme, selectedInfo }) => ({
@@ -28,7 +29,7 @@ const LiveChat = () => {
   const [selectedChat, setSelectedChat] = useState('');
 
   const [selectedInfo, setSelectedInfo] = useState(false);
-  const { data, loading } = useSelector((state) => state.users);
+  const { data, loading, searchData } = useSelector((state) => state.users);
   const [roomId, setRoomId] = useState('');
   const stompClientRef = useRef(null);
   const dispatch = useDispatch();
@@ -37,6 +38,22 @@ const LiveChat = () => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
+
+  const filteredList = () => {
+    if (!data) return [];
+
+    let filteredData = data;
+
+    if (searchData.length > 0) {
+      filteredData = data.filter(
+        (ele) =>
+          ele.name.toLowerCase().includes(searchData.toLowerCase()) ||
+          ele.phone.includes(searchData)
+      );
+    }
+
+    return filteredData;
+  };
 
   useEffect(() => {
     const unsubscribe = () => {
@@ -90,13 +107,14 @@ const LiveChat = () => {
 
   const handleSelectedInfo = () => {
     setSelectedInfo(!selectedInfo);
+    dispatch(fetchAllFileByRoom(roomId));
   };
 
   return (
     <div className="live-chat">
       <div className="live-chat-container">
         <div className="contact-list">
-          <ContactList data={data} loading={loading} onSelect={handleChatSelect} />
+          <ContactList data={filteredList()} loading={loading} onSelect={handleChatSelect} />
         </div>
         <div className="window-chat">
           {selectedChat ? (

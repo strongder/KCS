@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 
 import DialogAdd from "../../dialogAdd/DialogAdd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser, fetchUsers } from "../../../redux/slices/UserSlice";
 
 const AddUser = () => {
+  const {currentUser} = useSelector(state=>state.users)
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: "",
@@ -37,11 +38,12 @@ const AddUser = () => {
   const handleSubscribe = async () => {
     if (validateForm()) {
       let user = { ...formData };
-      console.log("check user", user);
       user = {
         ...user,
         role: user.role === "USER" ? "ROLE_USER" : "ROLE_ADMINISTRATOR",
         gender: user.gender === "Nam" ? true : false,
+        createBy: currentUser.email,
+        updateBy: currentUser.email,
       };
       delete user.confirmPassword;
       await dispatch(addUser(user));

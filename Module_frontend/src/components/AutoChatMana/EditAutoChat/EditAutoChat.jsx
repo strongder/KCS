@@ -7,6 +7,7 @@ import { getAllChat, getChatById, updateChat } from "../../../redux/slices/AutoC
 
 const EditAutoChat = () => {
   const { id } = useParams();
+  const {currentUser} = useSelector(state => state.users)
   const dispatch = useDispatch();
   const history = useHistory();
   const { autoChat } = useSelector((state) => state.autoChat);
@@ -35,11 +36,10 @@ const EditAutoChat = () => {
   const handleUpdate = () => {
     let newChat = {...autoChat, ...editChat}
     const isDelete = newChat.isDelete === 'delete' ? true: false;
-    newChat = {...newChat, isDelete}
-    console.log (">>>>>>>", newChat)
+    newChat = {...newChat, isDelete, updateBy: currentUser.email}
     dispatch(updateChat(newChat));
-    // dispatch(getAllChat());
-    //history.push("/admin/auto-chat")
+   
+    history.push("/admin/auto-chat")
     
   };
 

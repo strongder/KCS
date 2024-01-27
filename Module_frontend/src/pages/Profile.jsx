@@ -95,7 +95,7 @@ const Profile = () => {
 
 
       await dispatch(updateCurrentUser(newUser));
-      history.push("/admin/user");
+      history.push("/");
     } catch (error) {
       // Handle error, e.g., show an error message
       console.error("Error updating profile:", error);

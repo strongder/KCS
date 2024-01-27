@@ -13,6 +13,17 @@ export const getAllFile = async () => {
     }
 };
 
+export const getAllFileByRoom= async (id) => {
+    try {
+        const response = await axiosInstance.get(`${API_URL}/get-by-room-private/${id}`)
+        console.log(response.data)
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching autoChat:", error);
+        throw error;
+    }
+};
+
 export const getFileById = async (fileId) => {
     try {
         const response = await axiosInstance.get(`${API_URL}/${fileId}`)

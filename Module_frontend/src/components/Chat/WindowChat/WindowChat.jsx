@@ -8,6 +8,7 @@ import { addFile } from "../../../services/ResourceService";
 
 const WindowChat = (props) => {
 
+  const {files, loading} =useSelector (state=>state.resource)
   const { userId, onClickInfo, messages, roomId, stompClient } = props;
   const { user } = useSelector(state => state.users)
   const dispatch = useDispatch()

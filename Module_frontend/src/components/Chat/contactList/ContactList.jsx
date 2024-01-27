@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./ContactList.scss";
 import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-// import avatar from "../../../assets/images/tuat.png";
-// import { useDispatch } from "react-redux";
-import { useState } from "react";
-import SockJS from "sockjs-client";
-import Stomp from 'stompjs';
+
 import { useDispatch, useSelector } from "react-redux";
+import { searchUser } from "../../../redux/slices/UserSlice";
 
 const ContactList = (props) => {
   const dispatch = useDispatch();
   const { data, loading, onSelect } = props
   const [value, setValue] = React.useState("1");
 
-  const {user} = useSelector(state=>state.users)
+  const [searchData, setSearchData]  = useState('');
+  useEffect (() =>
+  {
+    dispatch(searchUser(searchData));
+  }, [searchData])
+  const { user } = useSelector(state => state.users)
   const handleChange = (event, newValue) => {
     setValue(newValue);
   }
@@ -37,14 +39,12 @@ const ContactList = (props) => {
             <TabPanel value="1">
               <div className="nav-list">
                 <div className="nav-search">
-                  <input type="text" placeholder="Search..." />
+                  <input type="text" placeholder="Search..." value={searchData}
+                    onChange={(e) => setSearchData(e.target.value)} />
                   <i className="bx bx-search-alt"></i>
                 </div>
                 <div className="content">
                   <div className="list-item">
-
-
-
                   </div>
                 </div>
               </div>
@@ -52,7 +52,8 @@ const ContactList = (props) => {
             <TabPanel value="2">
               <div className="nav-list">
                 <div className="nav-search">
-                  <input type="text" placeholder="Search..." />
+                  <input type="text" placeholder="Search..." value={searchData}
+                    onChange={(e) => setSearchData(e.target.value)}/>
                   <i className="bx bx-search-alt"></i>
                 </div>
                 <div className="content">
@@ -61,8 +62,8 @@ const ContactList = (props) => {
                     {data.map((item, index) => {
                       return (
                         <div className="item" key={index} onClick={() => onSelect(item.id)}
-                        
-                         style={ user.id === item.id ? { backgroundColor: '#bebebe' } : {}}>
+
+                          style={user.id === item.id ? { backgroundColor: '#bebebe' } : {}}>
                           <div className="item-avatar">
                             <img src={`data:image/jpg;base64,${item.avt}`} alt="" />
                           </div>

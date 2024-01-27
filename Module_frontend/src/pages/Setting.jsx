@@ -2,7 +2,7 @@ import React from 'react'
 import ThemeMenu from '../components/thememenu/ThemeMenu'
 const Setting = () => {
    return (
-    <div className='settings'>
+    <div style={{padding: "40px 30px"}} className='settings'>
         <ThemeMenu></ThemeMenu>
     </div>
 )

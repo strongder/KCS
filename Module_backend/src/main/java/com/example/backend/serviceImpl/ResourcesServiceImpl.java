@@ -62,7 +62,7 @@ public class ResourcesServiceImpl implements ResourcesService{
             File.setData(newFile.getBytes());
             File.setType(newFile.getContentType());
             File.setIdRoomPrivate(roomID);
-            File.setName(newFile.getName());
+            File.setName(newFile.getOriginalFilename());
             Resources resources = this.modelMapper.map(File,Resources.class);
             Resources resources2 = this.fileRepository.save(resources);
             return resources2;

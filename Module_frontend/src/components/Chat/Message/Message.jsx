@@ -15,27 +15,13 @@ const Message = (props) => {
   }
   const { message } = props;
   const { user, currentUser } = useSelector(state => state.users)
-  const [listFile, setListFile] = useState([])
   const who = message.idsender === currentUser.id ? 'own-message' : 'other-message'
   const avatar = message.idsender === currentUser.id ? `data:image/jpg;base64,${currentUser.avt}` : `data:image/jpg;base64,${user.avt}`;
 
-  const file = async () => {
-    if (message.idresources !== null) {
-      const filedata = await getFileById(message.idresources);
-      setListFile((prev) => [...prev, filedata] );
-     return filedata;
-    }
-
-    return null;
-  }
-  
-  
-   const filename = file();
 
 
   const [isHovered, setIsHovered] = useState(false);
 
-  console.log(listFile);
   return (
     <div className={`message ${who}`}
       onMouseEnter={() => setIsHovered(true)}

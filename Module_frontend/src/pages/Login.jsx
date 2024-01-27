@@ -7,14 +7,14 @@ import axios from "axios";
 
 
 const Login = () => {
-  const history  = useHistory('');
+  const history = useHistory('');
   const [auth, setAuth] = useState({
     username: '',
     password: ''
   })
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setAuth({...auth, [name] : value})
+    setAuth({ ...auth, [name]: value })
   };
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -24,13 +24,12 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       const response = await axios.post(`http://localhost:8081/api/v1/auth`, auth, {
-          headers: {
-              "Content-Type": "application/json",
-          },
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
-      // history.push("/")
-      console.log(response.data)
       if (response.status === 200) {
+        alert('Đăng nhập thành công')
         history.push('/')
         const token = response.data.token;
         const id = response.data.id;
@@ -40,12 +39,13 @@ const Login = () => {
         console.log(localStorage.getItem('token'))
         localStorage.setItem('expTime', expirationTime.toString());
       } else {
-          console.log("Đăng nhập không thành công");
+        alert('Đăng nhập thất bại');
       }
-  } catch (error) {
+    } catch (error) {
+      alert('Đăng nhập thất bại');
       console.log(error);
-  }
-};
+    }
+  };
 
   return (
     <div className="container">
@@ -74,12 +74,10 @@ const Login = () => {
           />
         </div>
         <div className="save">
-          <input type="checkbox" name="save" />
-          <p>Lưu tài khoản</p>
 
           <a href="/forgot-password">Quên mật khẩu?</a>
         </div>
-        
+
         <button type="submit" onClick={handleLogin} >Submit</button>
       </div>
     </div>

@@ -2,13 +2,20 @@
 import React, { useState } from "react";
 import "./InfoPanel.scss";
 import { useSelector } from "react-redux";
+import { downloadFile } from "../../../services/ResourceService";
 
 const InfoPanel = () => {
 
+  const { files, loading } = useSelector(state => state.resource)
   const { user } = useSelector(state => state.users)
   const [checkFile, setCheckFile] = useState(false);
   const [chooseFile, setChoseFile] = useState(false);
 
+  const handleImage = (fileID) => {
+    downloadFile(fileID);
+  }
+
+  console.log(files)
   const handleOpenListFile = () => {
     setCheckFile(true);
   }
@@ -17,6 +24,9 @@ const InfoPanel = () => {
   }
   const handleChooseFile = () => {
     setChoseFile(true)
+  }
+  const handleChooseImage = () => {
+    setChoseFile(false)
   }
 
   return (
@@ -37,17 +47,36 @@ const InfoPanel = () => {
           </div>
         </>) : (
         <>
-          <div className="tab"></div>
-          <i class='bx bx-arrow-back' ></i>
-          <p>Ảnh</p>
-          <p>File</p>
-          {chooseFile ? (
-            <div className="list-image">
-
+          <div className="tab">
+            <div className="tab-header">
+              <i style={{ fontSize: "20px" }} class='bx bx-arrow-back' ></i>
+              <p onClick={handleChooseImage}>Ảnh</p>
+              <p style={{ borderLeft: "1px solid #ccc" }} onClick={handleChooseFile}>File</p>
             </div>
-          ) : (<div className="list-file">
-
-          </div>)}
+            <hr />
+            {files && !chooseFile ? (
+              <div className="tab-image">
+                {files.map((file, index) => {
+                  if (file.type.includes('image')) {
+                    return (
+                      <div key={index} className="item-img" onClick={()=>downloadFile(file.id)}>
+                        <img src={`data:image;base64, ${file.data}`} alt="" />
+                      </div>
+                    )
+                  }
+                })}
+              </div>
+            ) : (<div className="tab-file">
+              {files.map((file, index) => {
+                if (!file.type.includes('image')) {
+                  return (
+                    <div key={index} className="item-file" onClick={()=>downloadFile(file.id)}>
+                      <i class='bx bx-file'></i> <span style={{ fontSize: "16px" }}>{file.name}</span>
+                    </div>
+                  )
+                }
+              })}
+            </div>)}</div>
         </>
       )}
 

@@ -75,6 +75,7 @@ const NavCard = () => {
           type="text"
           name="timeStart"
           value={formData.timeStart}
+          placeholder="hh:mm:ss"
           onChange={handleInputChange}
           required
         />
@@ -86,6 +87,7 @@ const NavCard = () => {
         <input
           type="test"
           name="timeEnd"
+          placeholder="hh:mm:ss"
           value={formData.timeEnd}
           onChange={handleInputChange}
           required

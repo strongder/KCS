@@ -35,13 +35,73 @@
     padding: 10px;
     border-radius: 5px;
     margin-top: 23px;
-    gap: 120px;
+    gap: 115px;
 
     i {
       font-size: 20px;
     }
   }
-  .open-file:hover{
+
+  .open-file:hover {
     background-color: #ccc;
+  }
+
+  .tab {
+
+    .tab-header {
+      display: grid;
+      grid-template-columns: 1fr 3fr 3fr;
+      padding: 5px;
+
+      p {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 5px;
+      }
+
+      p:hover {
+        background-color: #ccc;
+      }
+    }
+
+    .tab-image {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+
+      .item-img {
+        cursor: pointer;
+        img {
+          width: 100%;
+        }
+      }
+    }
+
+    .tab-file {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .item-file {
+        display: flex;
+        align-items: center;
+        padding: 10px 5px;
+        border-radius: 5px;
+        cursor: pointer;
+
+        i {
+          font-size: 30px;
+          margin: 0 10px;
+        }
+
+      }
+      .item-file:hover{
+        background-color: #ccc;
+      }
+    }
   }
 }
