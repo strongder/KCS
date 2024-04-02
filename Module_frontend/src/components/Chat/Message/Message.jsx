@@ -35,7 +35,6 @@ const Message = (props) => {
 
   const [isHovered, setIsHovered] = useState(false);
 
-  console.log(listFile);
   return (
     <div className={`message ${who}`}
       onMouseEnter={() => setIsHovered(true)}

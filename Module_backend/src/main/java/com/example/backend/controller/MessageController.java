@@ -32,7 +32,6 @@ public class MessageController {
 	@GetMapping("/{roomId}")
 	public ResponseEntity<List<ChatPrivateDTO>> getByUsers(@PathVariable("roomId") Long roomId) {
 		List<ChatPrivateDTO> listChatPrivateDTO = this.chatPrivateService.getByRoomID(roomId);
-//>>>>>>> dfa1cc6e27e21e8f044dc0e71902cb8769d41e9f
 		return new ResponseEntity<>(listChatPrivateDTO, HttpStatus.OK);
 	}
 }

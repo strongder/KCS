@@ -21,19 +21,40 @@ const AddUser = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+  function validatePhone(phone) {
+    var re = /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/;
+    return re.test(String(phone));
+  }
   const validateForm = () => {
-    const { name, phone, email, password, confirmPassword } = formData;
-    // Check if any field is empty
-    if (!name || !phone || !email || !password || !confirmPassword) {
-      return false;
-    }
-    // Check if password and confirmPassword match
-    if (password !== confirmPassword) {
-      return false;
-    }
+      const { name, phone, email, password, confirmPassword } = formData;
+      // Check if any field is empty
+      if (!name || !phone || !email || !password || !confirmPassword) {
+        alert("Vui lòng điền đầy đủ thông tin");
+        return false;
+      }
+      // Check if phone number is valid
+      if (!validatePhone(phone)) {
+        alert("Số điện thoại không hợp lệ");
+        return false;
+      }
+      // Check if email is valid
+      if (!validateEmail(email)) {
+        alert("Email không hợp lệ");
+        return false;
+      }
+      // Check if password and confirmPassword match
+      if (password !== confirmPassword) {
+        alert("Mật khẩu không khớp");
+        return false;
+      }
 
-    return true;
+      return true;
+   
   };
+  function validateEmail(email) {
+    var re = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+    return re.test(String(email).toLowerCase());
+}
   const handleSubscribe = async () => {
     if (validateForm()) {
       let user = { ...formData };
@@ -46,6 +67,7 @@ const AddUser = () => {
       delete user.confirmPassword;
       await dispatch(addUser(user));
       await dispatch(fetchUsers());
+      alert("Thêm tài khoản thành công");
       setFormData({
         name: "",
         email: "",
@@ -57,15 +79,8 @@ const AddUser = () => {
         role: "USER",
       });
     } else {
-      // Handle validation error, show message, etc.
-      alert("Form validation failed");
+      alert("Thêm tài khoản thất bại");
     }
-
-    //   handleClose();
-    // } else {
-    //   // Handle validation error, show message, etc.
-    //   console.log('Form validation failed');
-    // }
   };
 
   const bodyData = [

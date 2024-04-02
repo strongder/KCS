@@ -6,7 +6,7 @@ import { faSmile, faPaperPlane, faFile, faImage } from '@fortawesome/free-solid-
 import './MessageInput.scss';
 import EmojiPicker from '../EmojiPicker/EmojiPicker';
 
-const MessageInput = (props) => {
+const  MessageInput = (props) => {
   const { onSendMessage } = props;
   const [message, setMessage] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);

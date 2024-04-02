@@ -86,7 +86,6 @@ const Profile = () => {
     try {
       let newUser = { ...currentUser, ...profile };
 
-      // Convert gender and role if needed
       const gender = newUser.gender === "Nam";
       const role = newUser.role === "USER" ? "ROLE_USER" : "ROLE_ADMINISTRATOR";
 
@@ -97,7 +96,6 @@ const Profile = () => {
       await dispatch(updateCurrentUser(newUser));
       history.push("/admin/user");
     } catch (error) {
-      // Handle error, e.g., show an error message
       console.error("Error updating profile:", error);
     }
   };

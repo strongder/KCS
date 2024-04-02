@@ -72,7 +72,6 @@ const userSlice = createSlice({
       // })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(state)
         state.data = action.payload;
       })
       .addCase(fetchUsers.rejected, (state, action) => {
@@ -99,9 +98,6 @@ const userSlice = createSlice({
         state.loading = false;
         state.currentUser = action.payload;
       })
-      // .addCase(updateUser.pending, (state) => {
-      //   state.loading = true;
-      // })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
@@ -119,10 +115,7 @@ const userSlice = createSlice({
         state.loading = false;
         state.currentUser = action.payload;
       })
-      // .addCase(removeUser.pending, (state) => {
-      //   state.loading = true;
-      //   console.log("fdsfds");
-      // })
+     
       .addCase(removeUser.fulfilled, (state, action) => {
         state.loading = false;
         const userIndex = state.data.findIndex(

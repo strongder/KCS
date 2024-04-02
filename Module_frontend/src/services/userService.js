@@ -1,4 +1,3 @@
-import axios from "axios";
 import axiosInstance from "../api";
 
 const API_URL = "http://localhost:8081/api/v1/user";
@@ -7,7 +6,6 @@ const API_URL = "http://localhost:8081/api/v1/user";
 export const fetchUserById = async (userId) => {
   try {
     const response = await axiosInstance.get(`${API_URL}/${userId}`);
-    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error(`Error fetching user with ID ${userId}:`, error);
@@ -18,7 +16,6 @@ export const fetchUserById = async (userId) => {
 export const fetchUserByEmail = async (email) => {
   try {
     const response = await axiosInstance.get(`${API_URL}/find-by-email/${email}`);
-    // console.log(response.data)
     return response.data;
   } catch (error) { 
     console.error(`Error fetching user with ID ${email}:`, error);
@@ -29,7 +26,6 @@ export const fetchUserByEmail = async (email) => {
 export const fetchUsers = async () => {
   try {
     const response = await axiosInstance.get(API_URL)
-    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error("Error fetching users:", error);

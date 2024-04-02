@@ -13,11 +13,12 @@ const ContactList = (props) => {
   const dispatch = useDispatch();
   const { data, loading, onSelect } = props
   const [value, setValue] = React.useState("1");
-
-  const {user} = useSelector(state=>state.users)
+  const {user,currentUser} = useSelector(state=>state.users)
+  const listUser = data.filter(item => item.id !== currentUser.id);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   }
+
   return (
     <>
 
@@ -58,7 +59,7 @@ const ContactList = (props) => {
                 <div className="content">
                   <div className="list-item">
 
-                    {data.map((item, index) => {
+                    {listUser.map((item, index) => {
                       return (
                         <div className="item" key={index} onClick={() => onSelect(item.id)}
                         
