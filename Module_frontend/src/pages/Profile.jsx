@@ -31,7 +31,25 @@ const Profile = () => {
       avt: `data:image; base64, ${fileBase64String} `
     }));
   };
-
+  function validatePhone(phone) {
+    var re = /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/;
+    return re.test(String(phone));
+  }
+  const validateForm = () => {
+    const { name, phone} = profile;
+    // Check if any field is empty
+    if (!name || !phone  ) {
+      alert("Vui lòng điền đầy đủ thông tin");
+      return false;
+    }
+    // Check if phone number is valid
+    if (!validatePhone(phone)) {
+      alert("Số điện thoại không hợp lệ");
+      return false;
+    }
+    return true;
+ 
+};
   const handleImageChange = (e) => {
     setSelectFile(e.target.files[0]);
 
@@ -84,6 +102,10 @@ const Profile = () => {
 
   const handleUpdateProfile = async () => {
     try {
+      if (!validateForm()) {
+        return;
+      }
+
       let newUser = { ...currentUser, ...profile };
 
       const gender = newUser.gender === "Nam";
@@ -92,9 +114,9 @@ const Profile = () => {
 
       newUser = { ...newUser, gender, role, avt: fileBase64String };
 
-
       await dispatch(updateCurrentUser(newUser));
-      history.push("/admin/user");
+      alert("Cập nhật thông tin thành công");
+      history.push("/");
     } catch (error) {
       console.error("Error updating profile:", error);
     }
@@ -129,7 +151,7 @@ const Profile = () => {
             </div>
             <div className="info-item">
               <label>Email</label>
-              <input type="text" name="email" value={profile.email} onChange={handleInputChange} />
+              <input type="text" name="email" value={profile.email} readOnly />
             </div>
             <div className="info-item">
               <label>Số điện thoại</label>

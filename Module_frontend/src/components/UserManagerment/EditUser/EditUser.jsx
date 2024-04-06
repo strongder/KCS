@@ -14,8 +14,8 @@ const EditUser = () => {
     name: "",
     email: "",
     phone: "",
-    birthDay:"",
-    gender:"",
+    birthDay: "",
+    gender: "",
     role: "",
   });
 
@@ -31,19 +31,48 @@ const EditUser = () => {
         email: user.email,
         phone: user.phone,
         birthDay: user.birthDay,
-        gender: user.gender===true?'Nam':'Nữ',
-        role: user.role ==="ROLE_USER"?"USER":'ADMIN',
+        gender: user.gender === true ? "Nam" : "Nữ",
+        role: user.role === "ROLE_USER" ? "USER" : "ADMIN",
       });
     }
   }, [user]);
-  // console.log("check edit user", editUser);
+
+  function validateEmail(email) {
+    var re = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+    return re.test(String(email).toLowerCase());
+  }
+  function validatePhone(phone) {
+    var re = /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/;
+    return re.test(String(phone));
+  }
+  const validateForm = () => {
+    const { name, phone, email } = editUser;
+    // Check if any field is empty
+    if (!name || !phone || !email ) {
+      alert("Vui lòng điền đầy đủ thông tin");
+      return false;
+    }
+    // Check if phone number is valid
+    if (!validatePhone(phone)) {
+      alert("Số điện thoại không hợp lệ");
+      return false;
+    }
+    // Check if email is valid
+    if (!validateEmail(email)) {
+      alert("Email không hợp lệ");
+      return false;
+    }
+
+    return true;
+  };
   const handleUpdateUser = () => {
-    
+    if (!validateForm()) return;
     let newUser = { ...user, ...editUser };
-    const gender = newUser.gender==='Nam'?true:false;
-    const role = newUser.role==="USER"?"ROLE_USER":'ROLE_ADMINISTRATOR';
-    newUser = ({...newUser, role, gender});    
+    const gender = newUser.gender === "Nam" ? true : false;
+    const role = newUser.role === "USER" ? "ROLE_USER" : "ROLE_ADMINISTRATOR";
+    newUser = { ...newUser, role, gender };
     dispatch(updateUser(newUser)).then(() => {
+      alert("Cập nhật thông tin tài khoản thành công")
       history.push("/admin/user");
     });
   };
@@ -59,7 +88,10 @@ const EditUser = () => {
       <h2>Chỉnh sửa thông tin tài khoản</h2>
       <div className="user-edit-container">
         <div className="avatar">
-          <img src={user ? `data:image; base64, ${user.avt}`:null} alt="ảnh đại diện" />
+          <img
+            src={user ? `data:image; base64, ${user.avt}` : null}
+            alt="ảnh đại diện"
+          />
         </div>
         <div className="list-field">
           <label>
@@ -97,7 +129,7 @@ const EditUser = () => {
             Ngày sinh:
           </label>
           <input
-           style={{paddingRight: "20px"}}
+            style={{ paddingRight: "20px" }}
             type="date"
             name="birthDay" // Use item.title as the name for better identification
             value={editUser.birthDay}
